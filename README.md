@@ -3,6 +3,8 @@ Python WireMock Admin API Client
 
 This is a python admin API client to a standalone WireMock server.
 
+[![Docs](http://wiremock.readthedocs.io/en/latest/?badge=latest)](http://wiremock.readthedocs.org/)
+
 
 Install as Dependency
 --------------------
