@@ -3,4 +3,19 @@ from wiremock.client import *
 
 Config.base_url = 'https://mockserver.example.com/__admin/'
 
-# TODO
+mapping = Mapping(
+    priority=100,
+    request=MappingRequest(
+        method=HttpMethods.GET,
+        url='/hello'
+    ),
+    response=MappingResponse(
+        status=200,
+        body='hi'
+    ),
+    persistent=False,
+)
+
+mapping = Mappings.create_mapping(mapping=mapping)
+
+all_mappings = Mappings.retrieve_all_mappings()

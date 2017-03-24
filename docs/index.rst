@@ -9,8 +9,8 @@ wiremock is a HTTP client to the WireMock standalone admin API.
 Links
 -----
 
-* Documentation: https://bitbucket.org/wellaware/python_wiremock/overview
-* Official Repository: https://bitbucket.org/wellaware/python_wiremock.git
+* Documentation: https://github.com/platinummonkey/python-wiremock/overview
+* Official Repository: https://github.com/platinummonkey/python-wiremock.git
 * Package: TODO
 
 wiremock is known to support Python 2.7.
@@ -27,7 +27,7 @@ PyPI: TODO
 
     $ pip install wiremock
 
-Source: https://bitbucket.org/wellaware/python_wiremock.git
+Source: https://github.com/platinummonkey/python-wiremock.git
 
 .. code-block:: sh
 
