@@ -5,7 +5,7 @@ python:
 - '3.5'
 - '3.6'
 install: pip install -r requirements.pip
-script: run_coverage.sh
+script: bash ./run_coverage.sh
 deploy:
   provider: pypi
   on:
