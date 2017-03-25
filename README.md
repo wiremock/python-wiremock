@@ -3,6 +3,8 @@ Python WireMock Admin API Client
 
 This is a python admin API client to a standalone WireMock server.
 
+[![Build Status](https://travis-ci.org/platinummonkey/python-wiremock.svg?branch=master)](https://travis-ci.org/platinummonkey/python-wiremock)
+[![Coverage Status](https://coveralls.io/repos/github/platinummonkey/python-wiremock/badge.svg?branch=master)](https://coveralls.io/github/platinummonkey/python-wiremock?branch=master)
 [![Docs](https://img.shields.io/badge/docs-latest-brightgreen.svg)](http://wiremock.readthedocs.org/)
 
 
