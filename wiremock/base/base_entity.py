@@ -148,9 +148,9 @@ class BaseAbstractEntity(object):
                     if prop.dict_value_klass is None:
                         pass
                     elif issubclass(prop.dict_value_klass, BaseAbstractEntity):
-                        rv = prop.dict_value_klass.from_dict(k)
+                        rv = prop.dict_value_klass.from_dict(v)
                     else:
-                        rv = prop.dict_value_klass(k)
+                        rv = prop.dict_value_klass(v)
 
                     d[rk] = rv
                 value = d
