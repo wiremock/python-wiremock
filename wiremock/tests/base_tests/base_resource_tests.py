@@ -1,11 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TODO: Document base_resource_tests here.
-
-Copyright (C) 2017, Auto Trader UK
-Created 24. Apr 2017 15:42
-Creator: john.harrison
-
-"""
+"""Tests for base_resource module."""
 
 import unittest
 
