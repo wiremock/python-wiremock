@@ -5,6 +5,10 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v1.0.2
+------
+  * Wiremock 2.6.x uses 201 response code instead.
+
 v1.0.1
 ------
   * Bug Fix on dictionary klass deserialization fix.
