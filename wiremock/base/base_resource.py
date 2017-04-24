@@ -116,7 +116,7 @@ class RestClient(object):
     @staticmethod
     def handle_response(response):
         sc = response.status_code
-        if sc in [200, 204]:
+        if sc in [200, 201, 204]:
             return response
         elif sc is 401:  # pragma: no cover
             raise RequiresLoginException(sc, response.text)
