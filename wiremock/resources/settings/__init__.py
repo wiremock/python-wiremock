@@ -1,1 +1,1 @@
-from models import GlobalSetting
+from .models import GlobalSetting

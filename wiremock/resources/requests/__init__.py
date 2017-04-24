@@ -1,2 +1,2 @@
-from models import RequestResponse, RequestResponseDefinition, RequestResponseRequest, RequestCountResponse, \
+from .models import RequestResponse, RequestResponseDefinition, RequestResponseRequest, RequestCountResponse, \
     RequestResponseAll, RequestResponseFindResponse, RequestResponseAllMeta
