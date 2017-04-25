@@ -7,7 +7,7 @@ from requests import Response
 
 from wiremock.base import RestClient
 from wiremock.exceptions import UnexpectedResponseException
-from wiremock.tests import BaseClientTestCase
+from wiremock.tests.base import BaseClientTestCase, attr
 
 
 class RestClientTestCase(BaseClientTestCase):
@@ -16,6 +16,7 @@ class RestClientTestCase(BaseClientTestCase):
         super(RestClientTestCase, self).setUp()
         self.client = RestClient()
 
+    @attr('unit')
     def test_handle_response(self):
         for status_code in [200, 201, 204]:
             resp = self._create_dummy_response(status_code)

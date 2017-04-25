@@ -6,7 +6,8 @@ from setuptools import setup, find_packages
 #python setup.py sdist upload
 
 version = open('wiremock/VERSION', 'r').readline().strip()
-develop_requires = ['Sphinx==1.5.3',
+develop_requires = [
+    'Sphinx==1.5.3',
     'coverage==4.3.4',
     'detox==0.10.0',
     'mock==2.0.0',
@@ -50,8 +51,11 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     keywords='wiremock',
-    install_requires=['six>=1.10.0',
-                      'requests==2.13.0'],
+    install_requires=[
+        'setuptools>=35.0.1',
+        'six>=1.10.0',
+        'requests==2.13.0'
+    ],
     extras_require={
         'develop': develop_requires,
         'docs': ['Sphinx>=1.5.3', 'sphinx-rtd-theme>=0.2.4', 'watchdog>=0.8.3'],
