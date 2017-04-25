@@ -1,11 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TODO: Document server_tests here.
-
-Copyright (C) 2017, Auto Trader UK
-Created 25. Apr 2017 12:32
-Creator: john.harrison
-
-"""
+"""Test wiremock.server."""
 
 import unittest
 from subprocess import STDOUT, PIPE
