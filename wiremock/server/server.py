@@ -15,11 +15,7 @@ from wiremock.server.exceptions import (
 class WireMockServer(object):
 
     DEFAULT_JAVA = 'java'  # Assume java in PATH
-
-    DEFAULT_JAR = resource_filename(
-        'wiremock',
-        'server/wiremock-standalone-2.6.0.jar'
-    )
+    DEFAULT_JAR = resource_filename('wiremock', 'server/wiremock-standalone-2.6.0.jar')
 
     def __init__(self, java_path=DEFAULT_JAVA, jar_path=DEFAULT_JAR):
         self.java_path = java_path
@@ -27,6 +23,13 @@ class WireMockServer(object):
         self.port = self._get_free_port()
         self.__subprocess = None
         self.__running = False
+
+    def __enter__(self):
+        self.start()
+        return self
+
+    def __exit__(self, type, value, traceback):
+        self.stop()
 
     @property
     def is_running(self):
@@ -40,12 +43,7 @@ class WireMockServer(object):
 
         cmd = [self.java_path, '-jar', self.jar_path, '--port', str(self.port)]
         atexit.register(self.stop)
-        self.__subprocess = Popen(
-            cmd,
-            stdin=PIPE,
-            stdout=PIPE,
-            stderr=STDOUT
-        )
+        self.__subprocess = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
         self.__running = True
 
     def stop(self):

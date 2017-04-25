@@ -10,7 +10,7 @@ Creator: john.harrison
 import unittest
 from subprocess import STDOUT, PIPE
 
-from mock import patch
+from mock import patch, DEFAULT
 from pkg_resources import resource_filename
 
 from wiremock.server.exceptions import (
@@ -97,6 +97,15 @@ class WireMockServerTestCase(unittest.TestCase):
             _subprocess.kill.side_effect = AttributeError
             with self.assertRaises(WireMockServerNotStartedError):
                 self.wm.stop()
+
+    def test_with_statement(self):
+        with patch.multiple(WireMockServer, start=DEFAULT, stop=DEFAULT) as mocks:
+
+            with WireMockServer() as wm:
+                self.assertIsInstance(wm, WireMockServer)
+                mocks['start'].assert_called_once_with()
+
+            mocks['stop'].assert_called_once_with()
 
 
 if __name__ == '__main__':
