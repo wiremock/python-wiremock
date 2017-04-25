@@ -8,9 +8,15 @@ Creator: john.harrison
 """
 
 import unittest
+from subprocess import STDOUT, PIPE
+
 from mock import patch
 from pkg_resources import resource_filename
 
+from wiremock.server.exceptions import (
+    WireMockServerAlreadyStartedError,
+    WireMockServerNotStartedError
+)
 from wiremock.server.server import WireMockServer
 
 
@@ -58,6 +64,39 @@ class WireMockServerTestCase(unittest.TestCase):
         port = self.wm._get_free_port()
 
         self.assertEqual(port, expected_port)
+
+    @patch('wiremock.server.server.atexit')
+    @patch('wiremock.server.server.Popen')
+    def test_start(self, Popen, atexit):
+        self.wm.start()
+
+        Popen.assert_called_once_with(
+            [self.java_path, '-jar', self.jar_path, '--port', str(54321)],
+            stdin=PIPE,
+            stdout=PIPE,
+            stderr=STDOUT
+        )
+
+        self.assertTrue(self.wm.is_running)
+        atexit.register.assert_called_once_with(self.wm.stop)
+
+        # Test when already started
+        with self.assertRaises(WireMockServerAlreadyStartedError):
+            self.wm.start()
+
+    def test_stop(self):
+        with patch.object(self.wm, '_WireMockServer__subprocess') as _subprocess:
+            self.wm._WireMockServer__running = True
+
+            self.wm.stop()
+
+            _subprocess.kill.assert_called_once_with()
+
+            # Test repeated call
+
+            _subprocess.kill.side_effect = AttributeError
+            with self.assertRaises(WireMockServerNotStartedError):
+                self.wm.stop()
 
 
 if __name__ == '__main__':
