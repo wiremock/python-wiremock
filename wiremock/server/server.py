@@ -42,15 +42,16 @@ class WireMockServer(object):
             )
 
         cmd = [self.java_path, '-jar', self.jar_path, '--port', str(self.port)]
-        atexit.register(self.stop)
         self.__subprocess = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
+        atexit.register(self.stop, raise_on_error=False)
         self.__running = True
 
-    def stop(self):
+    def stop(self, raise_on_error=True):
         try:
             self.__subprocess.kill()
         except AttributeError:
-            raise WireMockServerNotStartedError()
+            if raise_on_error:
+                raise WireMockServerNotStartedError()
 
     def _get_free_port(self):
         s = socket.socket(socket.AF_INET, type=socket.SOCK_STREAM)

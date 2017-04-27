@@ -77,7 +77,7 @@ class WireMockServerTestCase(unittest.TestCase):
         )
 
         self.assertTrue(self.wm.is_running)
-        atexit.register.assert_called_once_with(self.wm.stop)
+        atexit.register.assert_called_once_with(self.wm.stop, raise_on_error=False)
 
         # Test when already started
         with self.assertRaises(WireMockServerAlreadyStartedError):
