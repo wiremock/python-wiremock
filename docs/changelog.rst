@@ -5,9 +5,13 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v1.1.1
+------
+  * Fixed bug when wiremock jar not found.
+
 v1.1.0
 ------
-  * Added Ability to stand up wiremock server (requires standalone jar being available)
+  * Added Ability to stand up wiremock server (requires standalone jar being available).
 
 v1.0.3
 ------
