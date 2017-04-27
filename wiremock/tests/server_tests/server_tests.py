@@ -67,6 +67,13 @@ class WireMockServerTestCase(unittest.TestCase):
     @patch('wiremock.server.server.atexit')
     @patch('wiremock.server.server.Popen')
     def test_start(self, Popen, atexit):
+
+        def poll():
+            Popen.return_value.returncode = None
+            return None
+
+        Popen.return_value.poll.side_effect = poll
+
         self.wm.start()
 
         Popen.assert_called_once_with(
@@ -77,11 +84,23 @@ class WireMockServerTestCase(unittest.TestCase):
         )
 
         self.assertTrue(self.wm.is_running)
-        atexit.register.assert_called_once_with(self.wm.stop)
+        atexit.register.assert_called_once_with(self.wm.stop, raise_on_error=False)
 
         # Test when already started
         with self.assertRaises(WireMockServerAlreadyStartedError):
             self.wm.start()
+
+    @attr('unit', 'server')
+    def test_start_with_invalid_java(self):
+        wm = WireMockServer(java_path='/no/such/path')
+        with self.assertRaises(WireMockServerNotStartedError):
+            wm.start()
+
+    @attr('unit', 'server')
+    def test_start_with_invalid_jar(self):
+        wm = WireMockServer(jar_path='/dev/null')
+        with self.assertRaises(WireMockServerNotStartedError):
+            wm.start()
 
     @attr('unit', 'server')
     def test_stop(self):

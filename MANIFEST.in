@@ -1,5 +1,5 @@
 include AUTHORS
 include LICENSE
 include README.rst
-recursive-include wiremock *.py VERSION
+recursive-include wiremock *.py VERSION wiremock-standalone-*.jar
 recursive-exclude wiremock/tests
