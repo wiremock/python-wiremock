@@ -5,6 +5,10 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v1.1.2
+------
+  * Allow looser dependency constraint for requests
+
 v1.1.1
 ------
   * Fixed bug when wiremock jar not found.
