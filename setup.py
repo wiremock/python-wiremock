@@ -7,18 +7,18 @@ from setuptools import setup, find_packages
 
 version = open('wiremock/VERSION', 'r').readline().strip()
 develop_requires = [
-    'Sphinx==1.5.3',
-    'coverage==4.3.4',
-    'detox==0.10.0',
-    'mock==2.0.0',
-    'nose==1.3.7',
-    'python-coveralls==2.9.0',
-    'responses==0.5.1',
+    'Sphinx~=1.5.3',
+    'coverage~=4.3.4',
+    'detox~=0.10.0',
+    'mock~=2.0.0',
+    'nose~=1.3.7',
+    'python-coveralls~=2.9.0',
+    'responses~=0.5.1',
     'requests~=2.13.0',
     'six>=1.10.0',
-    'sphinx-rtd-theme==0.2.4',
-    'tox==2.6.0',
-    'watchdog==0.8.3',
+    'sphinx-rtd-theme~=0.2.4',
+    'tox~=2.6.0',
+    'watchdog~=0.8.3',
     'wheel>=0.24.0']
 
 long_desc = """
