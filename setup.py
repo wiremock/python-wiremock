@@ -26,14 +26,14 @@ wiremock is an API Client to the Admin API for WireMock Standalone installation:
 
 `Documentation <https://wiremock.readthedocs.org/en/latest/>`_
 
-`Report a Bug <https://bitbucket.org/wellaware/python_wiremock/issues>`_
+`Report a Bug <https://github.com/platinummonkey/python-wiremock/issues>`_
 """
 
 setup(
     name='wiremock',
     version=version,
     description='Wiremock Admin API Client',
-    dependency_links=['https://bitbucket.org/wellaware/python_wiremock/archive/{0}.tar.gz#egg=wiremock-{0}'.format(version)],
+    dependency_links=['https://github.com/platinummonkey/python-wiremock/archive/{0}.tar.gz#egg=wiremock-{0}'.format(version)],
     long_description=long_desc,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -66,7 +66,7 @@ setup(
     author_email='codylee@wellaware.us',
     maintainer='Cody Lee',
     maintainer_email='codylee@wellaware.us',
-    url='https://bitbucket.org/wellaware/python_wiremock',
+    url='https://github.com/platinummonkey/python-wiremock',
     license='Apache Software License 2.0',
     packages=find_packages(),
     include_package_data=True,
