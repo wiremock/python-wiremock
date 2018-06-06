@@ -5,6 +5,10 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v1.1.3
+------
+  * Looser dependency constraint in setup.py
+
 v1.1.2
 ------
   * Allow looser dependency constraint for requests
