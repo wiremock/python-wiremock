@@ -5,6 +5,22 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v1.1.5
+------
+  * Looser requirements everywhere, run free!
+
+v1.1.4
+------
+  * Update links in setup.py and docs
+
+v1.1.3
+------
+  * Looser dependency constraint in setup.py
+
+v1.1.2
+------
+  * Allow looser dependency constraint for requests
+
 v1.1.1
 ------
   * Fixed bug when wiremock jar not found.

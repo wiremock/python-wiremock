@@ -7,18 +7,18 @@ from setuptools import setup, find_packages
 
 version = open('wiremock/VERSION', 'r').readline().strip()
 develop_requires = [
-    'Sphinx==1.5.3',
-    'coverage==4.3.4',
-    'detox==0.10.0',
-    'mock==2.0.0',
-    'nose==1.3.7',
-    'python-coveralls==2.9.0',
-    'responses==0.5.1',
-    'requests==2.13.0',
+    'Sphinx~=1.5.3',
+    'coverage~=4.3.4',
+    'detox~=0.10.0',
+    'mock~=2.0.0',
+    'nose~=1.3.7',
+    'python-coveralls~=2.9.0',
+    'responses~=0.5.1',
+    'requests~=2.13.0',
     'six>=1.10.0',
-    'sphinx-rtd-theme==0.2.4',
-    'tox==2.6.0',
-    'watchdog==0.8.3',
+    'sphinx-rtd-theme~=0.2.4',
+    'tox~=2.6.0',
+    'watchdog~=0.8.3',
     'wheel>=0.24.0']
 
 long_desc = """
@@ -26,14 +26,14 @@ wiremock is an API Client to the Admin API for WireMock Standalone installation:
 
 `Documentation <https://wiremock.readthedocs.org/en/latest/>`_
 
-`Report a Bug <https://bitbucket.org/wellaware/python_wiremock/issues>`_
+`Report a Bug <https://github.com/platinummonkey/python-wiremock/issues>`_
 """
 
 setup(
     name='wiremock',
     version=version,
     description='Wiremock Admin API Client',
-    dependency_links=['https://bitbucket.org/wellaware/python_wiremock/archive/{0}.tar.gz#egg=wiremock-{0}'.format(version)],
+    dependency_links=['https://github.com/platinummonkey/python-wiremock/archive/{0}.tar.gz#egg=wiremock-{0}'.format(version)],
     long_description=long_desc,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -54,7 +54,7 @@ setup(
     install_requires=[
         'setuptools>=35.0.1',
         'six>=1.10.0',
-        'requests==2.13.0'
+        'requests~=2.13.0'
     ],
     extras_require={
         'develop': develop_requires,
@@ -66,7 +66,7 @@ setup(
     author_email='codylee@wellaware.us',
     maintainer='Cody Lee',
     maintainer_email='codylee@wellaware.us',
-    url='https://bitbucket.org/wellaware/python_wiremock',
+    url='https://github.com/platinummonkey/python-wiremock',
     license='Apache Software License 2.0',
     packages=find_packages(),
     include_package_data=True,
