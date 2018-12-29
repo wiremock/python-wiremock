@@ -41,9 +41,9 @@ class RestClient(object):
         if 'timeout' not in kwargs:
             kwargs['timeout'] = self._timeout()
         if 'requests_verify' not in kwargs:
-            kwargs['requests_verify'] = self._requests_verify()
+            kwargs['verify'] = self._requests_verify()
         if 'requests_cert' not in kwargs:
-            kwargs['requests_cert'] = self._requests_cert()
+            kwargs['cert'] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("POST", url, **kwargs)
@@ -57,9 +57,9 @@ class RestClient(object):
         if 'timeout' not in kwargs:
             kwargs['timeout'] = self._timeout()
         if 'requests_verify' not in kwargs:
-            kwargs['requests_verify'] = self._requests_verify()
+            kwargs['verify'] = self._requests_verify()
         if 'requests_cert' not in kwargs:
-            kwargs['requests_cert'] = self._requests_cert()
+            kwargs['cert'] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("GET", url, **kwargs)
@@ -73,9 +73,9 @@ class RestClient(object):
         if 'timeout' not in kwargs:
             kwargs['timeout'] = self._timeout()
         if 'requests_verify' not in kwargs:
-            kwargs['requests_verify'] = self._requests_verify()
+            kwargs['verify'] = self._requests_verify()
         if 'requests_cert' not in kwargs:
-            kwargs['requests_cert'] = self._requests_cert()
+            kwargs['cert'] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("PUT", url, **kwargs)
@@ -89,9 +89,9 @@ class RestClient(object):
         if 'timeout' not in kwargs:
             kwargs['timeout'] = self._timeout()
         if 'requests_verify' not in kwargs:
-            kwargs['requests_verify'] = self._requests_verify()
+            kwargs['verify'] = self._requests_verify()
         if 'requests_cert' not in kwargs:
-            kwargs['requests_cert'] = self._requests_cert()
+            kwargs['cert'] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("PATCH", url, **kwargs)
@@ -105,9 +105,9 @@ class RestClient(object):
         if 'timeout' not in kwargs:
             kwargs['timeout'] = self._timeout()
         if 'requests_verify' not in kwargs:
-            kwargs['requests_verify'] = self._requests_verify()
+            kwargs['verify'] = self._requests_verify()
         if 'requests_cert' not in kwargs:
-            kwargs['requests_cert'] = self._requests_cert()
+            kwargs['cert'] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("DELETE", url, **kwargs)
@@ -121,9 +121,9 @@ class RestClient(object):
         if 'timeout' not in kwargs:
             kwargs['timeout'] = self._timeout()
         if 'requests_verify' not in kwargs:
-            kwargs['requests_verify'] = self._requests_verify()
+            kwargs['verify'] = self._requests_verify()
         if 'requests_cert' not in kwargs:
-            kwargs['requests_cert'] = self._requests_cert()
+            kwargs['cert'] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("OPTIONS", url, **kwargs)
@@ -137,9 +137,9 @@ class RestClient(object):
         if 'timeout' not in kwargs:
             kwargs['timeout'] = self._timeout()
         if 'requests_verify' not in kwargs:
-            kwargs['requests_verify'] = self._requests_verify()
+            kwargs['verify'] = self._requests_verify()
         if 'requests_cert' not in kwargs:
-            kwargs['requests_cert'] = self._requests_cert()
+            kwargs['cert'] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("HEAD", url, **kwargs)
