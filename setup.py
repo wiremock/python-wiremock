@@ -14,7 +14,7 @@ develop_requires = [
     'nose~=1.3.7',
     'python-coveralls~=2.9.0',
     'responses~=0.5.1',
-    'requests~=2.13.0',
+    'requests>=2.20.0',
     'six>=1.10.0',
     'sphinx-rtd-theme~=0.2.4',
     'tox~=2.6.0',
@@ -54,7 +54,7 @@ setup(
     install_requires=[
         'setuptools>=35.0.1',
         'six>=1.10.0',
-        'requests~=2.13.0'
+        'requests>=2.20.0'
     ],
     extras_require={
         'develop': develop_requires,

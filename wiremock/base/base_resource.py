@@ -12,15 +12,23 @@ from wiremock.exceptions import *
 
 class RestClient(object):
 
-    def __init__(self, timeout=None, base_url=None):
+    def __init__(self, timeout=None, base_url=None, requests_verify=None, requests_cert=None):
         self.timeout = timeout
         self.base_url = base_url
+        self.requests_verify = requests_verify
+        self.requests_cert = requests_cert
 
     def _base_url(self):
         return self.base_url or Config.base_url
 
     def _timeout(self):
         return self.timeout or Config.timeout
+
+    def _requests_verify(self):
+        return self.requests_verify or Config.requests_verify
+
+    def _requests_cert(self):
+        return self.requests_cert or Config.requests_cert
 
     def _log(self, action, url, **kwargs):
         ctx = {'timeout': kwargs.get('timeout')}
@@ -32,6 +40,10 @@ class RestClient(object):
     def post(self, uri, **kwargs):
         if 'timeout' not in kwargs:
             kwargs['timeout'] = self._timeout()
+        if 'requests_verify' not in kwargs:
+            kwargs['requests_verify'] = self._requests_verify()
+        if 'requests_cert' not in kwargs:
+            kwargs['requests_cert'] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("POST", url, **kwargs)
@@ -44,6 +56,10 @@ class RestClient(object):
     def get(self, uri, **kwargs):
         if 'timeout' not in kwargs:
             kwargs['timeout'] = self._timeout()
+        if 'requests_verify' not in kwargs:
+            kwargs['requests_verify'] = self._requests_verify()
+        if 'requests_cert' not in kwargs:
+            kwargs['requests_cert'] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("GET", url, **kwargs)
@@ -56,6 +72,10 @@ class RestClient(object):
     def put(self, uri, **kwargs):
         if 'timeout' not in kwargs:
             kwargs['timeout'] = self._timeout()
+        if 'requests_verify' not in kwargs:
+            kwargs['requests_verify'] = self._requests_verify()
+        if 'requests_cert' not in kwargs:
+            kwargs['requests_cert'] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("PUT", url, **kwargs)
@@ -68,6 +88,10 @@ class RestClient(object):
     def patch(self, uri, **kwargs):  # pragma: no cover
         if 'timeout' not in kwargs:
             kwargs['timeout'] = self._timeout()
+        if 'requests_verify' not in kwargs:
+            kwargs['requests_verify'] = self._requests_verify()
+        if 'requests_cert' not in kwargs:
+            kwargs['requests_cert'] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("PATCH", url, **kwargs)
@@ -80,6 +104,10 @@ class RestClient(object):
     def delete(self, uri, **kwargs):
         if 'timeout' not in kwargs:
             kwargs['timeout'] = self._timeout()
+        if 'requests_verify' not in kwargs:
+            kwargs['requests_verify'] = self._requests_verify()
+        if 'requests_cert' not in kwargs:
+            kwargs['requests_cert'] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("DELETE", url, **kwargs)
@@ -92,6 +120,10 @@ class RestClient(object):
     def options(self, uri, **kwargs):  # pragma: no cover
         if 'timeout' not in kwargs:
             kwargs['timeout'] = self._timeout()
+        if 'requests_verify' not in kwargs:
+            kwargs['requests_verify'] = self._requests_verify()
+        if 'requests_cert' not in kwargs:
+            kwargs['requests_cert'] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("OPTIONS", url, **kwargs)
@@ -104,6 +136,10 @@ class RestClient(object):
     def head(self, uri, **kwargs):  # pragma: no cover
         if 'timeout' not in kwargs:
             kwargs['timeout'] = self._timeout()
+        if 'requests_verify' not in kwargs:
+            kwargs['requests_verify'] = self._requests_verify()
+        if 'requests_cert' not in kwargs:
+            kwargs['requests_cert'] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("HEAD", url, **kwargs)

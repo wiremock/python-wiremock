@@ -23,6 +23,8 @@ DEFAULT_TIMEOUT = 30
 DEFAULT_BASE_URL = 'http://localhost/__admin'
 USER_AGENT = 'python_wiremock/%s'.format(__version__)
 DEFAULT_HEADERS = {'Accept': 'application/json', 'Content-Type': 'application/json', 'user-agent': USER_AGENT}
+DEFAULT_REQUESTS_VERIFY = True
+DEFAULT_REQUESTS_CERT = None
 
 
 @add_metaclass(Singleton)
@@ -31,6 +33,9 @@ class Config(object):
     base_url = DEFAULT_BASE_URL
     user_agent = USER_AGENT
     headers = DEFAULT_HEADERS
+    requests_verify = DEFAULT_REQUESTS_VERIFY
+    requests_cert = DEFAULT_REQUESTS_CERT
+
 
 Config()  # pre-call once
 

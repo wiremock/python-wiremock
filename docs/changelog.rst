@@ -5,6 +5,11 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v1.2.0
+------
+  * Add custom cert/verification options to be passed normally through the singleton config
+  * Upgrades minimum requests version to 2.20.0 for known CVE-2018-18074
+
 v1.1.5
 ------
   * Looser requirements everywhere, run free!
