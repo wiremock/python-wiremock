@@ -44,8 +44,7 @@ setup(
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
         "Natural Language :: English",
-        "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3",
         "Programming Language :: Python :: Implementation",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Software Development :: Libraries :: Python Modules",
@@ -69,4 +68,5 @@ setup(
     license='Apache Software License 2.0',
     packages=find_packages(),
     include_package_data=True,
+    python_requires='>=3.4',
 )
