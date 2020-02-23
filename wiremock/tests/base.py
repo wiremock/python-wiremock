@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 import json
 import logging
 from nose.tools import nottest
@@ -19,7 +18,7 @@ class BaseClientTestCase(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        Config.base_url = 'http://localhost/__admin'
+        Config.base_url = "http://localhost/__admin"
         Config.timeout = 1
         super(BaseClientTestCase, cls).setUpClass()
 
@@ -78,4 +77,4 @@ class BaseClientTestCase(TestCase):
             raise AssertionError("{} is not in dict: {}".format(key, obj))
 
 
-__all__ = ['BaseClientTestCase', 'nottest', 'attr', 'json', 'responses']
+__all__ = ["BaseClientTestCase", "nottest", "attr", "json", "responses"]

@@ -1,4 +1,3 @@
-
 class ApiException(Exception):
     """
     Generic Catch-all for API Exceptions.

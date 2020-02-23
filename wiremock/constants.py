@@ -1,13 +1,12 @@
-from __future__ import unicode_literals
 from calendar import timegm
 from copy import deepcopy
 import logging
 
 from wiremock import __version__
-from wiremock._compat import *
+from wiremock._compat import add_metaclass
 
 
-logger = logging.getLogger('wiremock')
+logger = logging.getLogger("wiremock")
 
 
 class Singleton(type):
@@ -20,9 +19,9 @@ class Singleton(type):
 
 
 DEFAULT_TIMEOUT = 30
-DEFAULT_BASE_URL = 'http://localhost/__admin'
-USER_AGENT = 'python_wiremock/%s'.format(__version__)
-DEFAULT_HEADERS = {'Accept': 'application/json', 'Content-Type': 'application/json', 'user-agent': USER_AGENT}
+DEFAULT_BASE_URL = "http://localhost/__admin"
+USER_AGENT = "python_wiremock/%s".format(__version__)
+DEFAULT_HEADERS = {"Accept": "application/json", "Content-Type": "application/json", "user-agent": USER_AGENT}
 DEFAULT_REQUESTS_VERIFY = True
 DEFAULT_REQUESTS_CERT = None
 
@@ -48,12 +47,12 @@ def make_headers(**kwargs):
 
 
 def datetime_to_ms(dt):
-    if isinstance(dt, integer_types):
+    if isinstance(dt, int):
         return dt
     else:
-        tmp = timegm(date.utctimetuple())
-        tmp += float(date.microsecond) / 1000000.0
-        return long_(tmp * 1000.0)
+        tmp = timegm(dt.utctimetuple())
+        tmp += float(dt.microsecond) / 1000000.0
+        return int(tmp * 1000.0)
 
 
-__all__ = ['Config', 'make_headers', 'logger', 'datetime_to_ms']
+__all__ = ["Config", "make_headers", "logger", "datetime_to_ms"]

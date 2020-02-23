@@ -1,18 +1,15 @@
-from __future__ import unicode_literals
-
 from wiremock.constants import make_headers
 from wiremock.base.base_resource import BaseResource
 
 
 class Scenarios(BaseResource):
-
     @classmethod
     def endpoint(cls):
-        return '/scenarios/reset'
+        return "/scenarios/reset"
 
     @classmethod
     def endpoint_single(cls):
-        return '/scenarios'
+        return "/scenarios"
 
     @classmethod
     def entity_class(cls):
@@ -24,4 +21,4 @@ class Scenarios(BaseResource):
         return cls.REST_CLIENT.handle_response(response)
 
 
-__all__ = ['Scenarios']
+__all__ = ["Scenarios"]

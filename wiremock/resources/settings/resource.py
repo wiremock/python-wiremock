@@ -1,18 +1,15 @@
-from __future__ import unicode_literals
-
 from wiremock.base.base_resource import BaseResource
 from wiremock.resources.settings import GlobalSetting
 
 
 class GlobalSettings(BaseResource):
-
     @classmethod
     def endpoint(cls):
-        return '/settings'
+        return "/settings"
 
     @classmethod
     def endpoint_single(cls):
-        return '/settings'
+        return "/settings"
 
     @classmethod
     def entity_class(cls):
@@ -23,4 +20,4 @@ class GlobalSettings(BaseResource):
         return cls._create(settings, parameters=parameters)
 
 
-__all__ = ['GlobalSettings']
+__all__ = ["GlobalSettings"]
