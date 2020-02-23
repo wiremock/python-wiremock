@@ -4,6 +4,8 @@ import atexit
 import socket
 
 import time
+
+import requests
 from pkg_resources import resource_filename
 from subprocess import Popen, PIPE, STDOUT
 
@@ -15,12 +17,13 @@ class WireMockServer(object):
     DEFAULT_JAVA = "java"  # Assume java in PATH
     DEFAULT_JAR = resource_filename("wiremock", "server/wiremock-standalone-2.6.0.jar")
 
-    def __init__(self, java_path=DEFAULT_JAVA, jar_path=DEFAULT_JAR):
+    def __init__(self, java_path=DEFAULT_JAVA, jar_path=DEFAULT_JAR, max_attempts=10):
         self.java_path = java_path
         self.jar_path = jar_path
         self.port = self._get_free_port()
         self.__subprocess = None
         self.__running = False
+        self.max_attempts = max_attempts
 
     def __enter__(self):
         self.start()
@@ -49,6 +52,19 @@ class WireMockServer(object):
             raise WireMockServerNotStartedError(
                 "\n".join(["returncode: {}".format(self.__subprocess.returncode), "stdout:", str(self.__subprocess.stdout.read())])
             )
+
+        # Call the /__admin endpoint as a check for running state
+        attempts = 0
+        success = False
+        while attempts < self.max_attempts:
+            attempts += 1
+            resp = requests.get("http://localhost:{}/__admin".format(self.port))
+            if resp.status_code == 200:
+                success = True
+                break
+
+        if not success:
+            raise WireMockServerNotStartedError("unable to get a successful GET http://localhost:{}/__admin response".format(self.port))
 
         atexit.register(self.stop, raise_on_error=False)
         self.__running = True
