@@ -60,7 +60,7 @@ class WireMockServerTestCase(unittest.TestCase):
     @responses.activate
     def test_start(self, Popen, atexit):
         # mock healthy endpoint
-        responses.add(responses.GET, "http://localhost/__admin", json=[], status=200)
+        responses.add(responses.GET, "http://localhost:{}/__admin".format(self.wm.port), json=[], status=200)
 
         def poll():
             Popen.return_value.returncode = None
