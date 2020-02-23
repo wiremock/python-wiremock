@@ -7,19 +7,18 @@ from setuptools import setup, find_packages
 
 version = open('wiremock/VERSION', 'r').readline().strip()
 develop_requires = [
-    'Sphinx~=1.5.3',
-    'coverage~=4.3.4',
-    'detox~=0.10.0',
-    'mock~=2.0.0',
+    'Sphinx~=2.4.3',
+    'coverage~=5.0.3',
+    'detox~=0.19',
+    'mock~=4.0.1',
     'nose~=1.3.7',
-    'python-coveralls~=2.9.0',
-    'responses~=0.5.1',
-    'requests>=2.20.0',
-    'six>=1.10.0',
-    'sphinx-rtd-theme~=0.2.4',
-    'tox~=2.6.0',
-    'watchdog~=0.8.3',
-    'wheel>=0.24.0']
+    'python-coveralls~=2.9.3',
+    'responses~=0.10.9',
+    'requests~=2.23.0',
+    'sphinx-rtd-theme~=0.4.3',
+    'tox~=3.14.0',
+    'watchdog~=0.10.2',
+    'wheel>=0.34.2']
 
 long_desc = """
 wiremock is an API Client to the Admin API for WireMock Standalone installation: https://wiremock.org/docs
@@ -52,13 +51,12 @@ setup(
     ],
     keywords='wiremock',
     install_requires=[
-        'setuptools>=35.0.1',
-        'six>=1.10.0',
+        'setuptools>=45.2.0',
         'requests>=2.20.0'
     ],
     extras_require={
         'develop': develop_requires,
-        'docs': ['Sphinx>=1.5.3', 'sphinx-rtd-theme>=0.2.4', 'watchdog>=0.8.3'],
+        'docs': ['Sphinx>=2.4.3', 'sphinx-rtd-theme>=0.4.3', 'watchdog>=0.10.2'],
     },
     test_suite='nose.collector',
     tests_require=develop_requires,

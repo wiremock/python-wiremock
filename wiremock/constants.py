@@ -3,7 +3,6 @@ from copy import deepcopy
 import logging
 
 from wiremock import __version__
-from wiremock._compat import *
 
 
 logger = logging.getLogger('wiremock')
@@ -47,12 +46,12 @@ def make_headers(**kwargs):
 
 
 def datetime_to_ms(dt):
-    if isinstance(dt, integer_types):
+    if isinstance(dt, int):
         return dt
     else:
         tmp = timegm(dt.utctimetuple())
         tmp += float(dt.microsecond) / 1000000.0
-        return long_(tmp * 1000.0)
+        return int(tmp * 1000.0)
 
 
 __all__ = ['Config', 'make_headers', 'logger', 'datetime_to_ms']

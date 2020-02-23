@@ -7,8 +7,6 @@ import time
 from pkg_resources import resource_filename
 from subprocess import Popen, PIPE, STDOUT
 
-from six import text_type
-
 from wiremock.server.exceptions import (
     WireMockServerAlreadyStartedError,
     WireMockServerNotStartedError
@@ -56,7 +54,7 @@ class WireMockServer(object):
             raise WireMockServerNotStartedError("\n".join([
                 "returncode: {}".format(self.__subprocess.returncode),
                 "stdout:",
-                text_type(self.__subprocess.stdout.read())
+                self.__subprocess.stdout.read()
             ]))
 
         atexit.register(self.stop, raise_on_error=False)

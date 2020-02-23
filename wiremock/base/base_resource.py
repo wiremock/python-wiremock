@@ -2,7 +2,6 @@ import json
 import requests
 from requests import exceptions as rexc
 
-from wiremock._compat import integer_types, float_types, array_types, string_types
 from wiremock.base.base_entity import BaseAbstractEntity
 from wiremock.constants import make_headers, Config, logger
 from wiremock.exceptions import *
@@ -194,9 +193,7 @@ class BaseResource(object):
 
     @staticmethod
     def get_entity_id(entity_id, entityClass):
-        if not (isinstance(entity_id, integer_types) or isinstance(entity_id, string_types)
-                or isinstance(entity_id, entityClass)):
-
+        if not (isinstance(entity_id, (int, str)) or isinstance(entity_id, entityClass)):
             raise InvalidInputException(422, entity_id)
         if isinstance(entity_id, entityClass):
             entity_id = entity_id.id
@@ -285,7 +282,7 @@ class BaseResource(object):
             return response  # pragma: no cover
         else:
             response_json = response.json()
-            if isinstance(response_json, array_types):
+            if isinstance(response_json, (tuple, list)):
                 results = []
                 for r in response_json:
                     if isinstance(r, dict):
@@ -296,7 +293,7 @@ class BaseResource(object):
 
     @classmethod
     def _retreive_one(cls, entity, parameters=None, ids={}):  # pragma: no cover
-        if isinstance(entity, integer_types) or isinstance(entity, float_types):
+        if isinstance(entity, (int, float)):
             ids['id'] = entity
             response = cls.REST_CLIENT.get(
                 cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters
@@ -321,7 +318,7 @@ class BaseResource(object):
 
     @classmethod
     def _delete(cls, entity, parameters=None, ids={}):  # pragma: no cover
-        if isinstance(entity, integer_types) or isinstance(entity, float_types):
+        if isinstance(entity, (int, float)):
             ids['id'] = entity
             response = cls.REST_CLIENT.delete(
                 cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters
