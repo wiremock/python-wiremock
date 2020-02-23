@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from wiremock._compat import add_metaclass
 from wiremock.base import BaseEntity, JsonProperty, BaseAbstractEntity, BaseEntityMetaType
 
@@ -118,7 +116,6 @@ class DelayDistribution(BaseAbstractEntity):
     upper = JsonProperty('upper')
     lower = JsonProperty('lower')
 
-
 @add_metaclass(BaseEntityMetaType)
 class MappingRequest(BaseAbstractEntity):
     method = JsonProperty('method')
@@ -130,7 +127,7 @@ class MappingRequest(BaseAbstractEntity):
     cookies = JsonProperty('cookies', klass=dict)
     headers = JsonProperty('headers', klass=dict)
     query_parameters = JsonProperty('queryParameters', klass=dict)
-    body_patterns = JsonProperty('bodyPatterns', klass=dict)
+    body_patterns = JsonProperty('bodyPatterns', klass=list, list_klass=dict)
 
 
 @add_metaclass(BaseEntityMetaType)

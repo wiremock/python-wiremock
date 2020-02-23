@@ -5,6 +5,11 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v2.0.0
+------
+  * Fixes issue #14
+  * Drops support for Python 2.x as this is EOL.
+
 v1.2.0
 ------
   * Add custom cert/verification options to be passed normally through the singleton config

@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from wiremock._compat import add_metaclass
 from wiremock.base import JsonProperty, BaseAbstractEntity, BaseEntityMetaType
 

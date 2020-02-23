@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from wiremock.resources.mappings import BasicAuthCredentials
 from wiremock.tests.base import BaseClientTestCase, attr
 from wiremock.resources.requests import RequestResponse, RequestCountResponse, RequestResponseDefinition, \

@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from wiremock.tests.base import BaseClientTestCase, attr
 from wiremock.resources.mappings import HttpMethods, CommonHeaders, BasicAuthCredentials
 from wiremock.resources.near_misses import NearMissMatchPatternRequest, NearMissMatchResponse, NearMissMatchRequest, \

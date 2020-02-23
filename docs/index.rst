@@ -13,7 +13,7 @@ Links
 * Official Repository: https://github.com/platinummonkey/python-wiremock.git
 * Package: TODO
 
-wiremock is known to support Python 2.7.
+wiremock is known to support Python 3.7.
 
 
 .. _download:

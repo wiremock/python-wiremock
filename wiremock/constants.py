@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 from calendar import timegm
 from copy import deepcopy
 import logging
@@ -51,8 +50,8 @@ def datetime_to_ms(dt):
     if isinstance(dt, integer_types):
         return dt
     else:
-        tmp = timegm(date.utctimetuple())
-        tmp += float(date.microsecond) / 1000000.0
+        tmp = timegm(dt.utctimetuple())
+        tmp += float(dt.microsecond) / 1000000.0
         return long_(tmp * 1000.0)
 
 

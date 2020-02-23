@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from wiremock.constants import make_headers
 from wiremock.base.base_resource import BaseResource
 

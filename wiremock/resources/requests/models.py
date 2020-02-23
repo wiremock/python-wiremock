@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from wiremock._compat import add_metaclass
 from wiremock.base import BaseEntity, JsonProperty, BaseAbstractEntity, BaseEntityMetaType
 from wiremock.resources.mappings.models import BasicAuthCredentials

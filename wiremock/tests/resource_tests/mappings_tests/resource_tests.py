@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import responses
 
 from wiremock.tests.base import BaseClientTestCase, attr

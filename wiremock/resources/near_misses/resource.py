@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from wiremock.base.base_resource import BaseResource
 from wiremock.resources.near_misses import NearMissMatchPatternRequest, NearMissMatchRequest, NearMissMatchResponse
 
