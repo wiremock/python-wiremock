@@ -6,7 +6,7 @@ from wiremock import __version__
 from wiremock._compat import add_metaclass
 
 
-logger = logging.getLogger('wiremock')
+logger = logging.getLogger("wiremock")
 
 
 class Singleton(type):
@@ -19,9 +19,9 @@ class Singleton(type):
 
 
 DEFAULT_TIMEOUT = 30
-DEFAULT_BASE_URL = 'http://localhost/__admin'
-USER_AGENT = 'python_wiremock/%s'.format(__version__)
-DEFAULT_HEADERS = {'Accept': 'application/json', 'Content-Type': 'application/json', 'user-agent': USER_AGENT}
+DEFAULT_BASE_URL = "http://localhost/__admin"
+USER_AGENT = "python_wiremock/%s".format(__version__)
+DEFAULT_HEADERS = {"Accept": "application/json", "Content-Type": "application/json", "user-agent": USER_AGENT}
 DEFAULT_REQUESTS_VERIFY = True
 DEFAULT_REQUESTS_CERT = None
 
@@ -55,4 +55,4 @@ def datetime_to_ms(dt):
         return int(tmp * 1000.0)
 
 
-__all__ = ['Config', 'make_headers', 'logger', 'datetime_to_ms']
+__all__ = ["Config", "make_headers", "logger", "datetime_to_ms"]

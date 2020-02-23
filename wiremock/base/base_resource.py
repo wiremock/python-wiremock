@@ -8,7 +8,6 @@ from wiremock.exceptions import *
 
 
 class RestClient(object):
-
     def __init__(self, timeout=None, base_url=None, requests_verify=None, requests_cert=None):
         self.timeout = timeout
         self.base_url = base_url
@@ -28,19 +27,16 @@ class RestClient(object):
         return self.requests_cert or Config.requests_cert
 
     def _log(self, action, url, **kwargs):
-        ctx = {'timeout': kwargs.get('timeout')}
-        logger.debug(
-            "%s [%s] - %s", action, url, kwargs.get('json', json.dumps(kwargs.get('data', None))),
-            extra=ctx
-        )
+        ctx = {"timeout": kwargs.get("timeout")}
+        logger.debug("%s [%s] - %s", action, url, kwargs.get("json", json.dumps(kwargs.get("data", None))), extra=ctx)
 
     def post(self, uri, **kwargs):
-        if 'timeout' not in kwargs:
-            kwargs['timeout'] = self._timeout()
-        if 'requests_verify' not in kwargs:
-            kwargs['verify'] = self._requests_verify()
-        if 'requests_cert' not in kwargs:
-            kwargs['cert'] = self._requests_cert()
+        if "timeout" not in kwargs:
+            kwargs["timeout"] = self._timeout()
+        if "requests_verify" not in kwargs:
+            kwargs["verify"] = self._requests_verify()
+        if "requests_cert" not in kwargs:
+            kwargs["cert"] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("POST", url, **kwargs)
@@ -51,12 +47,12 @@ class RestClient(object):
             raise ApiUnavailableException(-1, e)
 
     def get(self, uri, **kwargs):
-        if 'timeout' not in kwargs:
-            kwargs['timeout'] = self._timeout()
-        if 'requests_verify' not in kwargs:
-            kwargs['verify'] = self._requests_verify()
-        if 'requests_cert' not in kwargs:
-            kwargs['cert'] = self._requests_cert()
+        if "timeout" not in kwargs:
+            kwargs["timeout"] = self._timeout()
+        if "requests_verify" not in kwargs:
+            kwargs["verify"] = self._requests_verify()
+        if "requests_cert" not in kwargs:
+            kwargs["cert"] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("GET", url, **kwargs)
@@ -67,12 +63,12 @@ class RestClient(object):
             raise ApiUnavailableException(-1, e)
 
     def put(self, uri, **kwargs):
-        if 'timeout' not in kwargs:
-            kwargs['timeout'] = self._timeout()
-        if 'requests_verify' not in kwargs:
-            kwargs['verify'] = self._requests_verify()
-        if 'requests_cert' not in kwargs:
-            kwargs['cert'] = self._requests_cert()
+        if "timeout" not in kwargs:
+            kwargs["timeout"] = self._timeout()
+        if "requests_verify" not in kwargs:
+            kwargs["verify"] = self._requests_verify()
+        if "requests_cert" not in kwargs:
+            kwargs["cert"] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("PUT", url, **kwargs)
@@ -83,12 +79,12 @@ class RestClient(object):
             raise ApiUnavailableException(-1, e)
 
     def patch(self, uri, **kwargs):  # pragma: no cover
-        if 'timeout' not in kwargs:
-            kwargs['timeout'] = self._timeout()
-        if 'requests_verify' not in kwargs:
-            kwargs['verify'] = self._requests_verify()
-        if 'requests_cert' not in kwargs:
-            kwargs['cert'] = self._requests_cert()
+        if "timeout" not in kwargs:
+            kwargs["timeout"] = self._timeout()
+        if "requests_verify" not in kwargs:
+            kwargs["verify"] = self._requests_verify()
+        if "requests_cert" not in kwargs:
+            kwargs["cert"] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("PATCH", url, **kwargs)
@@ -99,12 +95,12 @@ class RestClient(object):
             raise ApiUnavailableException(-1, e)
 
     def delete(self, uri, **kwargs):
-        if 'timeout' not in kwargs:
-            kwargs['timeout'] = self._timeout()
-        if 'requests_verify' not in kwargs:
-            kwargs['verify'] = self._requests_verify()
-        if 'requests_cert' not in kwargs:
-            kwargs['cert'] = self._requests_cert()
+        if "timeout" not in kwargs:
+            kwargs["timeout"] = self._timeout()
+        if "requests_verify" not in kwargs:
+            kwargs["verify"] = self._requests_verify()
+        if "requests_cert" not in kwargs:
+            kwargs["cert"] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("DELETE", url, **kwargs)
@@ -115,12 +111,12 @@ class RestClient(object):
             raise ApiUnavailableException(-1, e)
 
     def options(self, uri, **kwargs):  # pragma: no cover
-        if 'timeout' not in kwargs:
-            kwargs['timeout'] = self._timeout()
-        if 'requests_verify' not in kwargs:
-            kwargs['verify'] = self._requests_verify()
-        if 'requests_cert' not in kwargs:
-            kwargs['cert'] = self._requests_cert()
+        if "timeout" not in kwargs:
+            kwargs["timeout"] = self._timeout()
+        if "requests_verify" not in kwargs:
+            kwargs["verify"] = self._requests_verify()
+        if "requests_cert" not in kwargs:
+            kwargs["cert"] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("OPTIONS", url, **kwargs)
@@ -131,12 +127,12 @@ class RestClient(object):
             raise ApiUnavailableException(-1, e)
 
     def head(self, uri, **kwargs):  # pragma: no cover
-        if 'timeout' not in kwargs:
-            kwargs['timeout'] = self._timeout()
-        if 'requests_verify' not in kwargs:
-            kwargs['verify'] = self._requests_verify()
-        if 'requests_cert' not in kwargs:
-            kwargs['cert'] = self._requests_cert()
+        if "timeout" not in kwargs:
+            kwargs["timeout"] = self._timeout()
+        if "requests_verify" not in kwargs:
+            kwargs["verify"] = self._requests_verify()
+        if "requests_cert" not in kwargs:
+            kwargs["cert"] = self._requests_cert()
         try:
             url = self._base_url() + uri
             self._log("HEAD", url, **kwargs)
@@ -175,11 +171,11 @@ class BaseResource(object):
 
     @classmethod
     def endpoint(cls):
-        return '/'  # pragma: no cover
+        return "/"  # pragma: no cover
 
     @classmethod
     def endpoint_single(cls):
-        return '/{id}'  # pragma: no cover
+        return "/{id}"  # pragma: no cover
 
     @classmethod
     def entity_class(cls):
@@ -209,13 +205,11 @@ class BaseResource(object):
     def _create(cls, entity, parameters=None, ids={}):  # pragma: no cover
         if isinstance(entity, BaseAbstractEntity):
             response = cls.REST_CLIENT.post(
-                cls.get_base_uri(cls.endpoint(), **ids), json=entity.get_json_data(), headers=make_headers(),
-                params=parameters
+                cls.get_base_uri(cls.endpoint(), **ids), json=entity.get_json_data(), headers=make_headers(), params=parameters
             )
         else:
             response = cls.REST_CLIENT.post(
-                cls.get_base_uri(cls.endpoint(), **ids), data=json.dumps(entity), headers=make_headers(),
-                params=parameters
+                cls.get_base_uri(cls.endpoint(), **ids), data=json.dumps(entity), headers=make_headers(), params=parameters
             )
 
         response = cls.REST_CLIENT.handle_response(response)
@@ -227,18 +221,16 @@ class BaseResource(object):
 
     @classmethod
     def _update(cls, entity, parameters=None, ids={}):  # pragma: no cover
-        entity_id = getattr(entity, 'id', None)
+        entity_id = getattr(entity, "id", None)
         if entity_id is not None:
-            ids['id'] = entity_id
+            ids["id"] = entity_id
         if isinstance(entity, BaseAbstractEntity):
             response = cls.REST_CLIENT.put(
-                cls.get_base_uri(cls.endpoint_single(), **ids), json=entity.get_json_data(), headers=make_headers(),
-                params=parameters
+                cls.get_base_uri(cls.endpoint_single(), **ids), json=entity.get_json_data(), headers=make_headers(), params=parameters
             )
         else:
             response = cls.REST_CLIENT.put(
-                cls.get_base_uri(cls.endpoint_single(), **ids), data=json.dumps(entity), headers=make_headers(),
-                params=parameters
+                cls.get_base_uri(cls.endpoint_single(), **ids), data=json.dumps(entity), headers=make_headers(), params=parameters
             )
 
         response = cls.REST_CLIENT.handle_response(response)
@@ -250,18 +242,16 @@ class BaseResource(object):
 
     @classmethod
     def _partial_update(cls, entity, parameters=None, ids={}):  # pragma: no cover
-        entity_id = getattr(entity, 'id', None)
+        entity_id = getattr(entity, "id", None)
         if entity_id is not None:
-            ids['id'] = entity_id
+            ids["id"] = entity_id
         if isinstance(entity, BaseAbstractEntity):
             response = cls.REST_CLIENT.patch(
-                cls.get_base_uri(cls.endpoint_single(), **ids), json=entity.get_json_data(), headers=make_headers(),
-                params=parameters
+                cls.get_base_uri(cls.endpoint_single(), **ids), json=entity.get_json_data(), headers=make_headers(), params=parameters
             )
         else:
             response = cls.REST_CLIENT.patch(
-                cls.get_base_uri(cls.endpoint_single(), **ids), data=json.dumps(entity), headers=make_headers(),
-                params=parameters
+                cls.get_base_uri(cls.endpoint_single(), **ids), data=json.dumps(entity), headers=make_headers(), params=parameters
             )
 
         response = cls.REST_CLIENT.handle_response(response)
@@ -273,9 +263,7 @@ class BaseResource(object):
 
     @classmethod
     def _retreive_all(cls, parameters=None, ids={}):  # pragma: no cover
-        response = cls.REST_CLIENT.get(
-            cls.get_base_uri(cls.endpoint(), **ids), headers=make_headers(), params=parameters
-        )
+        response = cls.REST_CLIENT.get(cls.get_base_uri(cls.endpoint(), **ids), headers=make_headers(), params=parameters)
         response = cls.REST_CLIENT.handle_response(response)
 
         if cls.entity_class() is None or not issubclass(cls.entity_class(), BaseAbstractEntity):
@@ -294,20 +282,14 @@ class BaseResource(object):
     @classmethod
     def _retreive_one(cls, entity, parameters=None, ids={}):  # pragma: no cover
         if isinstance(entity, (int, float)):
-            ids['id'] = entity
-            response = cls.REST_CLIENT.get(
-                cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters
-            )
+            ids["id"] = entity
+            response = cls.REST_CLIENT.get(cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters)
         elif entity is not None and issubclass(entity, BaseAbstractEntity):
-            entity_id = getattr(entity, 'id', None)
-            ids['id'] = entity_id
-            response = cls.REST_CLIENT.get(
-                cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters
-            )
+            entity_id = getattr(entity, "id", None)
+            ids["id"] = entity_id
+            response = cls.REST_CLIENT.get(cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters)
         else:
-            response = cls.REST_CLIENT.get(
-                cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters
-            )
+            response = cls.REST_CLIENT.get(cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters)
 
         response = cls.REST_CLIENT.handle_response(response)
 
@@ -319,20 +301,14 @@ class BaseResource(object):
     @classmethod
     def _delete(cls, entity, parameters=None, ids={}):  # pragma: no cover
         if isinstance(entity, (int, float)):
-            ids['id'] = entity
-            response = cls.REST_CLIENT.delete(
-                cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters
-            )
+            ids["id"] = entity
+            response = cls.REST_CLIENT.delete(cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters)
         elif isinstance(entity, BaseAbstractEntity):
-            entity_id = getattr(entity, 'id', None)
-            ids['id'] = entity_id
-            response = cls.REST_CLIENT.delete(
-                cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters
-            )
+            entity_id = getattr(entity, "id", None)
+            ids["id"] = entity_id
+            response = cls.REST_CLIENT.delete(cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters)
         else:
-            response = cls.REST_CLIENT.delete(
-                cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters
-            )
+            response = cls.REST_CLIENT.delete(cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters)
 
         response = cls.REST_CLIENT.handle_response(response)
         if response is None:
@@ -347,4 +323,4 @@ class BaseResource(object):
                 return response  # pragma: no cover
 
 
-__all__ = ['RestClient', 'BaseResource']
+__all__ = ["RestClient", "BaseResource"]

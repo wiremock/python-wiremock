@@ -30,9 +30,7 @@ class JsonProperty(object):
 
     value_container = JsonPropertyValueContainer
 
-    def __init__(self, json_name, property_name=None,
-                 klass=None, list_klass=None, dict_key_klass=None, dict_value_klass=None,
-                 include_if_null=False):
+    def __init__(self, json_name, property_name=None, klass=None, list_klass=None, dict_key_klass=None, dict_value_klass=None, include_if_null=False):
         self._json_name = json_name
         self._property_name = property_name
         self._klass = klass
@@ -267,7 +265,7 @@ class BaseEntityMetaType(type):
         prop_dict = OrderedDict()
 
         for base in bases:
-            for k, v in getattr(base, '_properties', {}).items():
+            for k, v in getattr(base, "_properties", {}).items():
                 prop_dict.setdefault(k, v)
 
         def _transform_property(prop_name, prop_obj):
@@ -290,7 +288,7 @@ class BaseEntityMetaType(type):
                 raise EntityModelException("%s defines the json property %s more than once" % (name, v.json_name))
             json_names.add(v.json_name)
 
-        body['_properties'] = prop_dict
+        body["_properties"] = prop_dict
 
         # Create the class
         klass = super(BaseEntityMetaType, mcs).__new__(mcs, name, bases, body)
@@ -324,7 +322,7 @@ class BaseEntity(BaseAbstractEntity):
     _id = None
 
     def __init__(self, **values):
-        self._id = values.pop('id', None)
+        self._id = values.pop("id", None)
         super(BaseEntity, self).__init__(**values)
 
     @property
@@ -375,9 +373,8 @@ class BaseEntity(BaseAbstractEntity):
             if item is not None or prop.include_if_null:
                 result[prop.json_name] = item
         if self.id is not None:
-            result['id'] = self.id
+            result["id"] = self.id
         return result
 
 
-__all__ = ['BaseEntity', 'BaseAbstractEntity', 'BaseEntityMetaType', 'collection_to_json', 'EntityModelException',
-           'JsonProperty']
+__all__ = ["BaseEntity", "BaseAbstractEntity", "BaseEntityMetaType", "collection_to_json", "EntityModelException", "JsonProperty"]

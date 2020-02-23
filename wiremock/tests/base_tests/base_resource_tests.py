@@ -11,12 +11,11 @@ from wiremock.tests.base import BaseClientTestCase, attr
 
 
 class RestClientTestCase(BaseClientTestCase):
-
     def setUp(self):
         super(RestClientTestCase, self).setUp()
         self.client = RestClient()
 
-    @attr('unit')
+    @attr("unit")
     def test_handle_response(self):
         for status_code in [200, 201, 204]:
             resp = self._create_dummy_response(status_code)
@@ -35,5 +34,5 @@ class RestClientTestCase(BaseClientTestCase):
         return resp
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

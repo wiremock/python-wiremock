@@ -7,16 +7,13 @@ import time
 from pkg_resources import resource_filename
 from subprocess import Popen, PIPE, STDOUT
 
-from wiremock.server.exceptions import (
-    WireMockServerAlreadyStartedError,
-    WireMockServerNotStartedError
-)
+from wiremock.server.exceptions import WireMockServerAlreadyStartedError, WireMockServerNotStartedError
 
 
 class WireMockServer(object):
 
-    DEFAULT_JAVA = 'java'  # Assume java in PATH
-    DEFAULT_JAR = resource_filename('wiremock', 'server/wiremock-standalone-2.6.0.jar')
+    DEFAULT_JAVA = "java"  # Assume java in PATH
+    DEFAULT_JAR = resource_filename("wiremock", "server/wiremock-standalone-2.6.0.jar")
 
     def __init__(self, java_path=DEFAULT_JAVA, jar_path=DEFAULT_JAR):
         self.java_path = java_path
@@ -38,11 +35,9 @@ class WireMockServer(object):
 
     def start(self):
         if self.is_running:
-            raise WireMockServerAlreadyStartedError(
-                'WireMockServer already started on port {}'.format(self.port)
-            )
+            raise WireMockServerAlreadyStartedError("WireMockServer already started on port {}".format(self.port))
 
-        cmd = [self.java_path, '-jar', self.jar_path, '--port', str(self.port)]
+        cmd = [self.java_path, "-jar", self.jar_path, "--port", str(self.port)]
         try:
             self.__subprocess = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
         except OSError as e:
@@ -51,11 +46,9 @@ class WireMockServer(object):
         time.sleep(0.1)
         if self.__subprocess.poll() is not None:
             # Process complete - server not started
-            raise WireMockServerNotStartedError("\n".join([
-                "returncode: {}".format(self.__subprocess.returncode),
-                "stdout:",
-                self.__subprocess.stdout.read()
-            ]))
+            raise WireMockServerNotStartedError(
+                "\n".join(["returncode: {}".format(self.__subprocess.returncode), "stdout:", self.__subprocess.stdout.read()])
+            )
 
         atexit.register(self.stop, raise_on_error=False)
         self.__running = True
@@ -69,7 +62,7 @@ class WireMockServer(object):
 
     def _get_free_port(self):
         s = socket.socket(socket.AF_INET, type=socket.SOCK_STREAM)
-        s.bind(('localhost', 0))
+        s.bind(("localhost", 0))
         address, port = s.getsockname()
         s.close()
         return port
