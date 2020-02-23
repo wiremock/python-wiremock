@@ -4,6 +4,7 @@
 import unittest
 from subprocess import STDOUT, PIPE
 
+import responses
 from mock import patch, DEFAULT
 from pkg_resources import resource_filename
 
@@ -56,7 +57,11 @@ class WireMockServerTestCase(unittest.TestCase):
     @attr("unit", "server")
     @patch("wiremock.server.server.atexit")
     @patch("wiremock.server.server.Popen")
+    @responses.activate
     def test_start(self, Popen, atexit):
+        # mock healthy endpoint
+        responses.add(responses.GET, "http://localhost:{}/__admin".format(self.wm.port), json=[], status=200)
+
         def poll():
             Popen.return_value.returncode = None
             return None
