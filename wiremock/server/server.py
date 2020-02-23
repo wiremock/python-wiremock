@@ -17,10 +17,10 @@ class WireMockServer(object):
     DEFAULT_JAVA = "java"  # Assume java in PATH
     DEFAULT_JAR = resource_filename("wiremock", "server/wiremock-standalone-2.6.0.jar")
 
-    def __init__(self, java_path=DEFAULT_JAVA, jar_path=DEFAULT_JAR, max_attempts=10):
+    def __init__(self, java_path=DEFAULT_JAVA, jar_path=DEFAULT_JAR, port=None, max_attempts=10):
         self.java_path = java_path
         self.jar_path = jar_path
-        self.port = self._get_free_port()
+        self.port = port or self._get_free_port()
         self.__subprocess = None
         self.__running = False
         self.max_attempts = max_attempts
