@@ -8,6 +8,7 @@ from setuptools import setup, find_packages
 version = open('wiremock/VERSION', 'r').readline().strip()
 develop_requires = [
     'Sphinx~=2.4.3',
+    'black~=19.10b0',
     'coverage~=5.0.3',
     'detox~=0.19',
     'mock~=4.0.1',

@@ -3,6 +3,7 @@ from copy import deepcopy
 import logging
 
 from wiremock import __version__
+from wiremock._compat import add_metaclass
 
 
 logger = logging.getLogger('wiremock')
