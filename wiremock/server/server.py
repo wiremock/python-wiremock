@@ -47,7 +47,7 @@ class WireMockServer(object):
         if self.__subprocess.poll() is not None:
             # Process complete - server not started
             raise WireMockServerNotStartedError(
-                "\n".join(["returncode: {}".format(self.__subprocess.returncode), "stdout:", self.__subprocess.stdout.read()])
+                "\n".join(["returncode: {}".format(self.__subprocess.returncode), "stdout:", str(self.__subprocess.stdout.read())])
             )
 
         atexit.register(self.stop, raise_on_error=False)
