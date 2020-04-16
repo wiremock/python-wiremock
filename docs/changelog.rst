@@ -5,6 +5,10 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v2.1.0
+------
+  * Enables Templating thanks to @mauricioalarcon
+
 v2.0.0
 ------
   * Fixes issue #14
