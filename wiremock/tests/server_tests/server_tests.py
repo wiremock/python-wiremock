@@ -70,7 +70,9 @@ class WireMockServerTestCase(unittest.TestCase):
 
         self.wm.start()
 
-        Popen.assert_called_once_with([self.java_path, "-jar", self.jar_path, "--port", str(54321)], stdin=PIPE, stdout=PIPE, stderr=STDOUT)
+        Popen.assert_called_once_with(
+            [self.java_path, "-jar", self.jar_path, "--port", str(54321), "--local-response-templating"], stdin=PIPE, stdout=PIPE, stderr=STDOUT
+        )
 
         self.assertTrue(self.wm.is_running)
         atexit.register.assert_called_once_with(self.wm.stop, raise_on_error=False)
