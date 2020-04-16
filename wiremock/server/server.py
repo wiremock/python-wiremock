@@ -40,7 +40,7 @@ class WireMockServer(object):
         if self.is_running:
             raise WireMockServerAlreadyStartedError("WireMockServer already started on port {}".format(self.port))
 
-        cmd = [self.java_path, "-jar", self.jar_path, "--port", str(self.port)]
+        cmd = [self.java_path, "-jar", self.jar_path, "--port", str(self.port), "--local-response-templating"]
         try:
             self.__subprocess = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
         except OSError as e:
