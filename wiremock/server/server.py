@@ -57,12 +57,15 @@ class WireMockServer(object):
         attempts = 0
         success = False
         while attempts < self.max_attempts:
-            attempts += 1
-            resp = requests.get("http://localhost:{}/__admin".format(self.port))
-            if resp.status_code == 200:
-                success = True
-                break
-            time.sleep(0.25)
+            try:
+                attempts += 1
+                resp = requests.get("http://localhost:{}/__admin".format(self.port))
+                if resp.status_code == 200:
+                    success = True
+                    break
+                time.sleep(0.25)
+            except requests.exceptions.ConnectionError:
+                pass
 
         if not success:
             raise WireMockServerNotStartedError("unable to get a successful GET http://localhost:{}/__admin response".format(self.port))
