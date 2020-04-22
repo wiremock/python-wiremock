@@ -5,6 +5,10 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v2.1.1
+------
+  * Fixes startup error on connection error thanks to @vasuarez
+
 v2.1.0
 ------
   * Enables Templating thanks to @mauricioalarcon
