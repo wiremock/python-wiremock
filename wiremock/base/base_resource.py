@@ -147,17 +147,17 @@ class RestClient(object):
         sc = response.status_code
         if sc in [200, 201, 204]:
             return response
-        elif sc is 401:  # pragma: no cover
+        elif sc == 401:  # pragma: no cover
             raise RequiresLoginException(sc, response.text)
-        elif sc is 403:  # pragma: no cover
+        elif sc == 403:  # pragma: no cover
             raise ForbiddenException(sc, response.text)
-        elif sc is 404:  # pragma: no cover
+        elif sc == 404:  # pragma: no cover
             raise NotFoundException(sc, response.text)
-        elif sc is 422:  # pragma: no cover
+        elif sc == 422:  # pragma: no cover
             raise InvalidInputException(sc, response.text)
         elif 200 < sc < 400:  # pragma: no cover
             raise UnexpectedResponseException(sc, response.text)
-        elif 400 <= sc < 500 and sc is not 404:  # pragma: no cover
+        elif 400 <= sc < 500 and sc != 404:  # pragma: no cover
             raise ClientException(sc, response.text)
         elif 500 <= sc < 600:  # pragma: no cover
             raise ServerException(sc, response.text)
