@@ -5,6 +5,10 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v2.1.2
+------
+  * Python3.8 lint fixes thanks to @tirkarthi
+
 v2.1.1
 ------
   * Fixes startup error on connection error thanks to @vasuarez
