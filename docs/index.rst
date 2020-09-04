@@ -9,7 +9,7 @@ wiremock is a HTTP client to the WireMock standalone admin API.
 Links
 -----
 
-* Documentation: https://github.com/platinummonkey/python-wiremock/overview
+* Documentation: https://wiremock.readthedocs.io/en/latest/
 * Official Repository: https://github.com/platinummonkey/python-wiremock.git
 * Package: TODO
 
