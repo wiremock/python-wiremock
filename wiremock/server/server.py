@@ -63,9 +63,10 @@ class WireMockServer(object):
                 if resp.status_code == 200:
                     success = True
                     break
-                time.sleep(0.25)
             except requests.exceptions.ConnectionError:
                 pass
+
+            time.sleep(0.25)
 
         if not success:
             raise WireMockServerNotStartedError("unable to get a successful GET http://localhost:{}/__admin response".format(self.port))
