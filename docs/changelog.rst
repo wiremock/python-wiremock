@@ -5,6 +5,10 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v2.1.3
+------
+  * Fix on startup thanks to @Enforcer
+
 v2.1.2
 ------
   * Python3.8 lint fixes thanks to @tirkarthi
