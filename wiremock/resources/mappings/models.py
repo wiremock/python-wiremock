@@ -129,6 +129,7 @@ class MappingRequest(BaseAbstractEntity):
     headers = JsonProperty("headers", klass=dict)
     query_parameters = JsonProperty("queryParameters", klass=dict)
     body_patterns = JsonProperty("bodyPatterns", klass=list, list_klass=dict)
+    metadata = JsonProperty("metadata", klass=dict)
 
 
 @add_metaclass(BaseEntityMetaType)
@@ -148,6 +149,7 @@ class MappingResponse(BaseAbstractEntity):
     status_message = JsonProperty("statusMessage")
     transformer_parameters = JsonProperty("transformerParameters", klass=dict)
     transformers = JsonProperty("transformers", klass=list)
+    metadata = JsonProperty("metadata", klass=dict)
 
 
 class Mapping(BaseEntity):
@@ -159,6 +161,7 @@ class Mapping(BaseEntity):
     new_scenario_state = JsonProperty("newScenarioState")
     required_scenario_state = JsonProperty("requiredScenarioState")
     scenario_name = JsonProperty("scenarioName")
+    metadata = JsonProperty('metadata', klass=dict)
 
 
 @add_metaclass(BaseEntityMetaType)
