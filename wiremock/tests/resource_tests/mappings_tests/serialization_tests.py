@@ -74,6 +74,7 @@ class MappingsSerializationTests(BaseClientTestCase):
             headers={"Accept": "stuff"},
             query_parameters={"param": "1"},
             body_patterns={"test": "test2"},
+            metadata={'key': 'value'}
         )
         serialized = e.get_json_data()
         self.assertDictContainsKeyWithValue(serialized, "method", "GET")
@@ -86,6 +87,7 @@ class MappingsSerializationTests(BaseClientTestCase):
         self.assertDictContainsKeyWithValue(serialized, "headers", {"Accept": "stuff"})
         self.assertDictContainsKeyWithValue(serialized, "queryParameters", {"param": "1"})
         self.assertDictContainsKeyWithValue(serialized, "bodyPatterns", {"test": "test2"})
+        self.assertDictContainsKeyWithValue(serialized, "metadata", {"key": "value"})
 
     @attr("unit", "serialization", "mappings")
     def test_mapping_request_deserialization(self):
@@ -100,6 +102,7 @@ class MappingsSerializationTests(BaseClientTestCase):
             "headers": {"Accept": "stuff"},
             "queryParameters": {"param": "1"},
             "bodyPatterns": {"test": "test2"},
+            'metadata': {'key': [1, 2, 3]},
         }
         e = MappingRequest.from_dict(serialized)
         self.assertIsInstance(e, MappingRequest)
@@ -115,6 +118,7 @@ class MappingsSerializationTests(BaseClientTestCase):
         self.assertEquals({"Accept": "stuff"}, e.headers)
         self.assertEquals({"param": "1"}, e.query_parameters)
         self.assertEquals({"test": "test2"}, e.body_patterns)
+        self.assertEquals({"key": [1, 2, 3]}, e.metadata)
 
     @attr("unit", "serialization", "mappings")
     def test_mapping_response_serialization(self):
@@ -241,14 +245,14 @@ class MappingsSerializationTests(BaseClientTestCase):
 
     @attr("unit", "serialization", "mappings")
     def test_all_mappings_serialization(self):
-        e = AllMappings(mappings=[Mapping(priority=1),], meta=MappingMeta(total=1))
+        e = AllMappings(mappings=[Mapping(priority=1), ], meta=MappingMeta(total=1))
         serialized = e.get_json_data()
-        self.assertDictContainsKeyWithValue(serialized, "mappings", [{"priority": 1},])
+        self.assertDictContainsKeyWithValue(serialized, "mappings", [{"priority": 1}, ])
         self.assertDictContainsKeyWithValue(serialized, "meta", {"total": 1})
 
     @attr("unit", "serialization", "mappings")
     def test_all_mappings_deserialization(self):
-        serialized = {"mappings": [{"priority": 1},], "meta": {"total": 1}}
+        serialized = {"mappings": [{"priority": 1}, ], "meta": {"total": 1}}
         e = AllMappings.from_dict(serialized)
         self.assertIsInstance(e, AllMappings)
         self.assertIsInstance(e.mappings, list)
