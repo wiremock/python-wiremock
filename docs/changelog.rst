@@ -5,6 +5,10 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v2.2.0
+------
+  * Adds missing Metadata serde options thanks to @andreroggeri
+
 v2.1.3
 ------
   * Fix on startup thanks to @Enforcer
