@@ -13,6 +13,10 @@ class Mappings(BaseResource):
         return "/mappings/{id}"
 
     @classmethod
+    def endpoint_delete_by_metadata(cls):
+        return "/mappings/remove-by-metadata"
+
+    @classmethod
     def entity_class(cls):
         return MappingResponse
 
@@ -70,6 +74,12 @@ class Mappings(BaseResource):
         mapping_id = cls.get_entity_id(mapping_id, Mapping)
         ids = {"id": mapping_id}
         response = cls.REST_CLIENT.delete(cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters)
+        return cls.REST_CLIENT.handle_response(response)
+
+    @classmethod
+    def delete_mapping_by_metadata(cls, metadata, parameters={}):
+        response = cls.REST_CLIENT.post(cls.get_base_uri(cls.endpoint_delete_by_metadata()), headers=make_headers(), params=parameters, json=metadata)
+
         return cls.REST_CLIENT.handle_response(response)
 
 
