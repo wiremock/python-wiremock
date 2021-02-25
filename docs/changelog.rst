@@ -5,6 +5,10 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v2.3.0
+------
+  * Adds missing Metadata delete calls thanks to @andreroggeri
+
 v2.2.0
 ------
   * Adds missing Metadata serde options thanks to @andreroggeri
