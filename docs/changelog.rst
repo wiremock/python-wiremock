@@ -5,6 +5,10 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v2.3.1
+------
+  * Adds support for --root_dir option on startup thanks to @dtwwolinski
+
 v2.3.0
 ------
   * Adds missing Metadata delete calls thanks to @andreroggeri
