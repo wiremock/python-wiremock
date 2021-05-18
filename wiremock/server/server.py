@@ -17,13 +17,14 @@ class WireMockServer(object):
     DEFAULT_JAVA = "java"  # Assume java in PATH
     DEFAULT_JAR = resource_filename("wiremock", "server/wiremock-standalone-2.6.0.jar")
 
-    def __init__(self, java_path=DEFAULT_JAVA, jar_path=DEFAULT_JAR, port=None, max_attempts=10):
+    def __init__(self, java_path=DEFAULT_JAVA, jar_path=DEFAULT_JAR, port=None, max_attempts=10, root_dir=None):
         self.java_path = java_path
         self.jar_path = jar_path
         self.port = port or self._get_free_port()
         self.__subprocess = None
         self.__running = False
         self.max_attempts = max_attempts
+        self.root_dir = root_dir
 
     def __enter__(self):
         self.start()
@@ -41,6 +42,9 @@ class WireMockServer(object):
             raise WireMockServerAlreadyStartedError("WireMockServer already started on port {}".format(self.port))
 
         cmd = [self.java_path, "-jar", self.jar_path, "--port", str(self.port), "--local-response-templating"]
+        if self.root_dir is not None:
+            cmd.append("--root-dir=")
+            cmd.append(str(self.root_dir))
         try:
             self.__subprocess = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
         except OSError as e:
