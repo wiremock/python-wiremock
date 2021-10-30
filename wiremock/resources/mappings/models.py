@@ -1,8 +1,10 @@
+import enum
 from wiremock._compat import add_metaclass
 from wiremock.base import BaseEntity, JsonProperty, BaseAbstractEntity, BaseEntityMetaType
 
 
-class HttpMethods(object):
+@enum.unique
+class HttpMethods(enum.Enum):
     ANY = "ANY"
     GET = "GET"
     POST = "POST"
@@ -13,7 +15,8 @@ class HttpMethods(object):
     HEAD = "HEAD"
 
 
-class CommonHeaders(object):
+@enun.unique
+class CommonHeaders(Enum):
     ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin"
     ACCEPT = "Accept"
     ACCEPT_CHARSET = "Accept-Charset"
@@ -70,7 +73,8 @@ class CommonHeaders(object):
     X_REQUESTED_WITH = "X-Requested-With"
 
 
-class WireMockMatchers(object):
+@enum.unique
+class WireMockMatchers(enum.Enum):
     ABSENT = "absent"
     ANYTHING = "anything"
     CASE_INSENSITIVE = "caseInsensitive"  # Should be true/false
@@ -87,10 +91,11 @@ class WireMockMatchers(object):
     X_PATH_NAMESPACES = "xPathNamespaces"
 
 
+
 @add_metaclass(BaseEntityMetaType)
 class BasicAuthCredentials(BaseAbstractEntity):
-    username = JsonProperty("username")
-    password = JsonProperty("password")
+    username = JsonProperty("username", klass=str)
+    password = JsonProperty("password", klass=str)
 
 
 class DelayDistributionMethods(object):

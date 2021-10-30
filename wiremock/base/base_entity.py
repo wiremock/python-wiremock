@@ -283,7 +283,7 @@ class BaseEntityMetaType(type):
 
         json_names = set()
         for v in prop_dict.values():
-            # type: v -> EntityProperty
+            # HACK type: v -> EntityProperty
             if v.json_name in json_names:
                 raise EntityModelException("%s defines the json property %s more than once" % (name, v.json_name))
             json_names.add(v.json_name)

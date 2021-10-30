@@ -15,16 +15,16 @@ class RestClient(object):
         self.requests_cert = requests_cert
 
     def _base_url(self):
-        return self.base_url or Config.base_url
+        return self.base_url or Config.instance().base_url
 
     def _timeout(self):
-        return self.timeout or Config.timeout
+        return self.timeout or Config.instance().timeout
 
     def _requests_verify(self):
-        return self.requests_verify or Config.requests_verify
+        return self.requests_verify or Config.instance().requests_verify
 
     def _requests_cert(self):
-        return self.requests_cert or Config.requests_cert
+        return self.requests_cert or Config.instance().requests_cert
 
     def _log(self, action, url, **kwargs):
         ctx = {"timeout": kwargs.get("timeout")}

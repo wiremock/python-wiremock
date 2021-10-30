@@ -18,8 +18,8 @@ class BaseClientTestCase(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        Config.base_url = "http://localhost/__admin"
-        Config.timeout = 1
+        Config.instance().base_url = "http://localhost/__admin"
+        Config.instance().timeout = 1
         super(BaseClientTestCase, cls).setUpClass()
 
     def assertHasAttr(self, obj, attr):
