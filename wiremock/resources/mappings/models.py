@@ -15,8 +15,8 @@ class HttpMethods(enum.Enum):
     HEAD = "HEAD"
 
 
-@enun.unique
-class CommonHeaders(Enum):
+@enum.unique
+class CommonHeaders(enum.Enum):
     ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin"
     ACCEPT = "Accept"
     ACCEPT_CHARSET = "Accept-Charset"

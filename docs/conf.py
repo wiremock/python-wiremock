@@ -59,7 +59,8 @@ copyright = u'2017, Cody Lee'
 # built documents.
 #
 # The short X.Y version.
-version = open('../wiremock/VERSION', 'r').readline().strip()
+import wiremock
+version = wiremock.__version__
 # The full version, including alpha/beta/rc tags.
 release = version
 
