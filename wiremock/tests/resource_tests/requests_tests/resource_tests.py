@@ -68,7 +68,11 @@ class RequestsResourceTests(BaseClientTestCase):
     @attr("unit", "requests", "resource")
     @responses.activate
     def test_get_matching_requests(self):
-        e = RequestResponseFindResponse(requests=[RequestResponseRequest(method="GET", url="test"),],)
+        e = RequestResponseFindResponse(
+            requests=[
+                RequestResponseRequest(method="GET", url="test"),
+            ],
+        )
         resp = e.get_json_data()
         responses.add(responses.POST, "http://localhost/__admin/requests/find", json=resp, status=200)
 
@@ -86,7 +90,11 @@ class RequestsResourceTests(BaseClientTestCase):
     @attr("unit", "requests", "resource")
     @responses.activate
     def test_get_unmatched_requests(self):
-        e = RequestResponseFindResponse(requests=[RequestResponseRequest(method="GET", url="test"),],)
+        e = RequestResponseFindResponse(
+            requests=[
+                RequestResponseRequest(method="GET", url="test"),
+            ],
+        )
         resp = e.get_json_data()
         responses.add(responses.GET, "http://localhost/__admin/requests/unmatched", json=resp, status=200)
 
@@ -102,7 +110,11 @@ class RequestsResourceTests(BaseClientTestCase):
     @attr("unit", "requests", "resource")
     @responses.activate
     def test_get_unmatched_requests_near_misses(self):
-        e = NearMissMatchResponse(near_misses=[NearMissMatch(request=NearMissMatchRequest(url="test", method="GET")),])
+        e = NearMissMatchResponse(
+            near_misses=[
+                NearMissMatch(request=NearMissMatchRequest(url="test", method="GET")),
+            ]
+        )
         resp = e.get_json_data()
         responses.add(responses.GET, "http://localhost/__admin/requests/unmatched/near-misses", json=resp, status=200)
 

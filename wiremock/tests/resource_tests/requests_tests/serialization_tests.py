@@ -144,14 +144,28 @@ class RequestsSerializationTests(BaseClientTestCase):
 
     @attr("unit", "serialization", "requests")
     def test_request_response_find_response_serialization(self):
-        e = RequestResponseFindResponse(requests=[RequestResponseRequest(method="GET", url="test"),])
+        e = RequestResponseFindResponse(
+            requests=[
+                RequestResponseRequest(method="GET", url="test"),
+            ]
+        )
         serialized = e.get_json_data()
         self.assertDictContainsKeyWithValueType(serialized, "requests", list)
-        self.assertDictContainsKeyWithValue(serialized, "requests", [{"method": "GET", "url": "test"},])
+        self.assertDictContainsKeyWithValue(
+            serialized,
+            "requests",
+            [
+                {"method": "GET", "url": "test"},
+            ],
+        )
 
     @attr("unit", "serialization", "requests")
     def test_request_response_find_response_deserialization(self):
-        serialized = {"requests": [{"method": "GET", "url": "test"},]}
+        serialized = {
+            "requests": [
+                {"method": "GET", "url": "test"},
+            ]
+        }
         e = RequestResponseFindResponse.from_dict(serialized)
         self.assertIsInstance(e, RequestResponseFindResponse)
         self.assertIsInstance(e.requests, list)
@@ -171,14 +185,20 @@ class RequestsSerializationTests(BaseClientTestCase):
         serialized = e.get_json_data()
         self.assertDictContainsKeyWithValue(serialized, "requestJournalDisabled", False)
         self.assertDictContainsKeyWithValue(
-            serialized, "requests", [{"request": {"method": "GET", "url": "test"}, "responseDefinition": {"status": 200}},]
+            serialized,
+            "requests",
+            [
+                {"request": {"method": "GET", "url": "test"}, "responseDefinition": {"status": 200}},
+            ],
         )
         self.assertDictContainsKeyWithValue(serialized, "meta", {"total": 1})
 
     @attr("unit", "serialization", "requests")
     def test_request_response_all_deserialization(self):
         serialized = {
-            "requests": [{"request": {"method": "GET", "url": "test"}, "responseDefinition": {"status": 200}},],
+            "requests": [
+                {"request": {"method": "GET", "url": "test"}, "responseDefinition": {"status": 200}},
+            ],
             "meta": {"total": 1},
             "requestJournalDisabled": False,
         }

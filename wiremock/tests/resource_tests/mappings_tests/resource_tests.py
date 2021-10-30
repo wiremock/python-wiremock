@@ -22,7 +22,12 @@ class MappingsResourceTests(BaseClientTestCase):
     @attr("unit", "mappings", "resource")
     @responses.activate
     def test_retrieve_all_mappings(self):
-        e = AllMappings(mappings=[Mapping(id="1234-5678", priority=1), ], meta=MappingMeta(total=1))
+        e = AllMappings(
+            mappings=[
+                Mapping(id="1234-5678", priority=1),
+            ],
+            meta=MappingMeta(total=1),
+        )
         resp = e.get_json_data()
         responses.add(responses.GET, "http://localhost/__admin/mappings", json=resp, status=200)
 
@@ -91,13 +96,8 @@ class MappingsResourceTests(BaseClientTestCase):
     @attr("unit", "mappings", "resource")
     @responses.activate
     def test_delete_mapping_by_metadata(self):
-        responses.add(responses.POST, "http://localhost/__admin/mappings/remove-by-metadata", body='{}', status=200)
+        responses.add(responses.POST, "http://localhost/__admin/mappings/remove-by-metadata", body="{}", status=200)
 
-        r = Mappings.delete_mapping_by_metadata({
-            "matchesJsonPath": {
-                "expression": "$.some.key",
-                "equalTo": "SomeValue"
-            }
-        })
+        r = Mappings.delete_mapping_by_metadata({"matchesJsonPath": {"expression": "$.some.key", "equalTo": "SomeValue"}})
 
         self.assertEquals(200, r.status_code)

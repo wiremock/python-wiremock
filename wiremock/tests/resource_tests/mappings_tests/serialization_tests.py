@@ -74,7 +74,7 @@ class MappingsSerializationTests(BaseClientTestCase):
             headers={"Accept": "stuff"},
             query_parameters={"param": "1"},
             body_patterns={"test": "test2"},
-            metadata={'key': 'value'}
+            metadata={"key": "value"},
         )
         serialized = e.get_json_data()
         self.assertDictContainsKeyWithValue(serialized, "method", "GET")
@@ -102,7 +102,7 @@ class MappingsSerializationTests(BaseClientTestCase):
             "headers": {"Accept": "stuff"},
             "queryParameters": {"param": "1"},
             "bodyPatterns": {"test": "test2"},
-            'metadata': {'key': [1, 2, 3]},
+            "metadata": {"key": [1, 2, 3]},
         }
         e = MappingRequest.from_dict(serialized)
         self.assertIsInstance(e, MappingRequest)
@@ -245,14 +245,30 @@ class MappingsSerializationTests(BaseClientTestCase):
 
     @attr("unit", "serialization", "mappings")
     def test_all_mappings_serialization(self):
-        e = AllMappings(mappings=[Mapping(priority=1), ], meta=MappingMeta(total=1))
+        e = AllMappings(
+            mappings=[
+                Mapping(priority=1),
+            ],
+            meta=MappingMeta(total=1),
+        )
         serialized = e.get_json_data()
-        self.assertDictContainsKeyWithValue(serialized, "mappings", [{"priority": 1}, ])
+        self.assertDictContainsKeyWithValue(
+            serialized,
+            "mappings",
+            [
+                {"priority": 1},
+            ],
+        )
         self.assertDictContainsKeyWithValue(serialized, "meta", {"total": 1})
 
     @attr("unit", "serialization", "mappings")
     def test_all_mappings_deserialization(self):
-        serialized = {"mappings": [{"priority": 1}, ], "meta": {"total": 1}}
+        serialized = {
+            "mappings": [
+                {"priority": 1},
+            ],
+            "meta": {"total": 1},
+        }
         e = AllMappings.from_dict(serialized)
         self.assertIsInstance(e, AllMappings)
         self.assertIsInstance(e.mappings, list)

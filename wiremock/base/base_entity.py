@@ -327,7 +327,7 @@ class BaseEntity(BaseAbstractEntity):
 
     @property
     def id(self):
-        """ Get the Id of the entity
+        """Get the Id of the entity
 
         :return: id of entity
         """

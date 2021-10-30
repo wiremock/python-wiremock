@@ -91,7 +91,6 @@ class WireMockMatchers(enum.Enum):
     X_PATH_NAMESPACES = "xPathNamespaces"
 
 
-
 @add_metaclass(BaseEntityMetaType)
 class BasicAuthCredentials(BaseAbstractEntity):
     username = JsonProperty("username", klass=str)
@@ -166,7 +165,7 @@ class Mapping(BaseEntity):
     new_scenario_state = JsonProperty("newScenarioState")
     required_scenario_state = JsonProperty("requiredScenarioState")
     scenario_name = JsonProperty("scenarioName")
-    metadata = JsonProperty('metadata', klass=dict)
+    metadata = JsonProperty("metadata", klass=dict)
 
 
 @add_metaclass(BaseEntityMetaType)
