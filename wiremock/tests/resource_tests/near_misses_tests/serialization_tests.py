@@ -1,4 +1,6 @@
-from wiremock.tests.base import BaseClientTestCase, attr
+import pytest
+
+from wiremock.tests.base import BaseClientTestCase
 from wiremock.resources.mappings import HttpMethods, CommonHeaders, BasicAuthCredentials
 from wiremock.resources.near_misses import (
     NearMissMatchPatternRequest,
@@ -11,7 +13,9 @@ from wiremock.resources.near_misses import (
 
 
 class NearMissesSerializationTests(BaseClientTestCase):
-    @attr("unit", "serialization", "nearmisses")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.nearmisses
     def test_near_miss_match_pattern_request_serialization(self):
         e = NearMissMatchPatternRequest(
             url="test",
@@ -45,7 +49,9 @@ class NearMissesSerializationTests(BaseClientTestCase):
         self.assertDictContainsKeyWithValue(serialized, "loggedDate", 12345)
         self.assertDictContainsKeyWithValue(serialized, "loggedDateString", "1/1/2017 00:00:00+0000")
 
-    @attr("unit", "serialization", "nearmisses")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.nearmisses
     def test_near_miss_match_pattern_request_deserialization(self):
         serialized = {
             "clientIp": "1.1.1.1",
@@ -82,7 +88,9 @@ class NearMissesSerializationTests(BaseClientTestCase):
         self.assertEquals(12345, e.logged_date)
         self.assertEquals("1/1/2017 00:00:00+0000", e.logged_date_string)
 
-    @attr("unit", "serialization", "nearmisses")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.nearmisses
     def test_near_miss_match_request_serialization(self):
         e = NearMissMatchRequest(
             url="test",
@@ -114,7 +122,9 @@ class NearMissesSerializationTests(BaseClientTestCase):
         self.assertDictContainsKeyWithValue(serialized, "bodyAsBase64", "test3")
         self.assertDictContainsKeyWithValue(serialized, "body", "test4")
 
-    @attr("unit", "serialization", "nearmisses")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.nearmisses
     def test_near_miss_match_request_deserialization(self):
         serialized = {
             "clientIp": "1.1.1.1",
@@ -149,20 +159,26 @@ class NearMissesSerializationTests(BaseClientTestCase):
         self.assertEquals("test3", e.body_as_base64)
         self.assertEquals("test4", e.body)
 
-    @attr("unit", "serialization", "nearmisses")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.nearmisses
     def test_near_miss_match_result_serialization(self):
         e = NearMissMatchResult(distance=0.75)
         serialized = e.get_json_data()
         self.assertDictContainsKeyWithValue(serialized, "distance", 0.75)
 
-    @attr("unit", "serialization", "nearmisses")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.nearmisses
     def test_near_miss_match_result_deserialization(self):
         serialized = {"distance": 0.75}
         e = NearMissMatchResult.from_dict(serialized)
         self.assertIsInstance(e, NearMissMatchResult)
         self.assertEquals(0.75, e.distance)
 
-    @attr("unit", "serialization", "nearmisses")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.nearmisses
     def test_near_miss_request_pattern_result_serialization(self):
         e = NearMissRequestPatternResult(
             url="test",
@@ -190,7 +206,9 @@ class NearMissesSerializationTests(BaseClientTestCase):
         self.assertDictContainsKeyWithValue(serialized, "bodyAsBase64", "test3")
         self.assertDictContainsKeyWithValue(serialized, "body", "test4")
 
-    @attr("unit", "serialization", "nearmisses")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.nearmisses
     def test_near_miss_request_pattern_result_deserialization(self):
         serialized = {
             "clientIp": "1.1.1.1",
@@ -221,7 +239,9 @@ class NearMissesSerializationTests(BaseClientTestCase):
         self.assertEquals("test3", e.body_as_base64)
         self.assertEquals("test4", e.body)
 
-    @attr("unit", "serialization", "nearmisses")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.nearmisses
     def test_near_miss_match_serialization(self):
         e = NearMissMatch(
             request=NearMissMatchRequest(url="test"),
@@ -241,7 +261,9 @@ class NearMissesSerializationTests(BaseClientTestCase):
         match_result = serialized["matchResult"]
         self.assertDictContainsKeyWithValue(match_result, "distance", 0.75)
 
-    @attr("unit", "serialization", "nearmisses")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.nearmisses
     def test_near_miss_match_deserialization(self):
         serialized = {
             "request": {
@@ -315,7 +337,9 @@ class NearMissesSerializationTests(BaseClientTestCase):
         # match result
         self.assertEquals(0.75, e.match_result.distance)
 
-    @attr("unit", "serialization", "nearmisses")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.nearmisses
     def test_near_miss_match_response_serialization(self):
         e = NearMissMatchResponse(
             near_misses=[
@@ -336,7 +360,9 @@ class NearMissesSerializationTests(BaseClientTestCase):
         self.assertDictContainsKeyWithValueType(near_miss, "matchResult", dict)
         self.assertDictContainsKeyWithValue(near_miss["matchResult"], "distance", 0.75)
 
-    @attr("unit", "serialization", "nearmisses")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.nearmisses
     def test_near_miss_match_response_deserialization(self):
         serialized = {"nearMisses": [{"request": {"url": "test"}, "requestPattern": {"url": "test"}, "matchResult": {"distance": 0.75}}]}
         e = NearMissMatchResponse.from_dict(serialized)

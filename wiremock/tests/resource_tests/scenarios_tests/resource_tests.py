@@ -1,11 +1,14 @@
 import responses
+import pytest
 
-from wiremock.tests.base import BaseClientTestCase, attr
+from wiremock.tests.base import BaseClientTestCase
 from wiremock.client import Scenarios
 
 
 class ScenariosResourceTests(BaseClientTestCase):
-    @attr("unit", "scenarios", "resource")
+    @pytest.mark.unit
+    @pytest.mark.scenarios
+    @pytest.mark.resource
     @responses.activate
     def test_reset_scenarios(self):
         responses.add(responses.POST, "http://localhost/__admin/scenarios/reset", body="", status=200)

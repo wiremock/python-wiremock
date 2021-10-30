@@ -1,7 +1,8 @@
 import responses
+import pytest
 
 from wiremock.resources.near_misses import NearMissMatchRequest
-from wiremock.tests.base import BaseClientTestCase, attr
+from wiremock.tests.base import BaseClientTestCase
 from wiremock.client import (
     RequestResponseDefinition,
     RequestResponseRequest,
@@ -18,7 +19,9 @@ from wiremock.client import (
 
 
 class RequestsResourceTests(BaseClientTestCase):
-    @attr("unit", "requests", "resource")
+    @pytest.mark.unit
+    @pytest.mark.requests
+    @pytest.mark.resource
     @responses.activate
     def test_get_all_received_requests(self):
         e = RequestResponseAll(requests=[], meta=RequestResponseAllMeta(total=1), request_journal_disabled=False)
@@ -29,7 +32,9 @@ class RequestsResourceTests(BaseClientTestCase):
         self.assertIsInstance(r, RequestResponseAll)
         self.assertEquals(False, r.request_journal_disabled)
 
-    @attr("unit", "requests", "resource")
+    @pytest.mark.unit
+    @pytest.mark.requests
+    @pytest.mark.resource
     @responses.activate
     def test_get_request(self):
         e = RequestResponse(
@@ -45,7 +50,9 @@ class RequestsResourceTests(BaseClientTestCase):
         self.assertEquals("test", r.request.url)
         self.assertEquals("1234-5678", r.id)
 
-    @attr("unit", "requests", "resource")
+    @pytest.mark.unit
+    @pytest.mark.requests
+    @pytest.mark.resource
     @responses.activate
     def test_reset_request_journal(self):
         responses.add(responses.POST, "http://localhost/__admin/requests/reset", body="", status=200)
@@ -53,7 +60,9 @@ class RequestsResourceTests(BaseClientTestCase):
         r = Requests.reset_request_journal()
         self.assertEquals(200, r.status_code)
 
-    @attr("unit", "requests", "resource")
+    @pytest.mark.unit
+    @pytest.mark.requests
+    @pytest.mark.resource
     @responses.activate
     def test_get_matching_request_count(self):
         resp = RequestCountResponse(count=4).get_json_data()
@@ -65,7 +74,9 @@ class RequestsResourceTests(BaseClientTestCase):
         self.assertIsInstance(r, RequestCountResponse)
         self.assertEquals(4, r.count)
 
-    @attr("unit", "requests", "resource")
+    @pytest.mark.unit
+    @pytest.mark.requests
+    @pytest.mark.resource
     @responses.activate
     def test_get_matching_requests(self):
         e = RequestResponseFindResponse(
@@ -87,7 +98,9 @@ class RequestsResourceTests(BaseClientTestCase):
         self.assertEquals("GET", result.method)
         self.assertEquals("test", result.url)
 
-    @attr("unit", "requests", "resource")
+    @pytest.mark.unit
+    @pytest.mark.requests
+    @pytest.mark.resource
     @responses.activate
     def test_get_unmatched_requests(self):
         e = RequestResponseFindResponse(
@@ -107,7 +120,9 @@ class RequestsResourceTests(BaseClientTestCase):
         self.assertEquals("GET", result.method)
         self.assertEquals("test", result.url)
 
-    @attr("unit", "requests", "resource")
+    @pytest.mark.unit
+    @pytest.mark.requests
+    @pytest.mark.resource
     @responses.activate
     def test_get_unmatched_requests_near_misses(self):
         e = NearMissMatchResponse(

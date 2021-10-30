@@ -1,11 +1,14 @@
 import responses
+import pytest
 
-from wiremock.tests.base import BaseClientTestCase, attr
+from wiremock.tests.base import BaseClientTestCase
 from wiremock.client import Mapping, MappingMeta, MappingRequest, MappingResponse, Mappings, AllMappings
 
 
 class MappingsResourceTests(BaseClientTestCase):
-    @attr("unit", "mappings", "resource")
+    @pytest.mark.unit
+    @pytest.mark.mappings
+    @pytest.mark.resource
     @responses.activate
     def test_create_mapping(self):
         e = MappingResponse(body="test", status=200)
@@ -19,7 +22,9 @@ class MappingsResourceTests(BaseClientTestCase):
         self.assertEquals(200, r.status)
         self.assertEquals("test", r.body)
 
-    @attr("unit", "mappings", "resource")
+    @pytest.mark.unit
+    @pytest.mark.mappings
+    @pytest.mark.resource
     @responses.activate
     def test_retrieve_all_mappings(self):
         e = AllMappings(
@@ -36,7 +41,9 @@ class MappingsResourceTests(BaseClientTestCase):
         self.assertIsInstance(r.meta, MappingMeta)
         self.assertEquals(1, r.meta.total)
 
-    @attr("unit", "mappings", "resource")
+    @pytest.mark.unit
+    @pytest.mark.mappings
+    @pytest.mark.resource
     @responses.activate
     def test_retrieve_mapping(self):
         e = Mapping(id="1234-5678", priority=1)
@@ -48,7 +55,9 @@ class MappingsResourceTests(BaseClientTestCase):
         self.assertEquals("1234-5678", r.id)
         self.assertEquals(1, r.priority)
 
-    @attr("unit", "mappings", "resource")
+    @pytest.mark.unit
+    @pytest.mark.mappings
+    @pytest.mark.resource
     @responses.activate
     def test_update_mapping(self):
         e = Mapping(id="1234-5678", priority=1)
@@ -60,7 +69,9 @@ class MappingsResourceTests(BaseClientTestCase):
         self.assertEquals("1234-5678", r.id)
         self.assertEquals(1, r.priority)
 
-    @attr("unit", "mappings", "resource")
+    @pytest.mark.unit
+    @pytest.mark.mappings
+    @pytest.mark.resource
     @responses.activate
     def test_persist_mappings(self):
         responses.add(responses.POST, "http://localhost/__admin/mappings/save", body="", status=200)
@@ -68,7 +79,9 @@ class MappingsResourceTests(BaseClientTestCase):
         r = Mappings.persist_mappings()
         self.assertEquals(200, r.status_code)
 
-    @attr("unit", "mappings", "resource")
+    @pytest.mark.unit
+    @pytest.mark.mappings
+    @pytest.mark.resource
     @responses.activate
     def test_reset_mappings(self):
         responses.add(responses.POST, "http://localhost/__admin/mappings/reset", body="", status=200)
@@ -76,7 +89,9 @@ class MappingsResourceTests(BaseClientTestCase):
         r = Mappings.reset_mappings()
         self.assertEquals(200, r.status_code)
 
-    @attr("unit", "mappings", "resource")
+    @pytest.mark.unit
+    @pytest.mark.mappings
+    @pytest.mark.resource
     @responses.activate
     def test_delete_all_mappings(self):
         responses.add(responses.DELETE, "http://localhost/__admin/mappings", body="", status=200)
@@ -84,7 +99,9 @@ class MappingsResourceTests(BaseClientTestCase):
         r = Mappings.delete_all_mappings()
         self.assertEquals(200, r.status_code)
 
-    @attr("unit", "mappings", "resource")
+    @pytest.mark.unit
+    @pytest.mark.mappings
+    @pytest.mark.resource
     @responses.activate
     def test_delete_mapping(self):
         e = Mapping(id="1234-5678", priority=1)
@@ -93,7 +110,9 @@ class MappingsResourceTests(BaseClientTestCase):
         r = Mappings.delete_mapping(e)
         self.assertEquals(200, r.status_code)
 
-    @attr("unit", "mappings", "resource")
+    @pytest.mark.unit
+    @pytest.mark.mappings
+    @pytest.mark.resource
     @responses.activate
     def test_delete_mapping_by_metadata(self):
         responses.add(responses.POST, "http://localhost/__admin/mappings/remove-by-metadata", body="{}", status=200)

@@ -1,11 +1,14 @@
 import responses
+import pytest
 
-from wiremock.tests.base import BaseClientTestCase, attr
+from wiremock.tests.base import BaseClientTestCase
 from wiremock.client import GlobalSetting, GlobalSettings
 
 
 class SettingsResourceTests(BaseClientTestCase):
-    @attr("unit", "settings", "resource")
+    @pytest.mark.unit
+    @pytest.mark.settings
+    @pytest.mark.resource
     @responses.activate
     def test_update_settings(self):
         e = GlobalSetting(fixed_delay=500)

@@ -1,10 +1,15 @@
 language: python
 python:
-- '3.7'
+  - '3.8'
+  - '3.9'
+  - '3.10'
+before_install:
+  - python --version
+  - pip install -U pip
+  - pip install -r requirements.pip
 install:
-- pip install -r requirements.pip
-- pip install tox-travis
-script: tox
+  - pip install ".[test]"
+script: pytest
 deploy:
   provider: pypi
   on:
@@ -16,4 +21,4 @@ deploy:
   username:
     secure: JhLffSYa/ES20jPiXmmEwEq6jLwpd2VEDe3KT+iqZ6LPygxCFjyoT8rI7LBz91PsjjBZa1jVFw7kAdtT6RvLOFHp3Pol87ULpmM8PBD++FIShxPFds2p+5UzEvQ/D3+6E9gxeHIwNQk6RGwYm4hF7kGaWQwhtD+Y3mXhL4pjvtGy+3rkXWHhe0LNvRdCUqogsv7EXBhRZunb/KqLW7rtn7NlTnBVz+Sf97GPuNtgmMG2UPnCcsip0V+hUgMcpMXqlVbPpFNfq2k901qKfRMgg4hjum6ML+oKCqiXFzH/cTCj9okNzK56yAkSN3lrfUPKHIVAfLAYDXexFCTDpbr970XnTtpFBlqzBnB8W4dYXrBb00j3vWy3yJrXZSQSwn8ETUBC4ObSKFJseIA0OFMlUoBHkVyLo0iH30VGGAlI0p3FXY+DBSQxIvyCIlbHbmHEcPlKyb6K5sEZgAT6mqPiPi0d6MnDNXF4R5+LAI0uZhr0EzXZkKoP0wH1DUoR72NJIyfGPKEvmY/os86UcvI9fGKCaqC15I2gMoKBWJ2s7xjiDvZ5Hi1vhK/kP2rQnGDrUd2wclhufMARiW0KYhJsfgMj4Q5ICQ4bMP3SWuXRc9A6toMLnH82z0r2sPLv8OFidbPW9wq4tnfZ0+WtJ2p+FARauEStHeVXdpfwkZds25I=
 after_success:
-- coveralls
+  - coveralls

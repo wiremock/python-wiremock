@@ -1,7 +1,8 @@
 import responses
+import pytest
 
 from wiremock.resources.mappings import HttpMethods
-from wiremock.tests.base import BaseClientTestCase, attr
+from wiremock.tests.base import BaseClientTestCase
 from wiremock.client import (
     NearMisses,
     NearMissMatch,
@@ -14,7 +15,9 @@ from wiremock.client import (
 
 
 class NearMissesResourceTests(BaseClientTestCase):
-    @attr("unit", "nearmisses", "resource")
+    @pytest.mark.unit
+    @pytest.mark.nearmisses
+    @pytest.mark.resource
     @responses.activate
     def test_find_nearest_misses_by_request(self):
         e = NearMissMatchResponse(
@@ -37,7 +40,9 @@ class NearMissesResourceTests(BaseClientTestCase):
         self.assertIsInstance(result, NearMissMatch)
         self.assertEquals("test", result.request.url)
 
-    @attr("unit", "nearmisses", "resource")
+    @pytest.mark.unit
+    @pytest.mark.nearmisses
+    @pytest.mark.resource
     @responses.activate
     def test_find_nearest_misses_by_request_pattern(self):
         e = NearMissMatchResponse(

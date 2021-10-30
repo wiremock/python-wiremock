@@ -1,7 +1,7 @@
 import json
 import logging
 from nose.tools import nottest
-from nose.plugins.attrib import attr
+import pytest
 import responses
 from unittest import TestCase
 
@@ -77,4 +77,4 @@ class BaseClientTestCase(TestCase):
             raise AssertionError("{} is not in dict: {}".format(key, obj))
 
 
-__all__ = ["BaseClientTestCase", "nottest", "attr", "json", "responses"]
+__all__ = ["BaseClientTestCase", "json", "responses"]

@@ -1,5 +1,7 @@
+import pytest
+
 from wiremock.resources.mappings import BasicAuthCredentials
-from wiremock.tests.base import BaseClientTestCase, attr
+from wiremock.tests.base import BaseClientTestCase
 from wiremock.resources.requests import (
     RequestResponse,
     RequestCountResponse,
@@ -12,33 +14,43 @@ from wiremock.resources.requests import (
 
 
 class RequestsSerializationTests(BaseClientTestCase):
-    @attr("unit", "serialization", "requests")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.requests
     def test_request_count_response_serialization(self):
         e = RequestCountResponse(count=1)
         serialized = e.get_json_data()
         self.assertDictContainsKeyWithValue(serialized, "count", 1)
 
-    @attr("unit", "serialization", "requests")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.requests
     def test_request_count_response_deserialization(self):
         serialized = {"count": 1}
         e = RequestCountResponse.from_dict(serialized)
         self.assertIsInstance(e, RequestCountResponse)
         self.assertEquals(1, e.count)
 
-    @attr("unit", "serialization", "requests")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.requests
     def test_request_response_all_meta_serialization(self):
         e = RequestResponseAllMeta(total=1)
         serialized = e.get_json_data()
         self.assertDictContainsKeyWithValue(serialized, "total", 1)
 
-    @attr("unit", "serialization", "requests")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.requests
     def test_request_response_all_meta_deserialization(self):
         serialized = {"total": 1}
         e = RequestResponseAllMeta.from_dict(serialized)
         self.assertIsInstance(e, RequestResponseAllMeta)
         self.assertEquals(1, e.total)
 
-    @attr("unit", "serialization", "requests")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.requests
     def test_request_response_request_serialization(self):
         e = RequestResponseRequest(
             method="GET",
@@ -70,7 +82,9 @@ class RequestsSerializationTests(BaseClientTestCase):
         self.assertDictContainsKeyWithValue(serialized, "loggedDate", 12345)
         self.assertDictContainsKeyWithValue(serialized, "loggedDateString", "test6")
 
-    @attr("unit", "serialization", "requests")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.requests
     def test_request_response_request_deserialization(self):
         serialized = {
             "method": "GET",
@@ -105,7 +119,9 @@ class RequestsSerializationTests(BaseClientTestCase):
         self.assertEquals(12345, e.logged_date)
         self.assertEquals("test6", e.logged_date_string)
 
-    @attr("unit", "serialization", "requests")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.requests
     def test_request_response_definition_serialization(self):
         e = RequestResponseDefinition(status=200, transformers=["test"], from_configured_stub=False, transformer_parameters={"test2": "2"})
         serialized = e.get_json_data()
@@ -114,7 +130,9 @@ class RequestsSerializationTests(BaseClientTestCase):
         self.assertDictContainsKeyWithValue(serialized, "fromConfiguredStub", False)
         self.assertDictContainsKeyWithValue(serialized, "transformerParameters", {"test2": "2"})
 
-    @attr("unit", "serialization", "requests")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.requests
     def test_request_response_definition_deserialization(self):
         serialized = {"status": 200, "transformers": ["test"], "fromConfiguredStub": False, "transformerParameters": {"test2": "2"}}
         e = RequestResponseDefinition.from_dict(serialized)
@@ -124,14 +142,18 @@ class RequestsSerializationTests(BaseClientTestCase):
         self.assertEquals(False, e.from_configured_stub)
         self.assertEquals({"test2": "2"}, e.transformer_parameters)
 
-    @attr("unit", "serialization", "requests")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.requests
     def test_request_response_serialization(self):
         e = RequestResponse(request=RequestResponseRequest(method="GET", url="test"), response_definition=RequestResponseDefinition(status=200))
         serialized = e.get_json_data()
         self.assertDictContainsKeyWithValue(serialized, "request", {"method": "GET", "url": "test"})
         self.assertDictContainsKeyWithValue(serialized, "responseDefinition", {"status": 200})
 
-    @attr("unit", "serialization", "requests")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.requests
     def test_request_response_deserialization(self):
         serialized = {"request": {"method": "GET", "url": "test"}, "responseDefinition": {"status": 200}}
         e = RequestResponse.from_dict(serialized)
@@ -142,7 +164,9 @@ class RequestsSerializationTests(BaseClientTestCase):
         self.assertIsInstance(e.response_definition, RequestResponseDefinition)
         self.assertEquals(200, e.response_definition.status)
 
-    @attr("unit", "serialization", "requests")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.requests
     def test_request_response_find_response_serialization(self):
         e = RequestResponseFindResponse(
             requests=[
@@ -159,7 +183,9 @@ class RequestsSerializationTests(BaseClientTestCase):
             ],
         )
 
-    @attr("unit", "serialization", "requests")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.requests
     def test_request_response_find_response_deserialization(self):
         serialized = {
             "requests": [
@@ -173,7 +199,9 @@ class RequestsSerializationTests(BaseClientTestCase):
         self.assertEquals("GET", e.requests[0].method)
         self.assertEquals("test", e.requests[0].url)
 
-    @attr("unit", "serialization", "requests")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.requests
     def test_request_response_all_serialization(self):
         e = RequestResponseAll(
             requests=[
@@ -193,7 +221,9 @@ class RequestsSerializationTests(BaseClientTestCase):
         )
         self.assertDictContainsKeyWithValue(serialized, "meta", {"total": 1})
 
-    @attr("unit", "serialization", "requests")
+    @pytest.mark.unit
+    @pytest.mark.serialization
+    @pytest.mark.requests
     def test_request_response_all_deserialization(self):
         serialized = {
             "requests": [
