@@ -9,7 +9,7 @@ Config.instance().base_url = "https://mockserver.example.com/__admin/"
 
 mapping = Mapping(
     priority=100,
-    request=MappingRequest(method=HttpMethods.GET, url="/hello"),
+    request=MappingRequest(method=HttpMethods.GET.value, url="/hello"),
     response=MappingResponse(status=200, body="hi"),
     persistent=False,
 )

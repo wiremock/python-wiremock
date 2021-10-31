@@ -5,7 +5,7 @@ import unittest
 from subprocess import STDOUT, PIPE
 
 import responses
-from mock import patch, DEFAULT
+from unittest.mock import patch, DEFAULT
 from pkg_resources import resource_filename
 import pytest
 
