@@ -29,7 +29,7 @@ class RequestsSerializationTests(BaseClientTestCase):
         serialized = {"count": 1}
         e = RequestCountResponse.from_dict(serialized)
         self.assertIsInstance(e, RequestCountResponse)
-        self.assertEquals(1, e.count)
+        self.assertEqual(1, e.count)
 
     @pytest.mark.unit
     @pytest.mark.serialization
@@ -46,7 +46,7 @@ class RequestsSerializationTests(BaseClientTestCase):
         serialized = {"total": 1}
         e = RequestResponseAllMeta.from_dict(serialized)
         self.assertIsInstance(e, RequestResponseAllMeta)
-        self.assertEquals(1, e.total)
+        self.assertEqual(1, e.total)
 
     @pytest.mark.unit
     @pytest.mark.serialization
@@ -113,21 +113,21 @@ class RequestsSerializationTests(BaseClientTestCase):
         }
         e = RequestResponseRequest.from_dict(serialized)
         self.assertIsInstance(e, RequestResponseRequest)
-        self.assertEquals("GET", e.method)
-        self.assertEquals("test", e.url)
-        self.assertEquals("test2", e.absolute_url)
-        self.assertEquals("test3", e.client_ip)
+        self.assertEqual("GET", e.method)
+        self.assertEqual("test", e.url)
+        self.assertEqual("test2", e.absolute_url)
+        self.assertEqual("test3", e.client_ip)
         self.assertIsInstance(e.basic_auth_credentials, BasicAuthCredentials)
-        self.assertEquals("username", e.basic_auth_credentials.username)
-        self.assertEquals("password", e.basic_auth_credentials.password)
-        self.assertEquals({"chocolate": "chip"}, e.cookies)
-        self.assertEquals({"test": "1"}, e.headers)
-        self.assertEquals({"test2": "2"}, e.query_parameters)
-        self.assertEquals(False, e.browser_proxy_request)
-        self.assertEquals("test4", e.body)
-        self.assertEquals("test5", e.body_as_base64)
-        self.assertEquals(12345, e.logged_date)
-        self.assertEquals("test6", e.logged_date_string)
+        self.assertEqual("username", e.basic_auth_credentials.username)
+        self.assertEqual("password", e.basic_auth_credentials.password)
+        self.assertEqual({"chocolate": "chip"}, e.cookies)
+        self.assertEqual({"test": "1"}, e.headers)
+        self.assertEqual({"test2": "2"}, e.query_parameters)
+        self.assertEqual(False, e.browser_proxy_request)
+        self.assertEqual("test4", e.body)
+        self.assertEqual("test5", e.body_as_base64)
+        self.assertEqual(12345, e.logged_date)
+        self.assertEqual("test6", e.logged_date_string)
 
     @pytest.mark.unit
     @pytest.mark.serialization
@@ -159,10 +159,10 @@ class RequestsSerializationTests(BaseClientTestCase):
         }
         e = RequestResponseDefinition.from_dict(serialized)
         self.assertIsInstance(e, RequestResponseDefinition)
-        self.assertEquals(200, e.status)
-        self.assertEquals(["test"], e.transformers)
-        self.assertEquals(False, e.from_configured_stub)
-        self.assertEquals({"test2": "2"}, e.transformer_parameters)
+        self.assertEqual(200, e.status)
+        self.assertEqual(["test"], e.transformers)
+        self.assertEqual(False, e.from_configured_stub)
+        self.assertEqual({"test2": "2"}, e.transformer_parameters)
 
     @pytest.mark.unit
     @pytest.mark.serialization
@@ -191,10 +191,10 @@ class RequestsSerializationTests(BaseClientTestCase):
         e = RequestResponse.from_dict(serialized)
         self.assertIsInstance(e, RequestResponse)
         self.assertIsInstance(e.request, RequestResponseRequest)
-        self.assertEquals("GET", e.request.method)
-        self.assertEquals("test", e.request.url)
+        self.assertEqual("GET", e.request.method)
+        self.assertEqual("test", e.request.url)
         self.assertIsInstance(e.response_definition, RequestResponseDefinition)
-        self.assertEquals(200, e.response_definition.status)
+        self.assertEqual(200, e.response_definition.status)
 
     @pytest.mark.unit
     @pytest.mark.serialization
@@ -228,8 +228,8 @@ class RequestsSerializationTests(BaseClientTestCase):
         self.assertIsInstance(e, RequestResponseFindResponse)
         self.assertIsInstance(e.requests, list)
         self.assertIsInstance(e.requests[0], RequestResponseRequest)
-        self.assertEquals("GET", e.requests[0].method)
-        self.assertEquals("test", e.requests[0].url)
+        self.assertEqual("GET", e.requests[0].method)
+        self.assertEqual("test", e.requests[0].url)
 
     @pytest.mark.unit
     @pytest.mark.serialization
@@ -275,14 +275,14 @@ class RequestsSerializationTests(BaseClientTestCase):
         }
         e = RequestResponseAll.from_dict(serialized)
         self.assertIsInstance(e, RequestResponseAll)
-        self.assertEquals(False, e.request_journal_disabled)
+        self.assertEqual(False, e.request_journal_disabled)
         self.assertIsInstance(e.requests, list)
         rr = e.requests[0]
         self.assertIsInstance(rr, RequestResponse)
         self.assertIsInstance(rr.request, RequestResponseRequest)
-        self.assertEquals("GET", rr.request.method)
-        self.assertEquals("test", rr.request.url)
+        self.assertEqual("GET", rr.request.method)
+        self.assertEqual("test", rr.request.url)
         self.assertIsInstance(rr.response_definition, RequestResponseDefinition)
-        self.assertEquals(200, rr.response_definition.status)
+        self.assertEqual(200, rr.response_definition.status)
         self.assertIsInstance(e.meta, RequestResponseAllMeta)
-        self.assertEquals(1, e.meta.total)
+        self.assertEqual(1, e.meta.total)

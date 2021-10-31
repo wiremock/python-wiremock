@@ -30,8 +30,8 @@ class MappingsSerializationTests(BaseClientTestCase):
         serialized = {"username": "username", "password": "password"}
         e = BasicAuthCredentials.from_dict(serialized)
         self.assertIsInstance(e, BasicAuthCredentials)
-        self.assertEquals("username", e.username)
-        self.assertEquals("password", e.password)
+        self.assertEqual("username", e.username)
+        self.assertEqual("password", e.password)
 
     @pytest.mark.unit
     @pytest.mark.serialization
@@ -48,14 +48,14 @@ class MappingsSerializationTests(BaseClientTestCase):
         serialized = {"total": 1}
         e = MappingMeta.from_dict(serialized)
         self.assertIsInstance(e, MappingMeta)
-        self.assertEquals(1, e.total)
+        self.assertEqual(1, e.total)
 
     @pytest.mark.unit
     @pytest.mark.serialization
     @pytest.mark.mappings
     def test_delay_distribution_serialization(self):
         e = DelayDistribution(
-            distribution_type=DelayDistributionMethods.LOG_NORMAL,
+            distribution_type=DelayDistributionMethods.LOG_NORMAL.value,
             median=0.1,
             sigma=0.2,
             upper=4,
@@ -81,11 +81,11 @@ class MappingsSerializationTests(BaseClientTestCase):
         }
         e = DelayDistribution.from_dict(serialized)
         self.assertIsInstance(e, DelayDistribution)
-        self.assertEquals("lognormal", e.distribution_type)
-        self.assertEquals(0.1, e.median)
-        self.assertEquals(0.2, e.sigma)
-        self.assertEquals(3, e.lower)
-        self.assertEquals(4, e.upper)
+        assert "lognormal" == e.distribution_type
+        assert 0.1 == e.median
+        assert 0.2 == e.sigma
+        assert 3 == e.lower
+        assert 4 == e.upper
 
     @pytest.mark.unit
     @pytest.mark.serialization
@@ -148,19 +148,19 @@ class MappingsSerializationTests(BaseClientTestCase):
         }
         e = MappingRequest.from_dict(serialized)
         self.assertIsInstance(e, MappingRequest)
-        self.assertEquals("GET", e.method)
-        self.assertEquals("test1", e.url)
-        self.assertEquals("test2", e.url_path)
-        self.assertEquals("test3", e.url_path_pattern)
-        self.assertEquals("test4", e.url_pattern)
+        assert "GET" == e.method
+        assert "test1" == e.url
+        assert "test2" == e.url_path
+        assert "test3" == e.url_path_pattern
+        assert "test4" == e.url_pattern
         self.assertIsInstance(e.basic_auth_credentials, BasicAuthCredentials)
-        self.assertEquals("username", e.basic_auth_credentials.username)
-        self.assertEquals("password", e.basic_auth_credentials.password)
-        self.assertEquals({"chocolate": "chip"}, e.cookies)
-        self.assertEquals({"Accept": "stuff"}, e.headers)
-        self.assertEquals({"param": "1"}, e.query_parameters)
-        self.assertEquals({"test": "test2"}, e.body_patterns)
-        self.assertEquals({"key": [1, 2, 3]}, e.metadata)
+        assert "username" == e.basic_auth_credentials.username
+        assert "password" == e.basic_auth_credentials.password
+        assert {"chocolate": "chip"} == e.cookies
+        assert {"Accept": "stuff"} == e.headers
+        assert {"param": "1"} == e.query_parameters
+        assert {"test": "test2"} == e.body_patterns
+        assert {"key": [1, 2, 3]} == e.metadata
 
     @pytest.mark.unit
     @pytest.mark.serialization
@@ -233,22 +233,22 @@ class MappingsSerializationTests(BaseClientTestCase):
         }
         e = MappingResponse.from_dict(serialized)
         self.assertIsInstance(e, MappingResponse)
-        self.assertEquals({"test": "1"}, e.additional_proxy_request_headers)
-        self.assertEquals("test2", e.base64_body)
-        self.assertEquals("test3", e.body)
-        self.assertEquals("test4", e.body_file_name)
-        self.assertEquals("test5", e.json_body)
+        self.assertEqual({"test": "1"}, e.additional_proxy_request_headers)
+        self.assertEqual("test2", e.base64_body)
+        self.assertEqual("test3", e.body)
+        self.assertEqual("test4", e.body_file_name)
+        self.assertEqual("test5", e.json_body)
         self.assertIsInstance(e.delay_distribution, DelayDistribution)
-        self.assertEquals("lognormal", e.delay_distribution.distribution_type)
-        self.assertEquals("test6", e.fault)
-        self.assertEquals(500, e.fixed_delay_milliseconds)
-        self.assertEquals("test7", e.from_configured_stub)
-        self.assertEquals({"test": "1"}, e.headers)
-        self.assertEquals("test8", e.proxy_base_url)
-        self.assertEquals(200, e.status)
-        self.assertEquals("test9", e.status_message)
-        self.assertEquals({"test2": "2"}, e.transformer_parameters)
-        self.assertEquals(["test10"], e.transformers)
+        self.assertEqual("lognormal", e.delay_distribution.distribution_type)
+        self.assertEqual("test6", e.fault)
+        self.assertEqual(500, e.fixed_delay_milliseconds)
+        self.assertEqual("test7", e.from_configured_stub)
+        self.assertEqual({"test": "1"}, e.headers)
+        self.assertEqual("test8", e.proxy_base_url)
+        self.assertEqual(200, e.status)
+        self.assertEqual("test9", e.status_message)
+        self.assertEqual({"test2": "2"}, e.transformer_parameters)
+        self.assertEqual(["test10"], e.transformers)
 
     @pytest.mark.unit
     @pytest.mark.serialization
@@ -298,18 +298,18 @@ class MappingsSerializationTests(BaseClientTestCase):
         }
         e = Mapping.from_dict(serialized)
         self.assertIsInstance(e, Mapping)
-        self.assertEquals(1, e.priority)
+        self.assertEqual(1, e.priority)
         self.assertIsInstance(e.request, MappingRequest)
-        self.assertEquals("GET", e.request.method)
-        self.assertEquals("test", e.request.url)
+        self.assertEqual("GET", e.request.method)
+        self.assertEqual("test", e.request.url)
         self.assertIsInstance(e.response, MappingResponse)
-        self.assertEquals(200, e.response.status)
-        self.assertEquals("test2", e.response.status_message)
-        self.assertEquals(False, e.persistent)
-        self.assertEquals({"test": "1"}, e.post_serve_actions)
-        self.assertEquals("test3", e.new_scenario_state)
-        self.assertEquals("test4", e.required_scenario_state)
-        self.assertEquals("test5", e.scenario_name)
+        self.assertEqual(200, e.response.status)
+        self.assertEqual("test2", e.response.status_message)
+        self.assertEqual(False, e.persistent)
+        self.assertEqual({"test": "1"}, e.post_serve_actions)
+        self.assertEqual("test3", e.new_scenario_state)
+        self.assertEqual("test4", e.required_scenario_state)
+        self.assertEqual("test5", e.scenario_name)
 
     @pytest.mark.unit
     @pytest.mark.serialization
@@ -346,6 +346,6 @@ class MappingsSerializationTests(BaseClientTestCase):
         self.assertIsInstance(e.mappings, list)
         m = e.mappings[0]
         self.assertIsInstance(m, Mapping)
-        self.assertEquals(1, m.priority)
+        self.assertEqual(1, m.priority)
         self.assertIsInstance(e.meta, MappingMeta)
-        self.assertEquals(1, e.meta.total)
+        self.assertEqual(1, e.meta.total)

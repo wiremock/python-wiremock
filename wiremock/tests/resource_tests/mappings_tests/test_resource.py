@@ -32,8 +32,8 @@ class MappingsResourceTests(BaseClientTestCase):
 
         r = Mappings.create_mapping(m)
         self.assertIsInstance(r, MappingResponse)
-        self.assertEquals(200, r.status)
-        self.assertEquals("test", r.body)
+        self.assertEqual(200, r.status)
+        self.assertEqual("test", r.body)
 
     @pytest.mark.unit
     @pytest.mark.mappings
@@ -54,7 +54,7 @@ class MappingsResourceTests(BaseClientTestCase):
         r = Mappings.retrieve_all_mappings()
         self.assertIsInstance(r, AllMappings)
         self.assertIsInstance(r.meta, MappingMeta)
-        self.assertEquals(1, r.meta.total)
+        self.assertEqual(1, r.meta.total)
 
     @pytest.mark.unit
     @pytest.mark.mappings
@@ -72,8 +72,8 @@ class MappingsResourceTests(BaseClientTestCase):
 
         r = Mappings.retrieve_mapping(e)
         self.assertIsInstance(r, Mapping)
-        self.assertEquals("1234-5678", r.id)
-        self.assertEquals(1, r.priority)
+        self.assertEqual("1234-5678", r.id)
+        self.assertEqual(1, r.priority)
 
     @pytest.mark.unit
     @pytest.mark.mappings
@@ -91,8 +91,8 @@ class MappingsResourceTests(BaseClientTestCase):
 
         r = Mappings.update_mapping(e)
         self.assertIsInstance(r, Mapping)
-        self.assertEquals("1234-5678", r.id)
-        self.assertEquals(1, r.priority)
+        self.assertEqual("1234-5678", r.id)
+        self.assertEqual(1, r.priority)
 
     @pytest.mark.unit
     @pytest.mark.mappings
@@ -107,7 +107,7 @@ class MappingsResourceTests(BaseClientTestCase):
         )
 
         r = Mappings.persist_mappings()
-        self.assertEquals(200, r.status_code)
+        self.assertEqual(200, r.status_code)
 
     @pytest.mark.unit
     @pytest.mark.mappings
@@ -122,7 +122,7 @@ class MappingsResourceTests(BaseClientTestCase):
         )
 
         r = Mappings.reset_mappings()
-        self.assertEquals(200, r.status_code)
+        self.assertEqual(200, r.status_code)
 
     @pytest.mark.unit
     @pytest.mark.mappings
@@ -134,7 +134,7 @@ class MappingsResourceTests(BaseClientTestCase):
         )
 
         r = Mappings.delete_all_mappings()
-        self.assertEquals(200, r.status_code)
+        self.assertEqual(200, r.status_code)
 
     @pytest.mark.unit
     @pytest.mark.mappings
@@ -150,7 +150,7 @@ class MappingsResourceTests(BaseClientTestCase):
         )
 
         r = Mappings.delete_mapping(e)
-        self.assertEquals(200, r.status_code)
+        self.assertEqual(200, r.status_code)
 
     @pytest.mark.unit
     @pytest.mark.mappings
@@ -168,4 +168,4 @@ class MappingsResourceTests(BaseClientTestCase):
             {"matchesJsonPath": {"expression": "$.some.key", "equalTo": "SomeValue"}}
         )
 
-        self.assertEquals(200, r.status_code)
+        self.assertEqual(200, r.status_code)
