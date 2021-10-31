@@ -1,7 +1,5 @@
 import json
 import logging
-from nose.tools import nottest
-import pytest
 import responses
 from unittest import TestCase
 
