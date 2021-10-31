@@ -30,7 +30,16 @@ class JsonProperty(object):
 
     value_container = JsonPropertyValueContainer
 
-    def __init__(self, json_name, property_name=None, klass=None, list_klass=None, dict_key_klass=None, dict_value_klass=None, include_if_null=False):
+    def __init__(
+        self,
+        json_name,
+        property_name=None,
+        klass=None,
+        list_klass=None,
+        dict_key_klass=None,
+        dict_value_klass=None,
+        include_if_null=False,
+    ):
         self._json_name = json_name
         self._property_name = property_name
         self._klass = klass
@@ -87,7 +96,9 @@ class JsonProperty(object):
         return self._klass is not None and issubclass(self._klass, dict)
 
     def is_list(self):
-        return self._klass is not None and (issubclass(self._klass, list) or issubclass(self._klass, tuple))
+        return self._klass is not None and (
+            issubclass(self._klass, list) or issubclass(self._klass, tuple)
+        )
 
     def is_base_entity_class(self):
         return self._klass is not None and issubclass(self._klass, BaseAbstractEntity)
@@ -120,16 +131,22 @@ class BaseAbstractEntity(object):
         self._values = {}
         for name, prop in self._properties.items():
             value = values.get(prop.json_name, values.get(name, None))
-            if prop.is_list() and isinstance(value, (tuple, list)):  # This is a list with sub types
+            if prop.is_list() and isinstance(
+                value, (tuple, list)
+            ):  # This is a list with sub types
                 l = prop.klass()
                 for v in value:
-                    if prop.list_klass is not None and issubclass(prop.list_klass, BaseAbstractEntity):
+                    if prop.list_klass is not None and issubclass(
+                        prop.list_klass, BaseAbstractEntity
+                    ):
                         l.append(prop.list_klass.from_dict(v))
                     else:
                         l.append(v)
                 value = l
                 value_container = prop.value_container(prop, l)
-            elif prop.is_dict() and isinstance(value, dict):  # This is a dict with sub types
+            elif prop.is_dict() and isinstance(
+                value, dict
+            ):  # This is a dict with sub types
                 d = {}
                 for k, v in value.items():
                     rk = k
@@ -152,7 +169,9 @@ class BaseAbstractEntity(object):
                     d[rk] = rv
                 value = d
                 value_container = prop.value_container(prop, d)
-            elif prop.is_base_entity_class() and isinstance(value, dict):  # This is a BaseAbstractEntity Class
+            elif prop.is_base_entity_class() and isinstance(
+                value, dict
+            ):  # This is a BaseAbstractEntity Class
                 value = prop.klass.from_dict(value)
                 value_container = prop.value_container(prop, value)
             else:
@@ -276,7 +295,9 @@ class BaseEntityMetaType(type):
             _del = lambda self: self._values[prop_name].delval()
             body[prop_name] = property(_get, _set, _del)
 
-        property_definitions = [(k, v) for k, v in body.items() if isinstance(v, JsonProperty)]
+        property_definitions = [
+            (k, v) for k, v in body.items() if isinstance(v, JsonProperty)
+        ]
 
         for k, v in property_definitions:
             _transform_property(k, v)
@@ -285,7 +306,10 @@ class BaseEntityMetaType(type):
         for v in prop_dict.values():
             # HACK type: v -> EntityProperty
             if v.json_name in json_names:
-                raise EntityModelException("%s defines the json property %s more than once" % (name, v.json_name))
+                raise EntityModelException(
+                    "%s defines the json property %s more than once"
+                    % (name, v.json_name)
+                )
             json_names.add(v.json_name)
 
         body["_properties"] = prop_dict
@@ -377,4 +401,11 @@ class BaseEntity(BaseAbstractEntity):
         return result
 
 
-__all__ = ["BaseEntity", "BaseAbstractEntity", "BaseEntityMetaType", "collection_to_json", "EntityModelException", "JsonProperty"]
+__all__ = [
+    "BaseEntity",
+    "BaseAbstractEntity",
+    "BaseEntityMetaType",
+    "collection_to_json",
+    "EntityModelException",
+    "JsonProperty",
+]

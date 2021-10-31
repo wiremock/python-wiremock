@@ -11,7 +11,12 @@ class ScenariosResourceTests(BaseClientTestCase):
     @pytest.mark.resource
     @responses.activate
     def test_reset_scenarios(self):
-        responses.add(responses.POST, "http://localhost/__admin/scenarios/reset", body="", status=200)
+        responses.add(
+            responses.POST,
+            "http://localhost/__admin/scenarios/reset",
+            body="",
+            status=200,
+        )
 
         r = Scenarios.reset_all_scenarios()
         self.assertEquals(200, r.status_code)

@@ -24,15 +24,24 @@ class NearMissesResourceTests(BaseClientTestCase):
             near_misses=[
                 NearMissMatch(
                     request=NearMissMatchRequest(url="test", method="GET"),
-                    request_pattern=NearMissRequestPatternResult(url="test1", method="GET"),
+                    request_pattern=NearMissRequestPatternResult(
+                        url="test1", method="GET"
+                    ),
                     match_result=NearMissMatchResult(distance=0.5),
                 ),
             ]
         )
         resp = e.get_json_data()
-        responses.add(responses.POST, "http://localhost/__admin/near-misses/request", json=resp, status=200)
+        responses.add(
+            responses.POST,
+            "http://localhost/__admin/near-misses/request",
+            json=resp,
+            status=200,
+        )
 
-        near_miss_match_request = NearMissMatchRequest(url="test", method=HttpMethods.GET)
+        near_miss_match_request = NearMissMatchRequest(
+            url="test", method=HttpMethods.GET.value
+        )
         r = NearMisses.find_nearest_misses_by_request(near_miss_match_request)
         self.assertIsInstance(r, NearMissMatchResponse)
         self.assertIsInstance(r.near_misses, list)
@@ -49,16 +58,27 @@ class NearMissesResourceTests(BaseClientTestCase):
             near_misses=[
                 NearMissMatch(
                     request=NearMissMatchRequest(url="test", method="GET"),
-                    request_pattern=NearMissRequestPatternResult(url="test1", method="GET"),
+                    request_pattern=NearMissRequestPatternResult(
+                        url="test1", method="GET"
+                    ),
                     match_result=NearMissMatchResult(distance=0.5),
                 ),
             ]
         )
         resp = e.get_json_data()
-        responses.add(responses.POST, "http://localhost/__admin/near-misses/request-pattern", json=resp, status=200)
+        responses.add(
+            responses.POST,
+            "http://localhost/__admin/near-misses/request-pattern",
+            json=resp,
+            status=200,
+        )
 
-        near_miss_match_request_pattern = NearMissMatchPatternRequest(url="test", method=HttpMethods.GET)
-        r = NearMisses.find_nearest_misses_by_request_pattern(near_miss_match_request_pattern)
+        near_miss_match_request_pattern = NearMissMatchPatternRequest(
+            url="test", method=HttpMethods.GET.value
+        )
+        r = NearMisses.find_nearest_misses_by_request_pattern(
+            near_miss_match_request_pattern
+        )
         self.assertIsInstance(r, NearMissMatchResponse)
         self.assertIsInstance(r.near_misses, list)
         result = r.near_misses[0]

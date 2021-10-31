@@ -13,7 +13,11 @@ logger = logging.getLogger("wiremock")
 DEFAULT_TIMEOUT: int = 30
 DEFAULT_BASE_URL: str = "http://localhost/__admin"
 USER_AGENT: str = "python_wiremock/%s".format(__version__)
-DEFAULT_HEADERS: Dict[str, Any] = {"Accept": "application/json", "Content-Type": "application/json", "user-agent": USER_AGENT}
+DEFAULT_HEADERS: Dict[str, Any] = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "user-agent": USER_AGENT,
+}
 DEFAULT_REQUESTS_VERIFY: bool = True
 DEFAULT_REQUESTS_CERT: Union[None, str] = None
 

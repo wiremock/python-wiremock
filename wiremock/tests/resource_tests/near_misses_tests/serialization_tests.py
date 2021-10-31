@@ -22,13 +22,15 @@ class NearMissesSerializationTests(BaseClientTestCase):
             url_pattern="test2",
             url_path="test3",
             url_path_pattern="test4",
-            method=HttpMethods.GET,
+            method=HttpMethods.GET.value,
             client_ip="1.1.1.1",
-            headers={CommonHeaders.ACCEPT: "json"},
+            headers={CommonHeaders.ACCEPT.value: "json"},
             query_parameters={"test": 1},
             cookies={"chocolate": "chip"},
             body_patterns={"test": 3},
-            basic_auth_credentials=BasicAuthCredentials(username="username", password="password"),
+            basic_auth_credentials=BasicAuthCredentials(
+                username="username", password="password"
+            ),
             browser_proxy_request=False,
             logged_date=12345,
             logged_date_string="1/1/2017 00:00:00+0000",
@@ -42,12 +44,20 @@ class NearMissesSerializationTests(BaseClientTestCase):
         self.assertDictContainsKeyWithValue(serialized, "clientIp", "1.1.1.1")
         self.assertDictContainsKeyWithValue(serialized, "headers", {"Accept": "json"})
         self.assertDictContainsKeyWithValue(serialized, "queryParameters", {"test": 1})
-        self.assertDictContainsKeyWithValue(serialized, "cookies", {"chocolate": "chip"})
+        self.assertDictContainsKeyWithValue(
+            serialized, "cookies", {"chocolate": "chip"}
+        )
         self.assertDictContainsKeyWithValue(serialized, "bodyPatterns", {"test": 3})
-        self.assertDictContainsKeyWithValue(serialized, "basicAuthCredentials", {"username": "username", "password": "password"})
+        self.assertDictContainsKeyWithValue(
+            serialized,
+            "basicAuthCredentials",
+            {"username": "username", "password": "password"},
+        )
         self.assertDictContainsKeyWithValue(serialized, "browserProxyRequest", False)
         self.assertDictContainsKeyWithValue(serialized, "loggedDate", 12345)
-        self.assertDictContainsKeyWithValue(serialized, "loggedDateString", "1/1/2017 00:00:00+0000")
+        self.assertDictContainsKeyWithValue(
+            serialized, "loggedDateString", "1/1/2017 00:00:00+0000"
+        )
 
     @pytest.mark.unit
     @pytest.mark.serialization
@@ -95,12 +105,14 @@ class NearMissesSerializationTests(BaseClientTestCase):
         e = NearMissMatchRequest(
             url="test",
             absolute_url="test2",
-            method=HttpMethods.GET,
+            method=HttpMethods.GET.value,
             client_ip="1.1.1.1",
-            headers={CommonHeaders.ACCEPT: "json"},
+            headers={CommonHeaders.ACCEPT.value: "json"},
             query_parameters={"test": 1},
             cookies={"chocolate": "chip"},
-            basic_auth_credentials=BasicAuthCredentials(username="username", password="password"),
+            basic_auth_credentials=BasicAuthCredentials(
+                username="username", password="password"
+            ),
             browser_proxy_request=False,
             logged_date=12345,
             logged_date_string="1/1/2017 00:00:00+0000",
@@ -114,11 +126,19 @@ class NearMissesSerializationTests(BaseClientTestCase):
         self.assertDictContainsKeyWithValue(serialized, "clientIp", "1.1.1.1")
         self.assertDictContainsKeyWithValue(serialized, "headers", {"Accept": "json"})
         self.assertDictContainsKeyWithValue(serialized, "queryParameters", {"test": 1})
-        self.assertDictContainsKeyWithValue(serialized, "cookies", {"chocolate": "chip"})
-        self.assertDictContainsKeyWithValue(serialized, "basicAuthCredentials", {"username": "username", "password": "password"})
+        self.assertDictContainsKeyWithValue(
+            serialized, "cookies", {"chocolate": "chip"}
+        )
+        self.assertDictContainsKeyWithValue(
+            serialized,
+            "basicAuthCredentials",
+            {"username": "username", "password": "password"},
+        )
         self.assertDictContainsKeyWithValue(serialized, "browserProxyRequest", False)
         self.assertDictContainsKeyWithValue(serialized, "loggedDate", 12345)
-        self.assertDictContainsKeyWithValue(serialized, "loggedDateString", "1/1/2017 00:00:00+0000")
+        self.assertDictContainsKeyWithValue(
+            serialized, "loggedDateString", "1/1/2017 00:00:00+0000"
+        )
         self.assertDictContainsKeyWithValue(serialized, "bodyAsBase64", "test3")
         self.assertDictContainsKeyWithValue(serialized, "body", "test4")
 
@@ -183,12 +203,14 @@ class NearMissesSerializationTests(BaseClientTestCase):
         e = NearMissRequestPatternResult(
             url="test",
             absolute_url="test2",
-            method=HttpMethods.GET,
+            method=HttpMethods.GET.value,
             client_ip="1.1.1.1",
-            headers={CommonHeaders.ACCEPT: "json"},
+            headers={CommonHeaders.ACCEPT.value: "json"},
             query_parameters={"test": 1},
             cookies={"chocolate": "chip"},
-            basic_auth_credentials=BasicAuthCredentials(username="username", password="password"),
+            basic_auth_credentials=BasicAuthCredentials(
+                username="username", password="password"
+            ),
             browser_proxy_request=False,
             body_as_base64="test3",
             body="test4",
@@ -200,8 +222,14 @@ class NearMissesSerializationTests(BaseClientTestCase):
         self.assertDictContainsKeyWithValue(serialized, "clientIp", "1.1.1.1")
         self.assertDictContainsKeyWithValue(serialized, "headers", {"Accept": "json"})
         self.assertDictContainsKeyWithValue(serialized, "queryParameters", {"test": 1})
-        self.assertDictContainsKeyWithValue(serialized, "cookies", {"chocolate": "chip"})
-        self.assertDictContainsKeyWithValue(serialized, "basicAuthCredentials", {"username": "username", "password": "password"})
+        self.assertDictContainsKeyWithValue(
+            serialized, "cookies", {"chocolate": "chip"}
+        )
+        self.assertDictContainsKeyWithValue(
+            serialized,
+            "basicAuthCredentials",
+            {"username": "username", "password": "password"},
+        )
         self.assertDictContainsKeyWithValue(serialized, "browserProxyRequest", False)
         self.assertDictContainsKeyWithValue(serialized, "bodyAsBase64", "test3")
         self.assertDictContainsKeyWithValue(serialized, "body", "test4")
@@ -278,7 +306,10 @@ class NearMissesSerializationTests(BaseClientTestCase):
                 "bodyAsBase64": "test3",
                 "loggedDateString": "1/1/2017 00:00:00+0000",
                 "queryParameters": {"test": 1},
-                "basicAuthCredentials": {"username": "username", "password": "password"},
+                "basicAuthCredentials": {
+                    "username": "username",
+                    "password": "password",
+                },
                 "method": "GET",
             },
             "requestPattern": {
@@ -291,7 +322,10 @@ class NearMissesSerializationTests(BaseClientTestCase):
                 "body": "test4",
                 "bodyAsBase64": "test3",
                 "queryParameters": {"test": 1},
-                "basicAuthCredentials": {"username": "username", "password": "password"},
+                "basicAuthCredentials": {
+                    "username": "username",
+                    "password": "password",
+                },
                 "method": "GET",
             },
             "matchResult": {"distance": 0.75},
@@ -327,7 +361,9 @@ class NearMissesSerializationTests(BaseClientTestCase):
         self.assertEquals({"Accept": "json"}, e.request_pattern.headers)
         self.assertEquals({"test": 1}, e.request_pattern.query_parameters)
         self.assertEquals({"chocolate": "chip"}, e.request_pattern.cookies)
-        self.assertIsInstance(e.request_pattern.basic_auth_credentials, BasicAuthCredentials)
+        self.assertIsInstance(
+            e.request_pattern.basic_auth_credentials, BasicAuthCredentials
+        )
         self.assertEquals("username", e.request_pattern.basic_auth_credentials.username)
         self.assertEquals("password", e.request_pattern.basic_auth_credentials.password)
         self.assertEquals(False, e.request_pattern.browser_proxy_request)
@@ -364,7 +400,15 @@ class NearMissesSerializationTests(BaseClientTestCase):
     @pytest.mark.serialization
     @pytest.mark.nearmisses
     def test_near_miss_match_response_deserialization(self):
-        serialized = {"nearMisses": [{"request": {"url": "test"}, "requestPattern": {"url": "test"}, "matchResult": {"distance": 0.75}}]}
+        serialized = {
+            "nearMisses": [
+                {
+                    "request": {"url": "test"},
+                    "requestPattern": {"url": "test"},
+                    "matchResult": {"distance": 0.75},
+                }
+            ]
+        }
         e = NearMissMatchResponse.from_dict(serialized)
         self.assertIsInstance(e, NearMissMatchResponse)
         self.assertIsInstance(e.near_misses, list)

@@ -9,7 +9,10 @@ from mock import patch, DEFAULT
 from pkg_resources import resource_filename
 import pytest
 
-from wiremock.server.exceptions import WireMockServerAlreadyStartedError, WireMockServerNotStartedError
+from wiremock.server.exceptions import (
+    WireMockServerAlreadyStartedError,
+    WireMockServerNotStartedError,
+)
 from wiremock.server.server import WireMockServer
 
 
@@ -41,7 +44,9 @@ class WireMockServerTestCase(unittest.TestCase):
         with patch.object(WireMockServer, "_get_free_port", return_value=self.port):
             wm = WireMockServer()
 
-        expected_jar = resource_filename("wiremock", "server/wiremock-standalone-2.6.0.jar")
+        expected_jar = resource_filename(
+            "wiremock", "server/wiremock-standalone-2.6.0.jar"
+        )
         self.assertEqual(wm.java_path, "java")  # Assume java in PATH
         self.assertEqual(wm.jar_path, expected_jar)
 
@@ -64,7 +69,12 @@ class WireMockServerTestCase(unittest.TestCase):
     @responses.activate
     def test_start(self, Popen, atexit):
         # mock healthy endpoint
-        responses.add(responses.GET, "http://localhost:{}/__admin".format(self.wm.port), json=[], status=200)
+        responses.add(
+            responses.GET,
+            "http://localhost:{}/__admin".format(self.wm.port),
+            json=[],
+            status=200,
+        )
 
         def poll():
             Popen.return_value.returncode = None
@@ -75,7 +85,17 @@ class WireMockServerTestCase(unittest.TestCase):
         self.wm.start()
 
         Popen.assert_called_once_with(
-            [self.java_path, "-jar", self.jar_path, "--port", str(54321), "--local-response-templating"], stdin=PIPE, stdout=PIPE, stderr=STDOUT
+            [
+                self.java_path,
+                "-jar",
+                self.jar_path,
+                "--port",
+                str(54321),
+                "--local-response-templating",
+            ],
+            stdin=PIPE,
+            stdout=PIPE,
+            stderr=STDOUT,
         )
 
         self.assertTrue(self.wm.is_running)

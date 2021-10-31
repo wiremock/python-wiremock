@@ -1,7 +1,7 @@
 from wiremock.constants import Config
-from wiremock.client import *
+from wiremock.client import *  # noqa
 
-Config.instance().base_url = 'https://mockserver.example.com/__admin/'
+Config.instance().base_url = "https://mockserver.example.com/__admin/"
 # Optionally set a custom cert path:
 # Config.requests_cert = ... (See requests documentation)
 # Optionally disable cert verification
@@ -9,14 +9,8 @@ Config.instance().base_url = 'https://mockserver.example.com/__admin/'
 
 mapping = Mapping(
     priority=100,
-    request=MappingRequest(
-        method=HttpMethods.GET,
-        url='/hello'
-    ),
-    response=MappingResponse(
-        status=200,
-        body='hi'
-    ),
+    request=MappingRequest(method=HttpMethods.GET, url="/hello"),
+    response=MappingResponse(status=200, body="hi"),
     persistent=False,
 )
 

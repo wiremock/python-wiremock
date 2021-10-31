@@ -1,2 +1,8 @@
-from .models import NearMissMatchResponse, NearMissMatchRequest, NearMissMatchResult, NearMissRequestPatternResult, \
-    NearMissMatch, NearMissMatchPatternRequest
+from .models import (
+    NearMissMatchResponse,
+    NearMissMatchRequest,
+    NearMissMatchResult,
+    NearMissRequestPatternResult,
+    NearMissMatch,
+    NearMissMatchPatternRequest,
+)

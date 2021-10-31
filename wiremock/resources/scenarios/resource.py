@@ -17,7 +17,9 @@ class Scenarios(BaseResource):
 
     @classmethod
     def reset_all_scenarios(cls, parameters={}):
-        response = cls.REST_CLIENT.post(cls.get_base_uri(cls.endpoint()), headers=make_headers(), params=parameters)
+        response = cls.REST_CLIENT.post(
+            cls.get_base_uri(cls.endpoint()), headers=make_headers(), params=parameters
+        )
         return cls.REST_CLIENT.handle_response(response)
 
 

@@ -21,10 +21,14 @@ class BaseClientTestCase(TestCase):
         super(BaseClientTestCase, cls).setUpClass()
 
     def assertHasAttr(self, obj, attr):
-        self.assertTrue(hasattr(obj, attr), "%s doesn't have attribute: %s" % (obj, attr))
+        self.assertTrue(
+            hasattr(obj, attr), "%s doesn't have attribute: %s" % (obj, attr)
+        )
 
     def assertNotHasAttr(self, obj, attr):
-        self.assertFalse(hasattr(obj, attr), "%s shouldn't have attribute: %s" % (obj, attr))
+        self.assertFalse(
+            hasattr(obj, attr), "%s shouldn't have attribute: %s" % (obj, attr)
+        )
 
     def assertAttrEqual(self, obj, attr, value):
         self.assertHasAttr(obj, attr)
@@ -70,7 +74,9 @@ class BaseClientTestCase(TestCase):
             if isinstance(obj[key], B):
                 return
             else:
-                raise AssertionError("dict[{}]={} is not of type: {}".format(key, obj[key], B))
+                raise AssertionError(
+                    "dict[{}]={} is not of type: {}".format(key, obj[key], B)
+                )
         else:
             raise AssertionError("{} is not in dict: {}".format(key, obj))
 

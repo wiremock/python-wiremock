@@ -2,7 +2,14 @@ import responses
 import pytest
 
 from wiremock.tests.base import BaseClientTestCase
-from wiremock.client import Mapping, MappingMeta, MappingRequest, MappingResponse, Mappings, AllMappings
+from wiremock.client import (
+    Mapping,
+    MappingMeta,
+    MappingRequest,
+    MappingResponse,
+    Mappings,
+    AllMappings,
+)
 
 
 class MappingsResourceTests(BaseClientTestCase):
@@ -13,9 +20,15 @@ class MappingsResourceTests(BaseClientTestCase):
     def test_create_mapping(self):
         e = MappingResponse(body="test", status=200)
         resp = e.get_json_data()
-        responses.add(responses.POST, "http://localhost/__admin/mappings", json=resp, status=200)
+        responses.add(
+            responses.POST, "http://localhost/__admin/mappings", json=resp, status=200
+        )
 
-        m = Mapping(priority=1, request=MappingRequest(url="test", method="GET"), response=MappingResponse(status=200, body="test"))
+        m = Mapping(
+            priority=1,
+            request=MappingRequest(url="test", method="GET"),
+            response=MappingResponse(status=200, body="test"),
+        )
 
         r = Mappings.create_mapping(m)
         self.assertIsInstance(r, MappingResponse)
@@ -34,7 +47,9 @@ class MappingsResourceTests(BaseClientTestCase):
             meta=MappingMeta(total=1),
         )
         resp = e.get_json_data()
-        responses.add(responses.GET, "http://localhost/__admin/mappings", json=resp, status=200)
+        responses.add(
+            responses.GET, "http://localhost/__admin/mappings", json=resp, status=200
+        )
 
         r = Mappings.retrieve_all_mappings()
         self.assertIsInstance(r, AllMappings)
@@ -48,7 +63,12 @@ class MappingsResourceTests(BaseClientTestCase):
     def test_retrieve_mapping(self):
         e = Mapping(id="1234-5678", priority=1)
         resp = e.get_json_data()
-        responses.add(responses.GET, "http://localhost/__admin/mappings/1234-5678", json=resp, status=200)
+        responses.add(
+            responses.GET,
+            "http://localhost/__admin/mappings/1234-5678",
+            json=resp,
+            status=200,
+        )
 
         r = Mappings.retrieve_mapping(e)
         self.assertIsInstance(r, Mapping)
@@ -62,7 +82,12 @@ class MappingsResourceTests(BaseClientTestCase):
     def test_update_mapping(self):
         e = Mapping(id="1234-5678", priority=1)
         resp = e.get_json_data()
-        responses.add(responses.PUT, "http://localhost/__admin/mappings/1234-5678", json=resp, status=200)
+        responses.add(
+            responses.PUT,
+            "http://localhost/__admin/mappings/1234-5678",
+            json=resp,
+            status=200,
+        )
 
         r = Mappings.update_mapping(e)
         self.assertIsInstance(r, Mapping)
@@ -74,7 +99,12 @@ class MappingsResourceTests(BaseClientTestCase):
     @pytest.mark.resource
     @responses.activate
     def test_persist_mappings(self):
-        responses.add(responses.POST, "http://localhost/__admin/mappings/save", body="", status=200)
+        responses.add(
+            responses.POST,
+            "http://localhost/__admin/mappings/save",
+            body="",
+            status=200,
+        )
 
         r = Mappings.persist_mappings()
         self.assertEquals(200, r.status_code)
@@ -84,7 +114,12 @@ class MappingsResourceTests(BaseClientTestCase):
     @pytest.mark.resource
     @responses.activate
     def test_reset_mappings(self):
-        responses.add(responses.POST, "http://localhost/__admin/mappings/reset", body="", status=200)
+        responses.add(
+            responses.POST,
+            "http://localhost/__admin/mappings/reset",
+            body="",
+            status=200,
+        )
 
         r = Mappings.reset_mappings()
         self.assertEquals(200, r.status_code)
@@ -94,7 +129,9 @@ class MappingsResourceTests(BaseClientTestCase):
     @pytest.mark.resource
     @responses.activate
     def test_delete_all_mappings(self):
-        responses.add(responses.DELETE, "http://localhost/__admin/mappings", body="", status=200)
+        responses.add(
+            responses.DELETE, "http://localhost/__admin/mappings", body="", status=200
+        )
 
         r = Mappings.delete_all_mappings()
         self.assertEquals(200, r.status_code)
@@ -105,7 +142,12 @@ class MappingsResourceTests(BaseClientTestCase):
     @responses.activate
     def test_delete_mapping(self):
         e = Mapping(id="1234-5678", priority=1)
-        responses.add(responses.DELETE, "http://localhost/__admin/mappings/1234-5678", body="", status=200)
+        responses.add(
+            responses.DELETE,
+            "http://localhost/__admin/mappings/1234-5678",
+            body="",
+            status=200,
+        )
 
         r = Mappings.delete_mapping(e)
         self.assertEquals(200, r.status_code)
@@ -115,8 +157,15 @@ class MappingsResourceTests(BaseClientTestCase):
     @pytest.mark.resource
     @responses.activate
     def test_delete_mapping_by_metadata(self):
-        responses.add(responses.POST, "http://localhost/__admin/mappings/remove-by-metadata", body="{}", status=200)
+        responses.add(
+            responses.POST,
+            "http://localhost/__admin/mappings/remove-by-metadata",
+            body="{}",
+            status=200,
+        )
 
-        r = Mappings.delete_mapping_by_metadata({"matchesJsonPath": {"expression": "$.some.key", "equalTo": "SomeValue"}})
+        r = Mappings.delete_mapping_by_metadata(
+            {"matchesJsonPath": {"expression": "$.some.key", "equalTo": "SomeValue"}}
+        )
 
         self.assertEquals(200, r.status_code)

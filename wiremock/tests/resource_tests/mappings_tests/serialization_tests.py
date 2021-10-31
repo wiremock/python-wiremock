@@ -54,7 +54,13 @@ class MappingsSerializationTests(BaseClientTestCase):
     @pytest.mark.serialization
     @pytest.mark.mappings
     def test_delay_distribution_serialization(self):
-        e = DelayDistribution(distribution_type=DelayDistributionMethods.LOG_NORMAL, median=0.1, sigma=0.2, upper=4, lower=3)
+        e = DelayDistribution(
+            distribution_type=DelayDistributionMethods.LOG_NORMAL,
+            median=0.1,
+            sigma=0.2,
+            upper=4,
+            lower=3,
+        )
         serialized = e.get_json_data()
         self.assertDictContainsKeyWithValue(serialized, "type", "lognormal")
         self.assertDictContainsKeyWithValue(serialized, "median", 0.1)
@@ -66,7 +72,13 @@ class MappingsSerializationTests(BaseClientTestCase):
     @pytest.mark.serialization
     @pytest.mark.mappings
     def test_delay_distribution_deserialization(self):
-        serialized = {"type": "lognormal", "median": 0.1, "sigma": 0.2, "lower": 3, "upper": 4}
+        serialized = {
+            "type": "lognormal",
+            "median": 0.1,
+            "sigma": 0.2,
+            "lower": 3,
+            "upper": 4,
+        }
         e = DelayDistribution.from_dict(serialized)
         self.assertIsInstance(e, DelayDistribution)
         self.assertEquals("lognormal", e.distribution_type)
@@ -85,7 +97,9 @@ class MappingsSerializationTests(BaseClientTestCase):
             url_path="test2",
             url_path_pattern="test3",
             url_pattern="test4",
-            basic_auth_credentials=BasicAuthCredentials(username="username", password="password"),
+            basic_auth_credentials=BasicAuthCredentials(
+                username="username", password="password"
+            ),
             cookies={"chocolate": "chip"},
             headers={"Accept": "stuff"},
             query_parameters={"param": "1"},
@@ -98,11 +112,21 @@ class MappingsSerializationTests(BaseClientTestCase):
         self.assertDictContainsKeyWithValue(serialized, "urlPath", "test2")
         self.assertDictContainsKeyWithValue(serialized, "urlPathPattern", "test3")
         self.assertDictContainsKeyWithValue(serialized, "urlPattern", "test4")
-        self.assertDictContainsKeyWithValue(serialized, "basicAuthCredentials", {"username": "username", "password": "password"})
-        self.assertDictContainsKeyWithValue(serialized, "cookies", {"chocolate": "chip"})
+        self.assertDictContainsKeyWithValue(
+            serialized,
+            "basicAuthCredentials",
+            {"username": "username", "password": "password"},
+        )
+        self.assertDictContainsKeyWithValue(
+            serialized, "cookies", {"chocolate": "chip"}
+        )
         self.assertDictContainsKeyWithValue(serialized, "headers", {"Accept": "stuff"})
-        self.assertDictContainsKeyWithValue(serialized, "queryParameters", {"param": "1"})
-        self.assertDictContainsKeyWithValue(serialized, "bodyPatterns", {"test": "test2"})
+        self.assertDictContainsKeyWithValue(
+            serialized, "queryParameters", {"param": "1"}
+        )
+        self.assertDictContainsKeyWithValue(
+            serialized, "bodyPatterns", {"test": "test2"}
+        )
         self.assertDictContainsKeyWithValue(serialized, "metadata", {"key": "value"})
 
     @pytest.mark.unit
@@ -148,7 +172,9 @@ class MappingsSerializationTests(BaseClientTestCase):
             body="test3",
             body_file_name="test4",
             json_body="test5",
-            delay_distribution=DelayDistribution(distribution_type="lognormal", sigma=0.1, median=0.2),
+            delay_distribution=DelayDistribution(
+                distribution_type="lognormal", sigma=0.1, median=0.2
+            ),
             fault="test6",
             fixed_delay_milliseconds=500,
             from_configured_stub="test7",
@@ -160,12 +186,18 @@ class MappingsSerializationTests(BaseClientTestCase):
             transformers=["test10"],
         )
         serialized = e.get_json_data()
-        self.assertDictContainsKeyWithValue(serialized, "additionalProxyRequestHeaders", {"test": "1"})
+        self.assertDictContainsKeyWithValue(
+            serialized, "additionalProxyRequestHeaders", {"test": "1"}
+        )
         self.assertDictContainsKeyWithValue(serialized, "base64Body", "test2")
         self.assertDictContainsKeyWithValue(serialized, "body", "test3")
         self.assertDictContainsKeyWithValue(serialized, "bodyFileName", "test4")
         self.assertDictContainsKeyWithValue(serialized, "jsonBody", "test5")
-        self.assertDictContainsKeyWithValue(serialized, "delayDistribution", {"type": "lognormal", "sigma": 0.1, "median": 0.2})
+        self.assertDictContainsKeyWithValue(
+            serialized,
+            "delayDistribution",
+            {"type": "lognormal", "sigma": 0.1, "median": 0.2},
+        )
         self.assertDictContainsKeyWithValue(serialized, "fault", "test6")
         self.assertDictContainsKeyWithValue(serialized, "fixedDelayMilliseconds", 500)
         self.assertDictContainsKeyWithValue(serialized, "fromConfiguredStub", "test7")
@@ -173,7 +205,9 @@ class MappingsSerializationTests(BaseClientTestCase):
         self.assertDictContainsKeyWithValue(serialized, "proxyBaseUrl", "test8")
         self.assertDictContainsKeyWithValue(serialized, "status", 200)
         self.assertDictContainsKeyWithValue(serialized, "statusMessage", "test9")
-        self.assertDictContainsKeyWithValue(serialized, "transformerParameters", {"test2": "2"})
+        self.assertDictContainsKeyWithValue(
+            serialized, "transformerParameters", {"test2": "2"}
+        )
         self.assertDictContainsKeyWithValue(serialized, "transformers", ["test10"])
 
     @pytest.mark.unit
@@ -232,12 +266,20 @@ class MappingsSerializationTests(BaseClientTestCase):
         )
         serialized = e.get_json_data()
         self.assertDictContainsKeyWithValue(serialized, "priority", 1)
-        self.assertDictContainsKeyWithValue(serialized, "request", {"method": "GET", "url": "test"})
-        self.assertDictContainsKeyWithValue(serialized, "response", {"status": 200, "statusMessage": "test2"})
+        self.assertDictContainsKeyWithValue(
+            serialized, "request", {"method": "GET", "url": "test"}
+        )
+        self.assertDictContainsKeyWithValue(
+            serialized, "response", {"status": 200, "statusMessage": "test2"}
+        )
         self.assertDictContainsKeyWithValue(serialized, "persistent", False)
-        self.assertDictContainsKeyWithValue(serialized, "postServeActions", {"test": "1"})
+        self.assertDictContainsKeyWithValue(
+            serialized, "postServeActions", {"test": "1"}
+        )
         self.assertDictContainsKeyWithValue(serialized, "newScenarioState", "test3")
-        self.assertDictContainsKeyWithValue(serialized, "requiredScenarioState", "test4")
+        self.assertDictContainsKeyWithValue(
+            serialized, "requiredScenarioState", "test4"
+        )
         self.assertDictContainsKeyWithValue(serialized, "scenarioName", "test5")
 
     @pytest.mark.unit

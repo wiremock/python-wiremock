@@ -12,7 +12,9 @@ class NearMissMatchRequest(BaseAbstractEntity):
     headers = JsonProperty("headers", klass=dict)
     query_parameters = JsonProperty("queryParameters", klass=dict)
     cookies = JsonProperty("cookies", klass=dict)
-    basic_auth_credentials = JsonProperty("basicAuthCredentials", klass=BasicAuthCredentials)
+    basic_auth_credentials = JsonProperty(
+        "basicAuthCredentials", klass=BasicAuthCredentials
+    )
     browser_proxy_request = JsonProperty("browserProxyRequest")  # type: bool
     body_as_base64 = JsonProperty("bodyAsBase64")
     body = JsonProperty("body")
@@ -32,7 +34,9 @@ class NearMissMatchPatternRequest(BaseAbstractEntity):
     query_parameters = JsonProperty("queryParameters", klass=dict)
     cookies = JsonProperty("cookies", klass=dict)
     body_patterns = JsonProperty("bodyPatterns", klass=dict)
-    basic_auth_credentials = JsonProperty("basicAuthCredentials", klass=BasicAuthCredentials)
+    basic_auth_credentials = JsonProperty(
+        "basicAuthCredentials", klass=BasicAuthCredentials
+    )
     browser_proxy_request = JsonProperty("browserProxyRequest")  # type: bool
     logged_date = JsonProperty("loggedDate")  # epoch seconds
     logged_date_string = JsonProperty("loggedDateString")
@@ -50,7 +54,9 @@ class NearMissRequestPatternResult(BaseAbstractEntity):
     headers = JsonProperty("headers", klass=dict)
     query_parameters = JsonProperty("queryParameters", klass=dict)
     cookies = JsonProperty("cookies", klass=dict)
-    basic_auth_credentials = JsonProperty("basicAuthCredentials", klass=BasicAuthCredentials)
+    basic_auth_credentials = JsonProperty(
+        "basicAuthCredentials", klass=BasicAuthCredentials
+    )
     browser_proxy_request = JsonProperty("browserProxyRequest")  # type: bool
     body_as_base64 = JsonProperty("bodyAsBase64")
     body = JsonProperty("body")

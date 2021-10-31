@@ -13,7 +13,9 @@ class SettingsResourceTests(BaseClientTestCase):
     def test_update_settings(self):
         e = GlobalSetting(fixed_delay=500)
         resp = e.get_json_data()
-        responses.add(responses.POST, "http://localhost/__admin/settings", json=resp, status=200)
+        responses.add(
+            responses.POST, "http://localhost/__admin/settings", json=resp, status=200
+        )
 
         r = GlobalSettings.update_global_settings(e)
         self.assertIsInstance(r, GlobalSetting)

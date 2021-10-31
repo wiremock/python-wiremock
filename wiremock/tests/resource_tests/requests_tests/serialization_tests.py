@@ -57,7 +57,9 @@ class RequestsSerializationTests(BaseClientTestCase):
             url="test",
             absolute_url="test2",
             client_ip="test3",
-            basic_auth_credentials=BasicAuthCredentials(username="username", password="password"),
+            basic_auth_credentials=BasicAuthCredentials(
+                username="username", password="password"
+            ),
             cookies={"chocolate": "chip"},
             headers={"test": "1"},
             query_parameters={"test2": "2"},
@@ -72,10 +74,18 @@ class RequestsSerializationTests(BaseClientTestCase):
         self.assertDictContainsKeyWithValue(serialized, "url", "test")
         self.assertDictContainsKeyWithValue(serialized, "absoluteUrl", "test2")
         self.assertDictContainsKeyWithValue(serialized, "clientIp", "test3")
-        self.assertDictContainsKeyWithValue(serialized, "basicAuthCredentials", {"username": "username", "password": "password"})
-        self.assertDictContainsKeyWithValue(serialized, "cookies", {"chocolate": "chip"})
+        self.assertDictContainsKeyWithValue(
+            serialized,
+            "basicAuthCredentials",
+            {"username": "username", "password": "password"},
+        )
+        self.assertDictContainsKeyWithValue(
+            serialized, "cookies", {"chocolate": "chip"}
+        )
         self.assertDictContainsKeyWithValue(serialized, "headers", {"test": "1"})
-        self.assertDictContainsKeyWithValue(serialized, "queryParameters", {"test2": "2"})
+        self.assertDictContainsKeyWithValue(
+            serialized, "queryParameters", {"test2": "2"}
+        )
         self.assertDictContainsKeyWithValue(serialized, "browserProxyRequest", False)
         self.assertDictContainsKeyWithValue(serialized, "body", "test4")
         self.assertDictContainsKeyWithValue(serialized, "bodyAsBase64", "test5")
@@ -123,18 +133,30 @@ class RequestsSerializationTests(BaseClientTestCase):
     @pytest.mark.serialization
     @pytest.mark.requests
     def test_request_response_definition_serialization(self):
-        e = RequestResponseDefinition(status=200, transformers=["test"], from_configured_stub=False, transformer_parameters={"test2": "2"})
+        e = RequestResponseDefinition(
+            status=200,
+            transformers=["test"],
+            from_configured_stub=False,
+            transformer_parameters={"test2": "2"},
+        )
         serialized = e.get_json_data()
         self.assertDictContainsKeyWithValue(serialized, "status", 200)
         self.assertDictContainsKeyWithValue(serialized, "transformers", ["test"])
         self.assertDictContainsKeyWithValue(serialized, "fromConfiguredStub", False)
-        self.assertDictContainsKeyWithValue(serialized, "transformerParameters", {"test2": "2"})
+        self.assertDictContainsKeyWithValue(
+            serialized, "transformerParameters", {"test2": "2"}
+        )
 
     @pytest.mark.unit
     @pytest.mark.serialization
     @pytest.mark.requests
     def test_request_response_definition_deserialization(self):
-        serialized = {"status": 200, "transformers": ["test"], "fromConfiguredStub": False, "transformerParameters": {"test2": "2"}}
+        serialized = {
+            "status": 200,
+            "transformers": ["test"],
+            "fromConfiguredStub": False,
+            "transformerParameters": {"test2": "2"},
+        }
         e = RequestResponseDefinition.from_dict(serialized)
         self.assertIsInstance(e, RequestResponseDefinition)
         self.assertEquals(200, e.status)
@@ -146,16 +168,26 @@ class RequestsSerializationTests(BaseClientTestCase):
     @pytest.mark.serialization
     @pytest.mark.requests
     def test_request_response_serialization(self):
-        e = RequestResponse(request=RequestResponseRequest(method="GET", url="test"), response_definition=RequestResponseDefinition(status=200))
+        e = RequestResponse(
+            request=RequestResponseRequest(method="GET", url="test"),
+            response_definition=RequestResponseDefinition(status=200),
+        )
         serialized = e.get_json_data()
-        self.assertDictContainsKeyWithValue(serialized, "request", {"method": "GET", "url": "test"})
-        self.assertDictContainsKeyWithValue(serialized, "responseDefinition", {"status": 200})
+        self.assertDictContainsKeyWithValue(
+            serialized, "request", {"method": "GET", "url": "test"}
+        )
+        self.assertDictContainsKeyWithValue(
+            serialized, "responseDefinition", {"status": 200}
+        )
 
     @pytest.mark.unit
     @pytest.mark.serialization
     @pytest.mark.requests
     def test_request_response_deserialization(self):
-        serialized = {"request": {"method": "GET", "url": "test"}, "responseDefinition": {"status": 200}}
+        serialized = {
+            "request": {"method": "GET", "url": "test"},
+            "responseDefinition": {"status": 200},
+        }
         e = RequestResponse.from_dict(serialized)
         self.assertIsInstance(e, RequestResponse)
         self.assertIsInstance(e.request, RequestResponseRequest)
@@ -205,7 +237,10 @@ class RequestsSerializationTests(BaseClientTestCase):
     def test_request_response_all_serialization(self):
         e = RequestResponseAll(
             requests=[
-                RequestResponse(request=RequestResponseRequest(method="GET", url="test"), response_definition=RequestResponseDefinition(status=200)),
+                RequestResponse(
+                    request=RequestResponseRequest(method="GET", url="test"),
+                    response_definition=RequestResponseDefinition(status=200),
+                ),
             ],
             meta=RequestResponseAllMeta(total=1),
             request_journal_disabled=False,
@@ -216,7 +251,10 @@ class RequestsSerializationTests(BaseClientTestCase):
             serialized,
             "requests",
             [
-                {"request": {"method": "GET", "url": "test"}, "responseDefinition": {"status": 200}},
+                {
+                    "request": {"method": "GET", "url": "test"},
+                    "responseDefinition": {"status": 200},
+                },
             ],
         )
         self.assertDictContainsKeyWithValue(serialized, "meta", {"total": 1})
@@ -227,7 +265,10 @@ class RequestsSerializationTests(BaseClientTestCase):
     def test_request_response_all_deserialization(self):
         serialized = {
             "requests": [
-                {"request": {"method": "GET", "url": "test"}, "responseDefinition": {"status": 200}},
+                {
+                    "request": {"method": "GET", "url": "test"},
+                    "responseDefinition": {"status": 200},
+                },
             ],
             "meta": {"total": 1},
             "requestJournalDisabled": False,

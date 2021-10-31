@@ -24,9 +24,15 @@ class RequestsResourceTests(BaseClientTestCase):
     @pytest.mark.resource
     @responses.activate
     def test_get_all_received_requests(self):
-        e = RequestResponseAll(requests=[], meta=RequestResponseAllMeta(total=1), request_journal_disabled=False)
+        e = RequestResponseAll(
+            requests=[],
+            meta=RequestResponseAllMeta(total=1),
+            request_journal_disabled=False,
+        )
         resp = e.get_json_data()
-        responses.add(responses.GET, "http://localhost/__admin/requests", json=resp, status=200)
+        responses.add(
+            responses.GET, "http://localhost/__admin/requests", json=resp, status=200
+        )
 
         r = Requests.get_all_received_requests()
         self.assertIsInstance(r, RequestResponseAll)
@@ -43,7 +49,12 @@ class RequestsResourceTests(BaseClientTestCase):
             response_definition=RequestResponseDefinition(url="test", method="GET"),
         )
         resp = e.get_json_data()
-        responses.add(responses.GET, "http://localhost/__admin/requests/1234-5678", json=resp, status=200)
+        responses.add(
+            responses.GET,
+            "http://localhost/__admin/requests/1234-5678",
+            json=resp,
+            status=200,
+        )
 
         r = Requests.get_request("1234-5678")
         self.assertIsInstance(r, RequestResponse)
@@ -55,7 +66,12 @@ class RequestsResourceTests(BaseClientTestCase):
     @pytest.mark.resource
     @responses.activate
     def test_reset_request_journal(self):
-        responses.add(responses.POST, "http://localhost/__admin/requests/reset", body="", status=200)
+        responses.add(
+            responses.POST,
+            "http://localhost/__admin/requests/reset",
+            body="",
+            status=200,
+        )
 
         r = Requests.reset_request_journal()
         self.assertEquals(200, r.status_code)
@@ -66,7 +82,12 @@ class RequestsResourceTests(BaseClientTestCase):
     @responses.activate
     def test_get_matching_request_count(self):
         resp = RequestCountResponse(count=4).get_json_data()
-        responses.add(responses.POST, "http://localhost/__admin/requests/count", json=resp, status=200)
+        responses.add(
+            responses.POST,
+            "http://localhost/__admin/requests/count",
+            json=resp,
+            status=200,
+        )
 
         request = NearMissMatchPatternRequest(url="test", method="GET")
 
@@ -85,7 +106,12 @@ class RequestsResourceTests(BaseClientTestCase):
             ],
         )
         resp = e.get_json_data()
-        responses.add(responses.POST, "http://localhost/__admin/requests/find", json=resp, status=200)
+        responses.add(
+            responses.POST,
+            "http://localhost/__admin/requests/find",
+            json=resp,
+            status=200,
+        )
 
         request = NearMissMatchPatternRequest(url="test", method="GET")
 
@@ -109,7 +135,12 @@ class RequestsResourceTests(BaseClientTestCase):
             ],
         )
         resp = e.get_json_data()
-        responses.add(responses.GET, "http://localhost/__admin/requests/unmatched", json=resp, status=200)
+        responses.add(
+            responses.GET,
+            "http://localhost/__admin/requests/unmatched",
+            json=resp,
+            status=200,
+        )
 
         r = Requests.get_unmatched_requests()
         self.assertIsInstance(r, RequestResponseFindResponse)
@@ -131,7 +162,12 @@ class RequestsResourceTests(BaseClientTestCase):
             ]
         )
         resp = e.get_json_data()
-        responses.add(responses.GET, "http://localhost/__admin/requests/unmatched/near-misses", json=resp, status=200)
+        responses.add(
+            responses.GET,
+            "http://localhost/__admin/requests/unmatched/near-misses",
+            json=resp,
+            status=200,
+        )
 
         r = Requests.get_unmatched_requests_near_misses()
         self.assertIsInstance(r, NearMissMatchResponse)
