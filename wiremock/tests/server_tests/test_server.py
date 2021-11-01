@@ -5,12 +5,15 @@ import unittest
 from subprocess import STDOUT, PIPE
 
 import responses
-from mock import patch, DEFAULT
+from unittest.mock import patch, DEFAULT
 from pkg_resources import resource_filename
+import pytest
 
-from wiremock.server.exceptions import WireMockServerAlreadyStartedError, WireMockServerNotStartedError
+from wiremock.server.exceptions import (
+    WireMockServerAlreadyStartedError,
+    WireMockServerNotStartedError,
+)
 from wiremock.server.server import WireMockServer
-from wiremock.tests.base import attr
 
 
 class WireMockServerTestCase(unittest.TestCase):
@@ -21,7 +24,8 @@ class WireMockServerTestCase(unittest.TestCase):
         with patch.object(WireMockServer, "_get_free_port", return_value=self.port):
             self.wm = WireMockServer(java_path=self.java_path, jar_path=self.jar_path)
 
-    @attr("unit", "server")
+    @pytest.mark.unit
+    @pytest.mark.wiremock_server
     def test_init(self):
         with patch.object(WireMockServer, "_get_free_port") as _get_free_port:
             _get_free_port.return_value = self.port
@@ -34,16 +38,20 @@ class WireMockServerTestCase(unittest.TestCase):
         self.assertEqual(wm.jar_path, self.jar_path)
         self.assertFalse(wm.is_running)
 
-    @attr("unit", "server")
+    @pytest.mark.unit
+    @pytest.mark.wiremock_server
     def test_init_with_defaults(self):
         with patch.object(WireMockServer, "_get_free_port", return_value=self.port):
             wm = WireMockServer()
 
-        expected_jar = resource_filename("wiremock", "server/wiremock-standalone-2.6.0.jar")
+        expected_jar = resource_filename(
+            "wiremock", "server/wiremock-standalone-2.6.0.jar"
+        )
         self.assertEqual(wm.java_path, "java")  # Assume java in PATH
         self.assertEqual(wm.jar_path, expected_jar)
 
-    @attr("unit", "server")
+    @pytest.mark.unit
+    @pytest.mark.wiremock_server
     @patch("wiremock.server.server.socket")
     def test_get_free_port(self, mock_socket):
         sock = mock_socket.socket.return_value
@@ -54,13 +62,19 @@ class WireMockServerTestCase(unittest.TestCase):
 
         self.assertEqual(port, expected_port)
 
-    @attr("unit", "server")
+    @pytest.mark.unit
+    @pytest.mark.wiremock_server
     @patch("wiremock.server.server.atexit")
     @patch("wiremock.server.server.Popen")
     @responses.activate
     def test_start(self, Popen, atexit):
         # mock healthy endpoint
-        responses.add(responses.GET, "http://localhost:{}/__admin".format(self.wm.port), json=[], status=200)
+        responses.add(
+            responses.GET,
+            "http://localhost:{}/__admin".format(self.wm.port),
+            json=[],
+            status=200,
+        )
 
         def poll():
             Popen.return_value.returncode = None
@@ -71,7 +85,17 @@ class WireMockServerTestCase(unittest.TestCase):
         self.wm.start()
 
         Popen.assert_called_once_with(
-            [self.java_path, "-jar", self.jar_path, "--port", str(54321), "--local-response-templating"], stdin=PIPE, stdout=PIPE, stderr=STDOUT
+            [
+                self.java_path,
+                "-jar",
+                self.jar_path,
+                "--port",
+                str(54321),
+                "--local-response-templating",
+            ],
+            stdin=PIPE,
+            stdout=PIPE,
+            stderr=STDOUT,
         )
 
         self.assertTrue(self.wm.is_running)
@@ -81,19 +105,22 @@ class WireMockServerTestCase(unittest.TestCase):
         with self.assertRaises(WireMockServerAlreadyStartedError):
             self.wm.start()
 
-    @attr("unit", "server")
+    @pytest.mark.unit
+    @pytest.mark.wiremock_server
     def test_start_with_invalid_java(self):
         wm = WireMockServer(java_path="/no/such/path")
         with self.assertRaises(WireMockServerNotStartedError):
             wm.start()
 
-    @attr("unit", "server")
+    @pytest.mark.unit
+    @pytest.mark.wiremock_server
     def test_start_with_invalid_jar(self):
         wm = WireMockServer(jar_path="/dev/null")
         with self.assertRaises(WireMockServerNotStartedError):
             wm.start()
 
-    @attr("unit", "server")
+    @pytest.mark.unit
+    @pytest.mark.wiremock_server
     def test_stop(self):
         with patch.object(self.wm, "_WireMockServer__subprocess") as _subprocess:
             self.wm._WireMockServer__running = True
@@ -108,7 +135,8 @@ class WireMockServerTestCase(unittest.TestCase):
             with self.assertRaises(WireMockServerNotStartedError):
                 self.wm.stop()
 
-    @attr("unit", "server")
+    @pytest.mark.unit
+    @pytest.mark.wiremock_server
     def test_with_statement(self):
         with patch.multiple(WireMockServer, start=DEFAULT, stop=DEFAULT) as mocks:
 

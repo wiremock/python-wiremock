@@ -1,5 +1,10 @@
 from wiremock._compat import add_metaclass
-from wiremock.base import BaseEntity, JsonProperty, BaseAbstractEntity, BaseEntityMetaType
+from wiremock.base import (
+    BaseEntity,
+    JsonProperty,
+    BaseAbstractEntity,
+    BaseEntityMetaType,
+)
 from wiremock.resources.mappings.models import BasicAuthCredentials
 
 
@@ -14,7 +19,9 @@ class RequestResponseRequest(BaseAbstractEntity):
     url = JsonProperty("url")
     absolute_url = JsonProperty("absoluteUrl")
     client_ip = JsonProperty("clientIp")
-    basic_auth_credentials = JsonProperty("basicAuthCredentials", klass=BasicAuthCredentials)
+    basic_auth_credentials = JsonProperty(
+        "basicAuthCredentials", klass=BasicAuthCredentials
+    )
     cookies = JsonProperty("cookies", klass=dict)
     headers = JsonProperty("headers", klass=dict)
     query_parameters = JsonProperty("queryParameters", klass=dict)
@@ -35,7 +42,9 @@ class RequestResponseDefinition(BaseAbstractEntity):
 
 class RequestResponse(BaseEntity):
     request = JsonProperty("request", klass=RequestResponseRequest)
-    response_definition = JsonProperty("responseDefinition", klass=RequestResponseDefinition)
+    response_definition = JsonProperty(
+        "responseDefinition", klass=RequestResponseDefinition
+    )
 
 
 @add_metaclass(BaseEntityMetaType)
@@ -52,7 +61,9 @@ class RequestResponseFindResponse(BaseAbstractEntity):
 class RequestResponseAll(BaseAbstractEntity):
     requests = JsonProperty("requests", klass=list, list_klass=RequestResponse)
     meta = JsonProperty("meta", klass=RequestResponseAllMeta)
-    request_journal_disabled = JsonProperty("requestJournalDisabled")  # should be true/false
+    request_journal_disabled = JsonProperty(
+        "requestJournalDisabled"
+    )  # should be true/false
 
 
 __all__ = [

@@ -1,8 +1,15 @@
+import enum
 from wiremock._compat import add_metaclass
-from wiremock.base import BaseEntity, JsonProperty, BaseAbstractEntity, BaseEntityMetaType
+from wiremock.base import (
+    BaseEntity,
+    JsonProperty,
+    BaseAbstractEntity,
+    BaseEntityMetaType,
+)
 
 
-class HttpMethods(object):
+@enum.unique
+class HttpMethods(enum.Enum):
     ANY = "ANY"
     GET = "GET"
     POST = "POST"
@@ -13,7 +20,8 @@ class HttpMethods(object):
     HEAD = "HEAD"
 
 
-class CommonHeaders(object):
+@enum.unique
+class CommonHeaders(enum.Enum):
     ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin"
     ACCEPT = "Accept"
     ACCEPT_CHARSET = "Accept-Charset"
@@ -70,7 +78,8 @@ class CommonHeaders(object):
     X_REQUESTED_WITH = "X-Requested-With"
 
 
-class WireMockMatchers(object):
+@enum.unique
+class WireMockMatchers(enum.Enum):
     ABSENT = "absent"
     ANYTHING = "anything"
     CASE_INSENSITIVE = "caseInsensitive"  # Should be true/false
@@ -89,16 +98,18 @@ class WireMockMatchers(object):
 
 @add_metaclass(BaseEntityMetaType)
 class BasicAuthCredentials(BaseAbstractEntity):
-    username = JsonProperty("username")
-    password = JsonProperty("password")
+    username = JsonProperty("username", klass=str)
+    password = JsonProperty("password", klass=str)
 
 
-class DelayDistributionMethods(object):
+@enum.unique
+class DelayDistributionMethods(enum.Enum):
     LOG_NORMAL = "lognormal"
     UNIFORM = "uniform"
 
 
-class ResponseFaultType(object):
+@enum.unique
+class ResponseFaultType(enum.Enum):
     EMPTY_RESPONSE = "EMPTY_RESPONSE"
     MALFORMED_RESPONSE_CHUNK = "MALFORMED_RESPONSE_CHUNK"
     RANDOM_DATA_THEN_CLOSE = "RANDOM_DATA_THEN_CLOSE"
@@ -124,7 +135,9 @@ class MappingRequest(BaseAbstractEntity):
     url_path = JsonProperty("urlPath")
     url_path_pattern = JsonProperty("urlPathPattern")
     url_pattern = JsonProperty("urlPattern")
-    basic_auth_credentials = JsonProperty("basicAuthCredentials", klass=BasicAuthCredentials)
+    basic_auth_credentials = JsonProperty(
+        "basicAuthCredentials", klass=BasicAuthCredentials
+    )
     cookies = JsonProperty("cookies", klass=dict)
     headers = JsonProperty("headers", klass=dict)
     query_parameters = JsonProperty("queryParameters", klass=dict)
@@ -134,7 +147,9 @@ class MappingRequest(BaseAbstractEntity):
 
 @add_metaclass(BaseEntityMetaType)
 class MappingResponse(BaseAbstractEntity):
-    additional_proxy_request_headers = JsonProperty("additionalProxyRequestHeaders", klass=dict)
+    additional_proxy_request_headers = JsonProperty(
+        "additionalProxyRequestHeaders", klass=dict
+    )
     base64_body = JsonProperty("base64Body")
     body = JsonProperty("body")
     body_file_name = JsonProperty("bodyFileName")
@@ -161,7 +176,7 @@ class Mapping(BaseEntity):
     new_scenario_state = JsonProperty("newScenarioState")
     required_scenario_state = JsonProperty("requiredScenarioState")
     scenario_name = JsonProperty("scenarioName")
-    metadata = JsonProperty('metadata', klass=dict)
+    metadata = JsonProperty("metadata", klass=dict)
 
 
 @add_metaclass(BaseEntityMetaType)

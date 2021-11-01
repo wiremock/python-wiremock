@@ -1,7 +1,5 @@
 import json
 import logging
-from nose.tools import nottest
-from nose.plugins.attrib import attr
 import responses
 from unittest import TestCase
 
@@ -18,15 +16,19 @@ class BaseClientTestCase(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        Config.base_url = "http://localhost/__admin"
-        Config.timeout = 1
+        Config.instance().base_url = "http://localhost/__admin"
+        Config.instance().timeout = 1
         super(BaseClientTestCase, cls).setUpClass()
 
     def assertHasAttr(self, obj, attr):
-        self.assertTrue(hasattr(obj, attr), "%s doesn't have attribute: %s" % (obj, attr))
+        self.assertTrue(
+            hasattr(obj, attr), "%s doesn't have attribute: %s" % (obj, attr)
+        )
 
     def assertNotHasAttr(self, obj, attr):
-        self.assertFalse(hasattr(obj, attr), "%s shouldn't have attribute: %s" % (obj, attr))
+        self.assertFalse(
+            hasattr(obj, attr), "%s shouldn't have attribute: %s" % (obj, attr)
+        )
 
     def assertAttrEqual(self, obj, attr, value):
         self.assertHasAttr(obj, attr)
@@ -63,7 +65,7 @@ class BaseClientTestCase(TestCase):
 
     def assertDictContainsKeyWithValue(self, obj, key, value):
         if key in obj:
-            self.assertEquals(value, obj[key])
+            self.assertEqual(value, obj[key])
         else:
             raise AssertionError("{} is not in dict: {}".format(key, obj))
 
@@ -72,9 +74,11 @@ class BaseClientTestCase(TestCase):
             if isinstance(obj[key], B):
                 return
             else:
-                raise AssertionError("dict[{}]={} is not of type: {}".format(key, obj[key], B))
+                raise AssertionError(
+                    "dict[{}]={} is not of type: {}".format(key, obj[key], B)
+                )
         else:
             raise AssertionError("{} is not in dict: {}".format(key, obj))
 
 
-__all__ = ["BaseClientTestCase", "nottest", "attr", "json", "responses"]
+__all__ = ["BaseClientTestCase", "json", "responses"]

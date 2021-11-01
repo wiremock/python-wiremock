@@ -42,10 +42,9 @@ htmlcov/
 .tox/
 .coverage
 coverage/
-wellaware/tests/coverage
+wiremock/tests/coverage
 .coverage.*
 .cache
-nosetests.xml
 coverage.xml
 *,cover
 .hypothesis/

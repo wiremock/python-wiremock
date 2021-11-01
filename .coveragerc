@@ -1,0 +1,8 @@
+[run]
+branch = True
+source = .
+omit =
+    wiremock/_compat.py
+
+[report]
+include = wiremock/*

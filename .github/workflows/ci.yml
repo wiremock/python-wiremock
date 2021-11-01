@@ -1,0 +1,86 @@
+# .github/workflows/app.yaml
+name: CI
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+      - version_3
+    tags:
+  schedule:
+    # run every day at 3:53 UTC
+    - cron: 53 3 * * *
+
+jobs:
+  test:
+    name: ${{ matrix.os }} / ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - Ubuntu
+          - macOS
+          - Windows
+        python-version:
+          - "3.10"
+          - 3.9
+          - 3.8
+        # TODO: uncomment after https://github.com/pytest-dev/py/issues/273 being fixed
+        # include:
+        #   - os: Ubuntu
+        #     python-version: 3.11-dev
+    env:
+      PY_COLORS: 1
+      TOXENV: piplatest-coverage
+      TOX_PARALLEL_NO_SPINNER: 1
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up Python ${{ matrix.python-version }} from GitHub
+        if: "!endsWith(matrix.python-version, '-dev')"
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python-version }} from deadsnakes
+        if: endsWith(matrix.python-version, '-dev')
+        uses: deadsnakes/action@v2.0.1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Log python version info (${{ matrix.python-version }})
+        run: python --version
+      - name: Pip cache
+        uses: actions/cache@v2
+        with:
+          path: >-
+            ${{
+              runner.os == 'Linux' &&
+              '~/.cache/pip'
+              || ''
+            }}${{
+              runner.os == 'macOS' &&
+              '~/Library/Caches/pip'
+              || ''
+            }}${{
+              runner.os == 'Windows' &&
+              '~\AppData\Local\pip\Cache'
+              || ''
+            }}
+          key: >-
+            ${{ runner.os }}-pip-${{ hashFiles('setup.cfg') }}-${{
+            hashFiles('setup.py') }}-${{ hashFiles('tox.ini') }}-${{
+            hashFiles('.pre-commit-config.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
+      - name: Install test dependencies
+        run: python -m pip install -U tox virtualenv
+      - name: Prepare test environment
+        run: tox --notest -p auto --parallel-live
+      - name: Test python-wiremock
+        run: tox
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1.0.15
+        with:
+          file: ./coverage.xml
+          name: ${{ runner.os }}-${{ matrix.python-version }}

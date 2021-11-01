@@ -1,52 +1,55 @@
 from calendar import timegm
 from copy import deepcopy
 import logging
+from typing import Dict, Any, Union
+import datetime
 
 from wiremock import __version__
-from wiremock._compat import add_metaclass
 
 
 logger = logging.getLogger("wiremock")
 
 
-class Singleton(type):
-    _instances = {}
-
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
-
-
-DEFAULT_TIMEOUT = 30
-DEFAULT_BASE_URL = "http://localhost/__admin"
-USER_AGENT = "python_wiremock/%s".format(__version__)
-DEFAULT_HEADERS = {"Accept": "application/json", "Content-Type": "application/json", "user-agent": USER_AGENT}
-DEFAULT_REQUESTS_VERIFY = True
-DEFAULT_REQUESTS_CERT = None
+DEFAULT_TIMEOUT: int = 30
+DEFAULT_BASE_URL: str = "http://localhost/__admin"
+USER_AGENT: str = "python_wiremock/%s".format(__version__)
+DEFAULT_HEADERS: Dict[str, Any] = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "user-agent": USER_AGENT,
+}
+DEFAULT_REQUESTS_VERIFY: bool = True
+DEFAULT_REQUESTS_CERT: Union[None, str] = None
 
 
-@add_metaclass(Singleton)
 class Config(object):
-    timeout = DEFAULT_TIMEOUT
-    base_url = DEFAULT_BASE_URL
-    user_agent = USER_AGENT
-    headers = DEFAULT_HEADERS
-    requests_verify = DEFAULT_REQUESTS_VERIFY
-    requests_cert = DEFAULT_REQUESTS_CERT
+    __instance = None
+
+    @classmethod
+    def instance(cls):
+        if cls.__instance is None:
+            cls.__instance = cls()
+        return cls.__instance
+
+    timeout: int = DEFAULT_TIMEOUT
+    base_url: str = DEFAULT_BASE_URL
+    user_agent: str = USER_AGENT
+    headers: Dict[str, Any] = DEFAULT_HEADERS
+    requests_verify: bool = DEFAULT_REQUESTS_VERIFY
+    requests_cert: Union[None, str] = DEFAULT_REQUESTS_CERT
 
 
-Config()  # pre-call once
+Config.instance()  # pre-call once
 
 
-def make_headers(**kwargs):
-    headers = deepcopy(Config.headers)
+def make_headers(**kwargs) -> Dict[str, Any]:
+    headers = deepcopy(Config.instance().headers)
     for key, value in kwargs.items():
         headers[key] = value
     return headers
 
 
-def datetime_to_ms(dt):
+def datetime_to_ms(dt: Union[int, datetime.datetime]) -> int:
     if isinstance(dt, int):
         return dt
     else:
