@@ -14,4 +14,4 @@ class SettingsSerializationTests(BaseClientTestCase):
         serialized = {"fixedDelay": 500}
         gs = GlobalSetting.from_dict(serialized)
         self.assertIsInstance(gs, GlobalSetting)
-        self.assertEquals(500, gs.fixed_delay)
+        self.assertEqual(500, gs.fixed_delay)

@@ -11,4 +11,4 @@ class ScenariosResourceTests(BaseClientTestCase):
         responses.add(responses.POST, "http://localhost/__admin/scenarios/reset", body="", status=200)
 
         r = Scenarios.reset_all_scenarios()
-        self.assertEquals(200, r.status_code)
+        self.assertEqual(200, r.status_code)

@@ -14,4 +14,4 @@ class SettingsResourceTests(BaseClientTestCase):
 
         r = GlobalSettings.update_global_settings(e)
         self.assertIsInstance(r, GlobalSetting)
-        self.assertEquals(500, r.fixed_delay)
+        self.assertEqual(500, r.fixed_delay)
