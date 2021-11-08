@@ -27,7 +27,7 @@ class RequestsResourceTests(BaseClientTestCase):
 
         r = Requests.get_all_received_requests()
         self.assertIsInstance(r, RequestResponseAll)
-        self.assertEquals(False, r.request_journal_disabled)
+        self.assertEqual(False, r.request_journal_disabled)
 
     @attr("unit", "requests", "resource")
     @responses.activate
@@ -42,8 +42,8 @@ class RequestsResourceTests(BaseClientTestCase):
 
         r = Requests.get_request("1234-5678")
         self.assertIsInstance(r, RequestResponse)
-        self.assertEquals("test", r.request.url)
-        self.assertEquals("1234-5678", r.id)
+        self.assertEqual("test", r.request.url)
+        self.assertEqual("1234-5678", r.id)
 
     @attr("unit", "requests", "resource")
     @responses.activate
@@ -51,7 +51,7 @@ class RequestsResourceTests(BaseClientTestCase):
         responses.add(responses.POST, "http://localhost/__admin/requests/reset", body="", status=200)
 
         r = Requests.reset_request_journal()
-        self.assertEquals(200, r.status_code)
+        self.assertEqual(200, r.status_code)
 
     @attr("unit", "requests", "resource")
     @responses.activate
@@ -63,7 +63,7 @@ class RequestsResourceTests(BaseClientTestCase):
 
         r = Requests.get_matching_request_count(request)
         self.assertIsInstance(r, RequestCountResponse)
-        self.assertEquals(4, r.count)
+        self.assertEqual(4, r.count)
 
     @attr("unit", "requests", "resource")
     @responses.activate
@@ -77,11 +77,11 @@ class RequestsResourceTests(BaseClientTestCase):
         r = Requests.get_matching_requests(request)
         self.assertIsInstance(r, RequestResponseFindResponse)
         self.assertIsInstance(r.requests, list)
-        self.assertEquals(1, len(r.requests))
+        self.assertEqual(1, len(r.requests))
         result = r.requests[0]
         self.assertIsInstance(result, RequestResponseRequest)
-        self.assertEquals("GET", result.method)
-        self.assertEquals("test", result.url)
+        self.assertEqual("GET", result.method)
+        self.assertEqual("test", result.url)
 
     @attr("unit", "requests", "resource")
     @responses.activate
@@ -93,11 +93,11 @@ class RequestsResourceTests(BaseClientTestCase):
         r = Requests.get_unmatched_requests()
         self.assertIsInstance(r, RequestResponseFindResponse)
         self.assertIsInstance(r.requests, list)
-        self.assertEquals(1, len(r.requests))
+        self.assertEqual(1, len(r.requests))
         result = r.requests[0]
         self.assertIsInstance(result, RequestResponseRequest)
-        self.assertEquals("GET", result.method)
-        self.assertEquals("test", result.url)
+        self.assertEqual("GET", result.method)
+        self.assertEqual("test", result.url)
 
     @attr("unit", "requests", "resource")
     @responses.activate
@@ -110,5 +110,5 @@ class RequestsResourceTests(BaseClientTestCase):
         self.assertIsInstance(r, NearMissMatchResponse)
         result = r.near_misses[0]
         self.assertIsInstance(result, NearMissMatch)
-        self.assertEquals("test", result.request.url)
-        self.assertEquals("GET", result.request.method)
+        self.assertEqual("test", result.request.url)
+        self.assertEqual("GET", result.request.method)

@@ -35,7 +35,7 @@ class NearMissesResourceTests(BaseClientTestCase):
         self.assertIsInstance(r.near_misses, list)
         result = r.near_misses[0]
         self.assertIsInstance(result, NearMissMatch)
-        self.assertEquals("test", result.request.url)
+        self.assertEqual("test", result.request.url)
 
     @attr("unit", "nearmisses", "resource")
     @responses.activate
@@ -58,4 +58,4 @@ class NearMissesResourceTests(BaseClientTestCase):
         self.assertIsInstance(r.near_misses, list)
         result = r.near_misses[0]
         self.assertIsInstance(result, NearMissMatch)
-        self.assertEquals("test", result.request.url)
+        self.assertEqual("test", result.request.url)

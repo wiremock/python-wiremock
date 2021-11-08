@@ -63,7 +63,7 @@ class BaseClientTestCase(TestCase):
 
     def assertDictContainsKeyWithValue(self, obj, key, value):
         if key in obj:
-            self.assertEquals(value, obj[key])
+            self.assertEqual(value, obj[key])
         else:
             raise AssertionError("{} is not in dict: {}".format(key, obj))
 

@@ -16,8 +16,8 @@ class MappingsResourceTests(BaseClientTestCase):
 
         r = Mappings.create_mapping(m)
         self.assertIsInstance(r, MappingResponse)
-        self.assertEquals(200, r.status)
-        self.assertEquals("test", r.body)
+        self.assertEqual(200, r.status)
+        self.assertEqual("test", r.body)
 
     @attr("unit", "mappings", "resource")
     @responses.activate
@@ -29,7 +29,7 @@ class MappingsResourceTests(BaseClientTestCase):
         r = Mappings.retrieve_all_mappings()
         self.assertIsInstance(r, AllMappings)
         self.assertIsInstance(r.meta, MappingMeta)
-        self.assertEquals(1, r.meta.total)
+        self.assertEqual(1, r.meta.total)
 
     @attr("unit", "mappings", "resource")
     @responses.activate
@@ -40,8 +40,8 @@ class MappingsResourceTests(BaseClientTestCase):
 
         r = Mappings.retrieve_mapping(e)
         self.assertIsInstance(r, Mapping)
-        self.assertEquals("1234-5678", r.id)
-        self.assertEquals(1, r.priority)
+        self.assertEqual("1234-5678", r.id)
+        self.assertEqual(1, r.priority)
 
     @attr("unit", "mappings", "resource")
     @responses.activate
@@ -52,8 +52,8 @@ class MappingsResourceTests(BaseClientTestCase):
 
         r = Mappings.update_mapping(e)
         self.assertIsInstance(r, Mapping)
-        self.assertEquals("1234-5678", r.id)
-        self.assertEquals(1, r.priority)
+        self.assertEqual("1234-5678", r.id)
+        self.assertEqual(1, r.priority)
 
     @attr("unit", "mappings", "resource")
     @responses.activate
@@ -61,7 +61,7 @@ class MappingsResourceTests(BaseClientTestCase):
         responses.add(responses.POST, "http://localhost/__admin/mappings/save", body="", status=200)
 
         r = Mappings.persist_mappings()
-        self.assertEquals(200, r.status_code)
+        self.assertEqual(200, r.status_code)
 
     @attr("unit", "mappings", "resource")
     @responses.activate
@@ -69,7 +69,7 @@ class MappingsResourceTests(BaseClientTestCase):
         responses.add(responses.POST, "http://localhost/__admin/mappings/reset", body="", status=200)
 
         r = Mappings.reset_mappings()
-        self.assertEquals(200, r.status_code)
+        self.assertEqual(200, r.status_code)
 
     @attr("unit", "mappings", "resource")
     @responses.activate
@@ -77,7 +77,7 @@ class MappingsResourceTests(BaseClientTestCase):
         responses.add(responses.DELETE, "http://localhost/__admin/mappings", body="", status=200)
 
         r = Mappings.delete_all_mappings()
-        self.assertEquals(200, r.status_code)
+        self.assertEqual(200, r.status_code)
 
     @attr("unit", "mappings", "resource")
     @responses.activate
@@ -86,7 +86,7 @@ class MappingsResourceTests(BaseClientTestCase):
         responses.add(responses.DELETE, "http://localhost/__admin/mappings/1234-5678", body="", status=200)
 
         r = Mappings.delete_mapping(e)
-        self.assertEquals(200, r.status_code)
+        self.assertEqual(200, r.status_code)
 
     @attr("unit", "mappings", "resource")
     @responses.activate
@@ -100,4 +100,4 @@ class MappingsResourceTests(BaseClientTestCase):
             }
         })
 
-        self.assertEquals(200, r.status_code)
+        self.assertEqual(200, r.status_code)
