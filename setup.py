@@ -26,7 +26,7 @@ wiremock is an API Client to the Admin API for WireMock Standalone installation:
 
 `Documentation <https://wiremock.readthedocs.org/en/latest/>`_
 
-`Report a Bug <https://github.com/platinummonkey/python-wiremock/issues>`_
+`Report a Bug <https://github.com/wiremock/python-wiremock/issues>`_
 """
 
 setup(

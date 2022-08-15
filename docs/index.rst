@@ -10,7 +10,7 @@ Links
 -----
 
 * Documentation: https://wiremock.readthedocs.io/en/latest/
-* Official Repository: https://github.com/platinummonkey/python-wiremock.git
+* Official Repository: https://github.com/wiremock/python-wiremock.git
 * Package: TODO
 
 wiremock is known to support Python 3.7.
@@ -27,7 +27,7 @@ PyPI: TODO
 
     $ pip install wiremock
 
-Source: https://github.com/platinummonkey/python-wiremock.git
+Source: https://github.com/wiremock/python-wiremock.git
 
 .. code-block:: sh
 
