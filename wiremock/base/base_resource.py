@@ -1,14 +1,17 @@
 import json
+
 import requests
 from requests import exceptions as rexc
 
 from wiremock.base.base_entity import BaseAbstractEntity
-from wiremock.constants import make_headers, Config, logger
+from wiremock.constants import Config, logger, make_headers
 from wiremock.exceptions import *
 
 
 class RestClient(object):
-    def __init__(self, timeout=None, base_url=None, requests_verify=None, requests_cert=None):
+    def __init__(
+        self, timeout=None, base_url=None, requests_verify=None, requests_cert=None
+    ):
         self.timeout = timeout
         self.base_url = base_url
         self.requests_verify = requests_verify
@@ -28,7 +31,13 @@ class RestClient(object):
 
     def _log(self, action, url, **kwargs):
         ctx = {"timeout": kwargs.get("timeout")}
-        logger.debug("%s [%s] - %s", action, url, kwargs.get("json", json.dumps(kwargs.get("data", None))), extra=ctx)
+        logger.debug(
+            "%s [%s] - %s",
+            action,
+            url,
+            kwargs.get("json", json.dumps(kwargs.get("data", None))),
+            extra=ctx,
+        )
 
     def post(self, uri, **kwargs):
         if "timeout" not in kwargs:
@@ -189,7 +198,9 @@ class BaseResource(object):
 
     @staticmethod
     def get_entity_id(entity_id, entityClass):
-        if not (isinstance(entity_id, (int, str)) or isinstance(entity_id, entityClass)):
+        if not (
+            isinstance(entity_id, (int, str)) or isinstance(entity_id, entityClass)
+        ):
             raise InvalidInputException(422, entity_id)
         if isinstance(entity_id, entityClass):
             entity_id = entity_id.id
@@ -205,16 +216,24 @@ class BaseResource(object):
     def _create(cls, entity, parameters=None, ids={}):  # pragma: no cover
         if isinstance(entity, BaseAbstractEntity):
             response = cls.REST_CLIENT.post(
-                cls.get_base_uri(cls.endpoint(), **ids), json=entity.get_json_data(), headers=make_headers(), params=parameters
+                cls.get_base_uri(cls.endpoint(), **ids),
+                json=entity.get_json_data(),
+                headers=make_headers(),
+                params=parameters,
             )
         else:
             response = cls.REST_CLIENT.post(
-                cls.get_base_uri(cls.endpoint(), **ids), data=json.dumps(entity), headers=make_headers(), params=parameters
+                cls.get_base_uri(cls.endpoint(), **ids),
+                data=json.dumps(entity),
+                headers=make_headers(),
+                params=parameters,
             )
 
         response = cls.REST_CLIENT.handle_response(response)
 
-        if cls.entity_class() is None or not issubclass(cls.entity_class(), BaseAbstractEntity):
+        if cls.entity_class() is None or not issubclass(
+            cls.entity_class(), BaseAbstractEntity
+        ):
             return response  # pragma: no cover
         else:
             return cls.entity_class().from_dict(response.json())
@@ -226,16 +245,24 @@ class BaseResource(object):
             ids["id"] = entity_id
         if isinstance(entity, BaseAbstractEntity):
             response = cls.REST_CLIENT.put(
-                cls.get_base_uri(cls.endpoint_single(), **ids), json=entity.get_json_data(), headers=make_headers(), params=parameters
+                cls.get_base_uri(cls.endpoint_single(), **ids),
+                json=entity.get_json_data(),
+                headers=make_headers(),
+                params=parameters,
             )
         else:
             response = cls.REST_CLIENT.put(
-                cls.get_base_uri(cls.endpoint_single(), **ids), data=json.dumps(entity), headers=make_headers(), params=parameters
+                cls.get_base_uri(cls.endpoint_single(), **ids),
+                data=json.dumps(entity),
+                headers=make_headers(),
+                params=parameters,
             )
 
         response = cls.REST_CLIENT.handle_response(response)
 
-        if cls.entity_class() is None or not issubclass(cls.entity_class(), BaseAbstractEntity):
+        if cls.entity_class() is None or not issubclass(
+            cls.entity_class(), BaseAbstractEntity
+        ):
             return response  # pragma: no cover
         else:
             return cls.entity_class().from_dict(response.json())
@@ -247,26 +274,40 @@ class BaseResource(object):
             ids["id"] = entity_id
         if isinstance(entity, BaseAbstractEntity):
             response = cls.REST_CLIENT.patch(
-                cls.get_base_uri(cls.endpoint_single(), **ids), json=entity.get_json_data(), headers=make_headers(), params=parameters
+                cls.get_base_uri(cls.endpoint_single(), **ids),
+                json=entity.get_json_data(),
+                headers=make_headers(),
+                params=parameters,
             )
         else:
             response = cls.REST_CLIENT.patch(
-                cls.get_base_uri(cls.endpoint_single(), **ids), data=json.dumps(entity), headers=make_headers(), params=parameters
+                cls.get_base_uri(cls.endpoint_single(), **ids),
+                data=json.dumps(entity),
+                headers=make_headers(),
+                params=parameters,
             )
 
         response = cls.REST_CLIENT.handle_response(response)
 
-        if cls.entity_class() is None or not issubclass(cls.entity_class(), BaseAbstractEntity):
+        if cls.entity_class() is None or not issubclass(
+            cls.entity_class(), BaseAbstractEntity
+        ):
             return response  # pragma: no cover
         else:
             return cls.entity_class().from_dict(response.json())
 
     @classmethod
     def _retreive_all(cls, parameters=None, ids={}):  # pragma: no cover
-        response = cls.REST_CLIENT.get(cls.get_base_uri(cls.endpoint(), **ids), headers=make_headers(), params=parameters)
+        response = cls.REST_CLIENT.get(
+            cls.get_base_uri(cls.endpoint(), **ids),
+            headers=make_headers(),
+            params=parameters,
+        )
         response = cls.REST_CLIENT.handle_response(response)
 
-        if cls.entity_class() is None or not issubclass(cls.entity_class(), BaseAbstractEntity):
+        if cls.entity_class() is None or not issubclass(
+            cls.entity_class(), BaseAbstractEntity
+        ):
             return response  # pragma: no cover
         else:
             response_json = response.json()
@@ -283,17 +324,31 @@ class BaseResource(object):
     def _retreive_one(cls, entity, parameters=None, ids={}):  # pragma: no cover
         if isinstance(entity, (int, float)):
             ids["id"] = entity
-            response = cls.REST_CLIENT.get(cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters)
+            response = cls.REST_CLIENT.get(
+                cls.get_base_uri(cls.endpoint_single(), **ids),
+                headers=make_headers(),
+                params=parameters,
+            )
         elif entity is not None and issubclass(entity, BaseAbstractEntity):
             entity_id = getattr(entity, "id", None)
             ids["id"] = entity_id
-            response = cls.REST_CLIENT.get(cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters)
+            response = cls.REST_CLIENT.get(
+                cls.get_base_uri(cls.endpoint_single(), **ids),
+                headers=make_headers(),
+                params=parameters,
+            )
         else:
-            response = cls.REST_CLIENT.get(cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters)
+            response = cls.REST_CLIENT.get(
+                cls.get_base_uri(cls.endpoint_single(), **ids),
+                headers=make_headers(),
+                params=parameters,
+            )
 
         response = cls.REST_CLIENT.handle_response(response)
 
-        if cls.entity_class() is None or not issubclass(cls.entity_class(), BaseAbstractEntity):
+        if cls.entity_class() is None or not issubclass(
+            cls.entity_class(), BaseAbstractEntity
+        ):
             return response  # pragma: no cover
         else:
             return cls.entity_class().from_dict(response.json())
@@ -302,19 +357,33 @@ class BaseResource(object):
     def _delete(cls, entity, parameters=None, ids={}):  # pragma: no cover
         if isinstance(entity, (int, float)):
             ids["id"] = entity
-            response = cls.REST_CLIENT.delete(cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters)
+            response = cls.REST_CLIENT.delete(
+                cls.get_base_uri(cls.endpoint_single(), **ids),
+                headers=make_headers(),
+                params=parameters,
+            )
         elif isinstance(entity, BaseAbstractEntity):
             entity_id = getattr(entity, "id", None)
             ids["id"] = entity_id
-            response = cls.REST_CLIENT.delete(cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters)
+            response = cls.REST_CLIENT.delete(
+                cls.get_base_uri(cls.endpoint_single(), **ids),
+                headers=make_headers(),
+                params=parameters,
+            )
         else:
-            response = cls.REST_CLIENT.delete(cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters)
+            response = cls.REST_CLIENT.delete(
+                cls.get_base_uri(cls.endpoint_single(), **ids),
+                headers=make_headers(),
+                params=parameters,
+            )
 
         response = cls.REST_CLIENT.handle_response(response)
         if response is None:
             return entity
 
-        if cls.entity_class() is None or not issubclass(cls.entity_class(), BaseAbstractEntity):
+        if cls.entity_class() is None or not issubclass(
+            cls.entity_class(), BaseAbstractEntity
+        ):
             return response  # pragma: no cover
         else:
             try:

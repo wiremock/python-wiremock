@@ -1,0 +1,77 @@
+[tool.poetry]
+name = "wiremock"
+version = "2.3.1"
+description = "Wiremock Admin API Client"
+authors = ["Cody Lee <cody.lee@datadoghq.com>", "Mike Waites <mikey.waites@gmail.com>"]
+license = "OSI Approved :: Apache Software License"
+packages = [{include = "wiremock"}]
+readme = "README.md"
+classifiers=[
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Web Environment",
+  "Environment :: Other Environment",
+  "Environment :: Plugins",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: OS Independent",
+  "Natural Language :: English",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: Implementation",
+  "Topic :: Internet :: WWW/HTTP",
+  "Topic :: Software Development :: Testing,",
+  "Topic :: Software Development :: Testing :: Unit",
+  "Topic :: Software Development :: Testing :: Mocking",
+  "Topic :: Software Development :: Quality Assurance",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[tool.poetry.dependencies]
+python = "^3.7 | ^3.8 | ^3.9 | ^3.10 | ^3.11"  
+requests = "^2.20.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+coverage = "^7.2.3"
+pytest-coverage = "^0.0"
+python-coveralls = "^2.9.3"
+responses = "^0.23.1"
+tox = "^4.4.12"
+watchdog = "^3.0.0"
+wheel = "^0.40.0"
+pytest = "^7.3.1"
+
+
+[tool.pytest.ini_options]
+markers = [
+  "unit: marks tests as unit tests",
+  "mappings",
+  "nearmisses",
+  "resource",
+  "serialization",
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.black]
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+include = '\.pyi?$'
+line-length = 88
