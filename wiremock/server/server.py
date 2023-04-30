@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """WireMock Server Management."""
 import atexit
-import importlib.resources
 import socket
 import time
 from subprocess import PIPE, STDOUT, Popen
 
 import requests
+from importlib_resources import files
 
 from wiremock.server.exceptions import (
     WireMockServerAlreadyStartedError,
@@ -17,11 +17,7 @@ from wiremock.server.exceptions import (
 class WireMockServer(object):
 
     DEFAULT_JAVA = "java"  # Assume java in PATH
-    DEFAULT_JAR = (
-        importlib.resources.files("wiremock")
-        / "server"
-        / "wiremock-standalone-2.6.0.jar"
-    )
+    DEFAULT_JAR = files("wiremock") / "server" / "wiremock-standalone-2.6.0.jar"
 
     def __init__(
         self,
