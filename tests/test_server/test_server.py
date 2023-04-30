@@ -1,10 +1,10 @@
-import importlib
 from dataclasses import dataclass
 from subprocess import PIPE, STDOUT
 from unittest.mock import DEFAULT, patch
 
 import pytest
 import responses
+from importlib_resources import files
 
 from tests.utils import assertEqual, assertIsInstance
 from wiremock.server.exceptions import (
@@ -54,11 +54,7 @@ def test_init_with_defaults(config):
     with patch.object(WireMockServer, "_get_free_port", return_value=config.port):
         wm = WireMockServer()
 
-    expected_jar = (
-        importlib.resources.files("wiremock")
-        / "server"
-        / "wiremock-standalone-2.6.0.jar"
-    )
+    expected_jar = files("wiremock") / "server" / "wiremock-standalone-2.6.0.jar"
     assertEqual(wm.java_path, "java")  # Assume java in PATH
     assertEqual(wm.jar_path, expected_jar)
 
