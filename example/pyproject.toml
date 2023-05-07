@@ -8,13 +8,15 @@ readme = "README.md"
 packages = [{include = "product_mock"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10.6"
 fastapi = "^0.95.1"
 requests = "^2.29.0"
 uvicorn = "^0.22.0"
 wiremock = { path = "../", develop=true}
 httpx = "^0.24.0"
 importlib-resources = "^5.12.0"
+docker = "^6.1.0"
+testcontainers = "^3.7.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.1"
