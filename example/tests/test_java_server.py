@@ -2,13 +2,8 @@ import os
 
 import pytest
 from fastapi.testclient import TestClient
-from wiremock.client import (
-    HttpMethods,
-    Mapping,
-    MappingRequest,
-    MappingResponse,
-    Mappings,
-)
+from wiremock.client import (HttpMethods, Mapping, MappingRequest,
+                             MappingResponse, Mappings)
 from wiremock.constants import Config
 from wiremock.server import WireMockServer
 
@@ -18,17 +13,18 @@ client = TestClient(app)
 
 
 def get_products():
-
     return [
-        {"name": "WireMock Basic", "sku": "wm1", "price": "0.00"},
-        {"name": "WireMock Pro", "sku": "wm2", "price": "500.00"},
-        {"name": "WireMock Enterprise", "sku": "wm3", "price": "5000.00"},
+        {"name": "Mock Product A", "price": 10.99, "category": "Books"},
+        {"name": "Mock Product B", "price": 5.99, "category": "Movies"},
+        {"name": "Mock Product C", "price": 7.99, "category": "Electronics"},
+        {"name": "Mock Product D", "price": 12.99, "category": "Books"},
+        {"name": "Mock Product E", "price": 8.99, "category": "Movies"},
+        {"name": "Mock Product F", "price": 15.99, "category": "Electronics"},
     ]
 
 
 @pytest.fixture(scope="session")
 def wm():
-
     with WireMockServer() as wm:
         Config.base_url = f"http://localhost:{wm.port}/__admin"
         os.environ["PRODUCTS_SERVICE_HOST"] = "http://localhost"
@@ -46,13 +42,13 @@ def wm():
                 priority=100,
                 request=MappingRequest(
                     method=HttpMethods.GET,
-                    url="/products",
-                    query_parameters={"product_name": {"equalTo": "WireMock Basic"}},
+                    url=r"/products?category=Books",
+                    query_parameters={"category": {"equalTo": "Books"}},
                 ),
                 response=MappingResponse(
                     status=200,
                     json_body=list(
-                        filter(lambda p: p["name"] == "WireMock Basic", get_products())
+                        filter(lambda p: p["category"] == "Books", get_products())
                     ),
                 ),
                 persistent=False,
@@ -63,7 +59,6 @@ def wm():
 
 
 def test_get_overview_default(wm):
-
     resp = client.get("/overview")
 
     assert resp.status_code == 200
@@ -71,12 +66,9 @@ def test_get_overview_default(wm):
 
 
 def test_get_overview_with_filters(wm):
-
-    resp = client.get("/overview?product_name=Basic")
+    resp = client.get("/overview?category=Books")
 
     assert resp.status_code == 200
     assert resp.json() == {
-        "products": list(
-            filter(lambda p: p["name"] == "WireMock Basic", get_products())
-        )
+        "products": list(filter(lambda p: p["category"] == "Books", get_products()))
     }
