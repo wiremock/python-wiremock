@@ -4,7 +4,7 @@ import pytest
 from fastapi.testclient import TestClient
 from wiremock.client import Mappings
 from wiremock.constants import Config
-from wiremock.server import WireMockServer
+from wiremock.testing.testcontainer import WireMockServer, start_wiremock_container
 
 from product_mock.overview_service import app
 
@@ -14,26 +14,27 @@ client = TestClient(app)
 
 
 @pytest.fixture(scope="module")
-def wm_java():
-    with WireMockServer() as _wm:
-        Config.base_url = f"http://localhost:{_wm.port}/__admin"
-        os.environ["PRODUCTS_SERVICE_HOST"] = "http://localhost"
-        os.environ["PRODUCTS_SERVICE_PORT"] = str(_wm.port)
+def wm_docker():
+    with start_wiremock_container() as wm:
+        server = WireMockServer(port=str(wm.port), url=wm.get_url())
+        Config.base_url = f"{wm.get_url()}/__admin"
+        os.environ["PRODUCTS_SERVICE_HOST"] = f"http://{wm.get_container_host_ip()}"
+        os.environ["PRODUCTS_SERVICE_PORT"] = str(wm.port)
         [Mappings.create_mapping(mapping=mapping) for mapping in get_mappings()]
 
-        yield _wm
+        yield server
 
         Mappings.delete_all_mappings()
 
 
-def test_get_overview_default(wm_java):
+def test_get_overview_default(wm_docker):
     resp = client.get("/overview")
 
     assert resp.status_code == 200
     assert resp.json() == {"products": get_products()}
 
 
-def test_get_overview_with_filters(wm_java):
+def test_get_overview_with_filters(wm_docker):
     resp = client.get("/overview?category=Books")
 
     assert resp.status_code == 200
