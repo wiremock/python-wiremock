@@ -32,3 +32,9 @@ jobs:
       - name: Test with pytest
         run: |
           poetry run pytest tests/
+
+      - name: Integration Tests
+        run: |
+          cd example/
+          docker-compose build overview_srv
+          docker-copose run overview_srv pytest --tb=short
