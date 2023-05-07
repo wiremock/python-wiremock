@@ -1,4 +1,4 @@
-name: Python Testing
+name: CI
 
 on:
   push:
@@ -44,4 +44,4 @@ jobs:
         run: |
           cd example/
           docker-compose build overview_srv
-          docker-copose run overview_srv pytest --tb=short
+          docker-compose run overview_srv pytest --tb=short

@@ -18,7 +18,7 @@ WORKDIR /app/example
 
 # Install dependencies
 COPY . /app
-COPY ./example/pyproject.toml ./example/poetry.lock /app/example
+COPY ./example/pyproject.toml ./example/poetry.lock /app/example/
 RUN poetry config virtualenvs.create false \
     && poetry install --no-root --no-interaction --no-ansi
 
