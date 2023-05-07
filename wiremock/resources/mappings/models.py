@@ -1,5 +1,10 @@
 from wiremock._compat import add_metaclass
-from wiremock.base import BaseEntity, JsonProperty, BaseAbstractEntity, BaseEntityMetaType
+from wiremock.base import (
+    BaseAbstractEntity,
+    BaseEntity,
+    BaseEntityMetaType,
+    JsonProperty,
+)
 
 
 class HttpMethods(object):
@@ -124,7 +129,9 @@ class MappingRequest(BaseAbstractEntity):
     url_path = JsonProperty("urlPath")
     url_path_pattern = JsonProperty("urlPathPattern")
     url_pattern = JsonProperty("urlPattern")
-    basic_auth_credentials = JsonProperty("basicAuthCredentials", klass=BasicAuthCredentials)
+    basic_auth_credentials = JsonProperty(
+        "basicAuthCredentials", klass=BasicAuthCredentials
+    )
     cookies = JsonProperty("cookies", klass=dict)
     headers = JsonProperty("headers", klass=dict)
     query_parameters = JsonProperty("queryParameters", klass=dict)
@@ -134,7 +141,9 @@ class MappingRequest(BaseAbstractEntity):
 
 @add_metaclass(BaseEntityMetaType)
 class MappingResponse(BaseAbstractEntity):
-    additional_proxy_request_headers = JsonProperty("additionalProxyRequestHeaders", klass=dict)
+    additional_proxy_request_headers = JsonProperty(
+        "additionalProxyRequestHeaders", klass=dict
+    )
     base64_body = JsonProperty("base64Body")
     body = JsonProperty("body")
     body_file_name = JsonProperty("bodyFileName")
@@ -161,7 +170,7 @@ class Mapping(BaseEntity):
     new_scenario_state = JsonProperty("newScenarioState")
     required_scenario_state = JsonProperty("requiredScenarioState")
     scenario_name = JsonProperty("scenarioName")
-    metadata = JsonProperty('metadata', klass=dict)
+    metadata = JsonProperty("metadata", klass=dict)
 
 
 @add_metaclass(BaseEntityMetaType)
