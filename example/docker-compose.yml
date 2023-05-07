@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  overview_srv:
+    build:
+      context: ../
+      dockerfile: example/Dockerfile
+    ports:
+      - "5001:5001"
+    volumes:
+      - ..:/app/
+      - .:/app/example/
+    command: uvicorn product_mock.overview_service:app --host=0.0.0.0 --port=5001
+
+  products_srv:
+    build:
+      context: ../
+      dockerfile: example/Dockerfile
+    ports:
+      - "5002:5002"
+    volumes:
+      - ..:/app/
+      - .:/app/example/
+    command: uvicorn product_mock.products_service:app --host=0.0.0.0 --port=5002

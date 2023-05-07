@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "product-mock"
+version = "0.1.0"
+description = "An exmaple micro service that demonstrates the utility of python-wiremock"
+authors = ["Mike Waites <mikey.waites@gmail.com>"]
+license = "OSI Approved :: Apache Software License"
+readme = "README.md"
+packages = [{include = "product_mock"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.95.1"
+requests = "^2.29.0"
+uvicorn = "^0.22.0"
+wiremock = { path = "../", develop=true}
+httpx = "^0.24.0"
+importlib-resources = "^5.12.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.1"
+black = "^23.3.0"
+isort = "^5.12.0"
+mypy = "^1.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+include = '\.pyi?'
