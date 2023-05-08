@@ -32,7 +32,7 @@ Source: https://github.com/wiremock/python-wiremock.git
 .. code-block:: sh
 
     $ git clone TODO
-    $ python setup.py install
+    $ poetry install
 
 
 Contents
