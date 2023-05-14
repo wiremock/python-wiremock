@@ -9,10 +9,19 @@ jobs:
   update_release_draft:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+      - name: Install Poetry
+        run: curl -sSL https://install.python-poetry.org | python
+      - name: Get version from pyproject.toml
+        run: echo "VERSION=$(poetry version -s)" >> $GITHUB_ENV
       - uses: release-drafter/release-drafter@v5
         with:
-          name: next
-          tag: next
-          version: next
+          name: ${{ env.VERSION }}
+          tag: ${{ env.VERSION }}
+          version: ${{ env.VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
