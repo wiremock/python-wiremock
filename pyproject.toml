@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "wiremock"
-version = "2.3.2"
+version = "2.4.0-alpha"
 description = "Wiremock Admin API Client"
 authors = ["Cody Lee <cody.lee@datadoghq.com>", "Mike Waites <mikey.waites@gmail.com>"]
 license = "OSI Approved :: Apache Software License"
