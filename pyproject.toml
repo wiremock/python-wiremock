@@ -22,7 +22,7 @@ classifiers=[
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: Implementation",
   "Topic :: Internet :: WWW/HTTP",
-  "Topic :: Software Development :: Testing,",
+  "Topic :: Software Development :: Testing",
   "Topic :: Software Development :: Testing :: Unit",
   "Topic :: Software Development :: Testing :: Mocking",
   "Topic :: Software Development :: Quality Assurance",
