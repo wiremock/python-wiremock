@@ -20,6 +20,7 @@ def wm_docker():
         Config.base_url = f"{wm.get_url()}/__admin"
         os.environ["PRODUCTS_SERVICE_HOST"] = f"http://{wm.get_container_host_ip()}"
         os.environ["PRODUCTS_SERVICE_PORT"] = str(wm.port)
+
         [Mappings.create_mapping(mapping=mapping) for mapping in get_mappings()]
 
         yield server
