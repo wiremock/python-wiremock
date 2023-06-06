@@ -28,6 +28,6 @@ Customizing the path to java:
 
 Customizing the WireMock server JAR file:
 
-    WireMockServer(jar_path='/my/secret/location/wiremock-standalone-2.0.0.jar')
+    WireMockServer(jar_path='/my/secret/location/wiremock-standalone-2.35.0.jar')
 
 

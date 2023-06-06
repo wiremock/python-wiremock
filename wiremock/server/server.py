@@ -17,7 +17,7 @@ from wiremock.server.exceptions import (
 class WireMockServer(object):
 
     DEFAULT_JAVA = "java"  # Assume java in PATH
-    DEFAULT_JAR = files("wiremock") / "server" / "wiremock-standalone-2.6.0.jar"
+    DEFAULT_JAR = files("wiremock") / "server" / "wiremock-standalone-2.35.0.jar"
 
     def __init__(
         self,
