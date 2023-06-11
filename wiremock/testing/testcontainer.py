@@ -2,11 +2,10 @@ import json
 import os
 import tarfile
 import tempfile
-import urllib.request
+import time
 from contextlib import contextmanager
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, TypedDict
+from typing import Any, Generator
 from urllib.parse import urljoin
 
 import docker
@@ -14,6 +13,10 @@ import requests
 from testcontainers.core.container import DockerContainer
 from testcontainers.core.exceptions import ContainerStartException
 from testcontainers.core.waiting_utils import wait_container_is_ready
+
+from wiremock.resources.mappings.models import Mapping
+
+TMappingConfigs = dict[str | dict, str | int | dict | Mapping]
 
 
 class WireMockContainer(DockerContainer):
@@ -28,16 +31,47 @@ class WireMockContainer(DockerContainer):
     EXTENSIONS_DIR: str = "/var/wiremock/extensions/"
 
     def __init__(
-        self, image: str = "wiremock/wiremock", port: int = 8080, **kwargs
+        self,
+        image: str = "wiremock/wiremock:2.35.0",
+        http_server_port: int = 8080,
+        https_server_port: int = 8443,
+        dind: bool = False,
+        secure: bool = True,
+        verify_ssl_certs: bool = True,
+        init: bool = True,
+        docker_client_kwargs: dict[str, Any] = {},
     ) -> None:
-        self.port = port
-        super(WireMockContainer, self).__init__(image, **kwargs)
-        self.with_volume_mapping("/var/run/docker.sock", "/var/run/docker.sock")
-        self.with_env("JAVA_OPTS", "-Djava.net.preferIPv4Stack=true")
+        self.dind = dind
+        self.http_server_port = http_server_port
+        self.https_server_port = https_server_port
+        self.secure = secure
+        self.verify_ssl_certs = verify_ssl_certs
+        super(WireMockContainer, self).__init__(image, **docker_client_kwargs)
+
+        if init:
+            self.initialize()
+
+    def initialize(self) -> None:
         self.wire_mock_args: list[str] = []
         self.mapping_stubs: dict[str, str] = {}
         self.mapping_files: dict[str, str] = {}
         self.extensions: dict[str, bytes] = {}
+
+        if self.dind:
+            self.with_volume_mapping("/var/run/docker.sock", "/var/run/docker.sock")
+
+        if self.secure:
+            self.with_https_port()
+        else:
+            self.with_http_port()
+
+    def with_http_port(self) -> None:
+        self.with_cli_arg("--port", str(self.http_server_port))
+        self.with_exposed_ports(self.http_server_port)
+
+    def with_https_port(self) -> None:
+        self.with_cli_arg("--https-port", str(self.https_server_port))
+        self.with_exposed_ports(self.https_server_port)
 
     def with_env(self, key: str, value: str) -> "WireMockContainer":
         super().with_env(key, value)
@@ -52,19 +86,12 @@ class WireMockContainer(DockerContainer):
         self.wire_mock_args.append(arg_value)
         return self
 
-    def with_mapping(self, name: str, data: dict[str, Any]) -> "WireMockContainer":
+    def with_mapping(self, name: str, data: TMappingConfigs) -> "WireMockContainer":
         self.mapping_stubs[name] = json.dumps(data)
         return self
 
     def with_file(self, name: str, data: dict[str, Any]):
         self.mapping_files[name] = json.dumps(data)
-        return self
-
-    def with_extension(self, class_name: str, jar_path: Path) -> "WireMockContainer":
-
-        with open(jar_path, "rb") as fp:
-            self.extensions[class_name] = fp.read()
-
         return self
 
     def copy_file_to_container(self, host_path: Path, container_path: Path) -> None:
@@ -119,47 +146,69 @@ class WireMockContainer(DockerContainer):
             configs=self.mapping_files, container_dir_path=Path(f"{self.FILES_DIR}")
         )
 
-    def copy_extensions_to_container(self) -> None:
-        """Copies all extension jar files generated with :meth:`.with_extension`
-        to the container under the configured EXTENSIONS_DIR
+    def server_running(self, retry_count: int = 3, retry_delay: int = 1) -> bool:
+        """Pings the __admin/mappings endpoint of the wiremock server running inside the
+        container as a proxy for checking if the server is up and running.
 
-        ..code-block::
-            wm.with_extension(
-                "com.ninecookies.wiremock.extensions.JsonBodyTransformer",
-                Path("extensions/wiremock-body-transformer-1.1.3.jar"
-            )
+        {retry_count} attempts requests will be made with a delay of {retry_delay}
+        to allow for race conditions when containers are being spun up
+        quickly between tests.
+
+        Args:
+            retry_count: The number of attempts made to ping the server
+            retry_delay: The number of seconds to wait before each attempt
+
+        Returns:
+            True if the request is successful
         """
-        self.exec("mkdir -p /var/wiremock/extensions")
-        self.copy_files_to_container(
-            configs=self.extensions,
-            container_dir_path=Path(f"{self.EXTENSIONS_DIR}"),
-            mode="wb+",
+
+        for _ in range(retry_count):
+            try:
+                response = requests.get(
+                    self.get_url("__admin/mappings"), verify=self.verify_ssl_certs
+                )
+                if response.status_code == 200:
+                    return True
+            except requests.exceptions.RequestException as e:
+                print(f"Request failed: {e}")
+
+            time.sleep(retry_delay)
+
+        return False
+
+    def reload_mappings(self) -> requests.Response:
+        resp = requests.post(
+            self.get_url("__admin/mappings/reset"), verify=self.verify_ssl_certs
         )
+        if not resp.status_code <= 300:
+            raise Exception("Failed to reload mappings")
+
+        return resp
 
     @wait_container_is_ready()
     def configure(self) -> None:
-        res = urllib.request.urlopen(self.get_url("__admin/mappings"))
-        if res.status != 200:
-            raise Exception()
+        if not self.server_running():
+            raise Exception("Server does not appear to be running in container")
 
         self.copy_mappings_to_container()
         self.copy_mapping_files_to_container()
-        self.copy_extensions_to_container()
 
-        requests.post(self.get_url("__admin/mappings/reset"))
+        self.reload_mappings()
 
     def get_base_url(self) -> str:
-        return (
-            f"http://{self.get_container_host_ip()}:{self.get_exposed_port(self.port)}"
-        )
+        """Generate the base url of the container wiremock-server
+
+        Returns:
+            The base to the container based on the hostname and exposed ports
+        """
+        proto = "https" if self.secure else "http"
+        port = self.https_server_port if self.secure else self.http_server_port
+        return f"{proto}://{self.get_container_host_ip()}:{self.get_exposed_port(port)}"
 
     def get_url(self, path: str) -> str:
         return urljoin(self.get_base_url(), path)
 
     def start(self) -> "WireMockContainer":
-        # TODO this causes the container to hang
-        # if self.extensions.keys():
-        #     self.with_cli_arg("--extensions", ",".join(self.extensions.keys()))
         cmd = " ".join(self.wire_mock_args)
         self.with_command(cmd)
         super().start()
@@ -167,25 +216,41 @@ class WireMockContainer(DockerContainer):
         return self
 
 
-@dataclass
-class WireMockServer:
-    port: str
-    url: str
-
-
 @contextmanager
-def start_wiremock_container(mapping=None, port=None):
+def wiremock_container(
+    image: str = "wiremock/wiremock:2.35.0",
+    http_server_port: int = 8080,
+    https_server_port: int = 8443,
+    dind: bool = False,
+    secure: bool = True,
+    verify_ssl_certs: bool = True,
+    mappings: list[tuple[str, TMappingConfigs]] = [],
+    start: bool = True,
+    docker_client_kwargs: dict[str, Any] = {},
+) -> Generator[WireMockContainer, None, None]:
     """
-    Start a wiremock test container using Testcontainers and set up mappings.
+    Start a wiremock test container using Testcontainers
 
-    :param mapping: Optional dict of wiremock mappings to set up.
-    :param port: Optional port to use for the wiremock container. Defaults to 8080.
-    :return: URL of the running wiremock container.
+    :return: WireMockContainer instance
     """
 
     client = docker.from_env()
+    client.ping()
     try:
-        with WireMockContainer() as wm:
+        wm = WireMockContainer(
+            image=image,
+            http_server_port=http_server_port,
+            https_server_port=https_server_port,
+            dind=dind,
+            secure=secure,
+            verify_ssl_certs=verify_ssl_certs,
+            docker_client_kwargs=docker_client_kwargs,
+        )
+        [wm.with_mapping(m_name, m_data) for m_name, m_data in mappings]
+        if start:
+            with wm:
+                yield wm
+        else:
             yield wm
     except ContainerStartException as e:
         raise Exception("Error starting wiremock container") from e
@@ -193,22 +258,3 @@ def start_wiremock_container(mapping=None, port=None):
         raise Exception("Error connecting to wiremock container") from e
     finally:
         client.close()
-
-
-def wiremock_container(mapping=None, port=None):
-    """
-    Decorator that starts a wiremock test container using Testcontainers and sets up mappings.
-
-    :param mapping: Optional dict of wiremock mappings to set up.
-    :param port: Optional port to use for the wiremock container. Defaults to 8080.
-    """
-
-    def decorator(fn):
-        def wrapper(*args, **kwargs):
-            with start_wiremock_container(mapping=mapping, port=port) as wm:
-                server = WireMockServer(port=str(wm.port), url=wm.get_url())
-                return fn(server, *args, **kwargs)
-
-        return wrapper
-
-    return decorator
