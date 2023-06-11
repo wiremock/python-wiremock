@@ -17,8 +17,7 @@ client = TestClient(app)
 def wm_java():
     with WireMockServer() as _wm:
         Config.base_url = f"http://localhost:{_wm.port}/__admin"
-        os.environ["PRODUCTS_SERVICE_HOST"] = "http://localhost"
-        os.environ["PRODUCTS_SERVICE_PORT"] = str(_wm.port)
+        os.environ["PRODUCTS_SERVICE_HOST"] = f"http://localhost:{_wm.port}"
         [Mappings.create_mapping(mapping=mapping) for mapping in get_mappings()]
 
         yield _wm
