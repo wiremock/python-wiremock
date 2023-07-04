@@ -1,5 +1,4 @@
 import os
-import time
 
 import pytest
 from fastapi.testclient import TestClient
@@ -16,7 +15,7 @@ client = TestClient(app)
 
 @pytest.fixture(scope="module")
 def wm_docker():
-    with wiremock_container(verify_ssl_certs=False, secure=False, dind=True) as wm:
+    with wiremock_container(verify_ssl_certs=False, secure=False) as wm:
         wm.start()
 
         Config.base_url = wm.get_url("__admin/")

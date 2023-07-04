@@ -16,7 +16,11 @@ This is a python admin API client to a standalone WireMock server.
 
 To install:
 
-    pip install wiremock
+    `pip install wiremock`
+
+To install with testing dependencies:
+
+    `pip install wiremock[testing]`
 
 ## Documentation
 
