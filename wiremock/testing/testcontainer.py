@@ -5,7 +5,7 @@ import tempfile
 import time
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Any, Generator
+from typing import Any, Generator, Optional
 from urllib.parse import urljoin
 
 import docker
@@ -24,24 +24,19 @@ class WireMockContainer(DockerContainer):
     Wiremock container.
     """
 
-    DEFAULT_IMAGE_NAME: str = "wiremock/wiremock"
-    DEFAULT_TAG: str = "latest"
     MAPPINGS_DIR: str = "/home/wiremock/mappings/"
     FILES_DIR: str = "/home/wiremock/__files/"
-    EXTENSIONS_DIR: str = "/var/wiremock/extensions/"
 
     def __init__(
         self,
         image: str = "wiremock/wiremock:2.35.0",
         http_server_port: int = 8080,
         https_server_port: int = 8443,
-        dind: bool = False,
         secure: bool = True,
         verify_ssl_certs: bool = True,
         init: bool = True,
         docker_client_kwargs: dict[str, Any] = {},
     ) -> None:
-        self.dind = dind
         self.http_server_port = http_server_port
         self.https_server_port = https_server_port
         self.secure = secure
@@ -57,9 +52,6 @@ class WireMockContainer(DockerContainer):
         self.mapping_files: dict[str, str] = {}
         self.extensions: dict[str, bytes] = {}
 
-        if self.dind:
-            self.with_volume_mapping("/var/run/docker.sock", "/var/run/docker.sock")
-
         if self.secure:
             self.with_https_port()
         else:
@@ -73,14 +65,6 @@ class WireMockContainer(DockerContainer):
         self.with_cli_arg("--https-port", str(self.https_server_port))
         self.with_exposed_ports(self.https_server_port)
 
-    def with_env(self, key: str, value: str) -> "WireMockContainer":
-        super().with_env(key, value)
-        return self
-
-    def with_exposed_ports(self, *ports) -> "WireMockContainer":
-        super().with_exposed_ports(*ports)
-        return self
-
     def with_cli_arg(self, arg_name: str, arg_value: str) -> "WireMockContainer":
         self.wire_mock_args.append(arg_name)
         self.wire_mock_args.append(arg_value)
@@ -92,6 +76,15 @@ class WireMockContainer(DockerContainer):
 
     def with_file(self, name: str, data: dict[str, Any]):
         self.mapping_files[name] = json.dumps(data)
+        return self
+
+    def with_command(self, cmd: Optional[str] = None) -> "WireMockContainer":
+
+        if not cmd:
+            cmd = " ".join(self.wire_mock_args)
+
+        super().with_command(cmd)
+
         return self
 
     def copy_file_to_container(self, host_path: Path, container_path: Path) -> None:
@@ -208,8 +201,7 @@ class WireMockContainer(DockerContainer):
     def get_url(self, path: str) -> str:
         return urljoin(self.get_base_url(), path)
 
-    def start(self) -> "WireMockContainer":
-        cmd = " ".join(self.wire_mock_args)
+    def start(self, cmd: Optional[str] = None) -> "WireMockContainer":
         self.with_command(cmd)
         super().start()
         self.configure()
@@ -221,7 +213,6 @@ def wiremock_container(
     image: str = "wiremock/wiremock:2.35.0",
     http_server_port: int = 8080,
     https_server_port: int = 8443,
-    dind: bool = False,
     secure: bool = True,
     verify_ssl_certs: bool = True,
     mappings: list[tuple[str, TMappingConfigs]] = [],
@@ -241,7 +232,6 @@ def wiremock_container(
             image=image,
             http_server_port=http_server_port,
             https_server_port=https_server_port,
-            dind=dind,
             secure=secure,
             verify_ssl_certs=verify_ssl_certs,
             docker_client_kwargs=docker_client_kwargs,
