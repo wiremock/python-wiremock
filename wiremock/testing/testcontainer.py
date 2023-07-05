@@ -5,7 +5,7 @@ import tempfile
 import time
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Any, Generator, Optional
+from typing import Any, Dict, Generator, List, Optional, Tuple, Union
 from urllib.parse import urljoin
 
 import docker
@@ -16,7 +16,7 @@ from testcontainers.core.waiting_utils import wait_container_is_ready
 
 from wiremock.resources.mappings.models import Mapping
 
-TMappingConfigs = dict[str | dict, str | int | dict | Mapping]
+TMappingConfigs = Dict[Union[str, Dict], Union[str, int, Dict, Mapping]]
 
 
 class WireMockContainer(DockerContainer):
@@ -35,7 +35,7 @@ class WireMockContainer(DockerContainer):
         secure: bool = True,
         verify_ssl_certs: bool = True,
         init: bool = True,
-        docker_client_kwargs: dict[str, Any] = {},
+        docker_client_kwargs: Dict[str, Any] = {},
     ) -> None:
         self.http_server_port = http_server_port
         self.https_server_port = https_server_port
@@ -47,10 +47,10 @@ class WireMockContainer(DockerContainer):
             self.initialize()
 
     def initialize(self) -> None:
-        self.wire_mock_args: list[str] = []
-        self.mapping_stubs: dict[str, str] = {}
-        self.mapping_files: dict[str, str] = {}
-        self.extensions: dict[str, bytes] = {}
+        self.wire_mock_args: List[str] = []
+        self.mapping_stubs: Dict[str, str] = {}
+        self.mapping_files: Dict[str, str] = {}
+        self.extensions: Dict[str, bytes] = {}
 
         if self.secure:
             self.with_https_port()
@@ -74,7 +74,7 @@ class WireMockContainer(DockerContainer):
         self.mapping_stubs[name] = json.dumps(data)
         return self
 
-    def with_file(self, name: str, data: dict[str, Any]):
+    def with_file(self, name: str, data: Dict[str, Any]):
         self.mapping_files[name] = json.dumps(data)
         return self
 
@@ -94,7 +94,7 @@ class WireMockContainer(DockerContainer):
             )
 
     def copy_files_to_container(
-        self, configs: dict[str, Any], container_dir_path: Path, mode: str = "w+"
+        self, configs: Dict[str, Any], container_dir_path: Path, mode: str = "w+"
     ) -> None:
 
         temp_dir = tempfile.mkdtemp()
@@ -215,9 +215,9 @@ def wiremock_container(
     https_server_port: int = 8443,
     secure: bool = True,
     verify_ssl_certs: bool = True,
-    mappings: list[tuple[str, TMappingConfigs]] = [],
+    mappings: List[Tuple[str, TMappingConfigs]] = [],
     start: bool = True,
-    docker_client_kwargs: dict[str, Any] = {},
+    docker_client_kwargs: Dict[str, Any] = {},
 ) -> Generator[WireMockContainer, None, None]:
     """
     Start a wiremock test container using Testcontainers
