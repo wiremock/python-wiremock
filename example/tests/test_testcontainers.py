@@ -16,9 +16,9 @@ client = TestClient(app)
 @pytest.fixture(scope="module")
 def wm_docker():
     with wiremock_container(verify_ssl_certs=False, secure=False) as wm:
-        wm.start()
 
-        Config.base_url = wm.get_url("__admin/")
+        Config.base_url = wm.get_url("__admin")
+
         os.environ["PRODUCTS_SERVICE_HOST"] = wm.get_base_url()
 
         [Mappings.create_mapping(mapping=mapping) for mapping in get_mappings()]
@@ -26,7 +26,6 @@ def wm_docker():
         yield wm
 
         Mappings.delete_all_mappings()
-        wm.stop()
 
 
 @pytest.mark.usefixtures("wm_docker")

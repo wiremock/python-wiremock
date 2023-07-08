@@ -1,4 +1,6 @@
 import json
+from typing import List
+from urllib.parse import urljoin
 
 import requests
 from requests import exceptions as rexc
@@ -39,6 +41,11 @@ class RestClient(object):
             extra=ctx,
         )
 
+    def _get_url(self, *uri_parts: List[str]) -> str:
+
+        uri = "/".join(map(lambda x: str(x).rstrip("/"), uri_parts))
+        return f"{self._base_url().rstrip('/')}{uri}"
+
     def post(self, uri, **kwargs):
         if "timeout" not in kwargs:
             kwargs["timeout"] = self._timeout()
@@ -47,7 +54,7 @@ class RestClient(object):
         if "requests_cert" not in kwargs:
             kwargs["cert"] = self._requests_cert()
         try:
-            url = self._base_url() + uri
+            url = self._get_url(uri)
             self._log("POST", url, **kwargs)
             return requests.post(url, **kwargs)
         except rexc.Timeout as e:  # pragma: no cover
@@ -63,7 +70,7 @@ class RestClient(object):
         if "requests_cert" not in kwargs:
             kwargs["cert"] = self._requests_cert()
         try:
-            url = self._base_url() + uri
+            url = self._get_url(uri)
             self._log("GET", url, **kwargs)
             return requests.get(url, **kwargs)
         except rexc.Timeout as e:  # pragma: no cover
@@ -79,7 +86,7 @@ class RestClient(object):
         if "requests_cert" not in kwargs:
             kwargs["cert"] = self._requests_cert()
         try:
-            url = self._base_url() + uri
+            url = self._get_url(uri)
             self._log("PUT", url, **kwargs)
             return requests.put(url, **kwargs)
         except rexc.Timeout as e:  # pragma: no cover
@@ -95,7 +102,7 @@ class RestClient(object):
         if "requests_cert" not in kwargs:
             kwargs["cert"] = self._requests_cert()
         try:
-            url = self._base_url() + uri
+            url = self._get_url(uri)
             self._log("PATCH", url, **kwargs)
             return requests.patch(url, **kwargs)
         except rexc.Timeout as e:  # pragma: no cover
@@ -111,7 +118,7 @@ class RestClient(object):
         if "requests_cert" not in kwargs:
             kwargs["cert"] = self._requests_cert()
         try:
-            url = self._base_url() + uri
+            url = self._get_url(uri)
             self._log("DELETE", url, **kwargs)
             return requests.delete(url, **kwargs)
         except rexc.Timeout as e:  # pragma: no cover
@@ -127,7 +134,7 @@ class RestClient(object):
         if "requests_cert" not in kwargs:
             kwargs["cert"] = self._requests_cert()
         try:
-            url = self._base_url() + uri
+            url = self._get_url(uri)
             self._log("OPTIONS", url, **kwargs)
             return requests.options(url, **kwargs)
         except rexc.Timeout as e:  # pragma: no cover
@@ -143,7 +150,7 @@ class RestClient(object):
         if "requests_cert" not in kwargs:
             kwargs["cert"] = self._requests_cert()
         try:
-            url = self._base_url() + uri
+            url = self._get_url(uri)
             self._log("HEAD", url, **kwargs)
             return requests.head(url, **kwargs)
         except rexc.Timeout as e:  # pragma: no cover

@@ -1,57 +1,91 @@
 from pathlib import Path
 from typing import cast
-from unittest.mock import Mock, patch
+from unittest.mock import MagicMock, Mock, patch
 
+import pytest
 import requests
 from docker.models.containers import Container
 
-from wiremock.testing.testcontainer import WireMockContainer, wiremock_container
+from wiremock.client import (
+    HttpMethods,
+    Mapping,
+    MappingRequest,
+    MappingResponse,
+    Mappings,
+)
+from wiremock.constants import Config
+from wiremock.testing.testcontainer import (
+    WireMockContainer,
+    WireMockContainerException,
+    wiremock_container,
+)
 
 
-def test_get_secure_base_url():
+@patch.object(WireMockContainer, "get_exposed_port")
+@patch.object(WireMockContainer, "get_container_host_ip")
+def test_get_secure_base_url(mock_get_ip, mock_get_port):
     # Arrange
-    with wiremock_container(verify_ssl_certs=False) as wm:
-        host = wm.get_container_host_ip()
-        port = wm.get_exposed_port(wm.https_server_port)
-        expected_url = f"https://{host}:{port}"
+    wm = WireMockContainer(
+        secure=True,
+        verify_ssl_certs=False,
+    )
+    mock_get_ip.return_value = "127.0.0.1"
+    mock_get_port.return_value = 63379
+    expected_url = "https://127.0.0.1:63379"
 
-        # Act/Assert
-        assert wm.get_base_url() == expected_url
+    # Act/Assert
+    assert wm.get_base_url() == expected_url
 
 
-def test_get_secure_url():
+@patch.object(WireMockContainer, "get_exposed_port")
+@patch.object(WireMockContainer, "get_container_host_ip")
+def test_get_secure_url(mock_get_ip, mock_get_port):
     # Arrange
-    with wiremock_container(verify_ssl_certs=False) as wm:
-        path = "example-path"
-        host = wm.get_container_host_ip()
-        port = wm.get_exposed_port(wm.https_server_port)
-        expected_url = f"https://{host}:{port}/example-path"
+    wm = WireMockContainer(
+        secure=True,
+        verify_ssl_certs=False,
+    )
+    path = "example-path"
+    mock_get_ip.return_value = "127.0.0.1"
+    mock_get_port.return_value = 63379
 
-        # Act/Assert
-        assert wm.get_url(path) == expected_url
+    expected_url = "https://127.0.0.1:63379/example-path"
+
+    # Act/Assert
+    assert wm.get_url(path) == expected_url
 
 
-def test_get_non_secure_base_url():
+@patch.object(WireMockContainer, "get_exposed_port")
+@patch.object(WireMockContainer, "get_container_host_ip")
+def test_get_non_secure_base_url(mock_get_ip, mock_get_port):
     # Arrange
-    with wiremock_container(secure=False, verify_ssl_certs=False) as wm:
-        host = wm.get_container_host_ip()
-        port = wm.get_exposed_port(wm.http_server_port)
-        expected_url = f"http://{host}:{port}"
+    wm = WireMockContainer(
+        secure=False,
+        verify_ssl_certs=False,
+    )
+    mock_get_ip.return_value = "127.0.0.1"
+    mock_get_port.return_value = 63379
+    expected_url = "http://127.0.0.1:63379"
 
-        # Act/Assert
-        assert wm.get_base_url() == expected_url
+    # Act/Assert
+    assert wm.get_base_url() == expected_url
 
 
-def test_get_non_secure_url():
+@patch.object(WireMockContainer, "get_exposed_port")
+@patch.object(WireMockContainer, "get_container_host_ip")
+def test_get_non_secure_url(mock_get_ip, mock_get_port):
     # Arrange
-    with wiremock_container(secure=False, verify_ssl_certs=False) as wm:
-        path = "example-path"
-        host = wm.get_container_host_ip()
-        port = wm.get_exposed_port(wm.http_server_port)
-        expected_url = f"http://{host}:{port}/example-path"
+    wm = WireMockContainer(
+        secure=False,
+        verify_ssl_certs=False,
+    )
+    path = "example-path"
+    mock_get_ip.return_value = "127.0.0.1"
+    mock_get_port.return_value = 63379
+    expected_url = "http://127.0.0.1:63379/example-path"
 
-        # Act/Assert
-        assert wm.get_url(path) == expected_url
+    # Act/Assert
+    assert wm.get_url(path) == expected_url
 
 
 @patch.object(WireMockContainer, "initialize")
@@ -156,26 +190,84 @@ def test_with_http_port_with_user_defined_port_value(mock_cli_arg, mock_expose_p
     mock_expose_port.assert_called_once_with(5000)
 
 
-def test_container_starts_with_custom_https_port():
+@patch("wiremock.testing.testcontainer.requests.get")
+@patch.object(WireMockContainer, "get_url")
+def test_container_starts_with_custom_https_port(mock_get_url, mock_get):
 
     # Arrange
+    mock_get_url.return_value = "http://localhost/__admin/mappings"
+    resp_mock = MagicMock(spec=requests.Response)
+    resp_mock.status_code = 200
+    mock_get.return_value = resp_mock
     wm = WireMockContainer(verify_ssl_certs=False, https_server_port=9443)
 
     # Act
-    with wm:
-
-        assert wm.server_running() is True
+    assert wm.server_running() is True
 
 
-def test_container_starts_with_custom_http_port():
+@patch("wiremock.testing.testcontainer.requests.get")
+@patch.object(WireMockContainer, "get_url")
+def test_container_starts_with_custom_http_port(mock_get_url, mock_get):
 
     # Arrange
+    mock_get_url.return_value = "http://localhost/__admin/mappings"
+    resp_mock = MagicMock(spec=requests.Response)
+    resp_mock.status_code = 200
+    mock_get.return_value = resp_mock
     wm = WireMockContainer(verify_ssl_certs=False, secure=False, http_server_port=5000)
 
     # Act
-    with wm:
 
-        assert wm.server_running() is True
+    assert wm.server_running() is True
+
+
+@patch("wiremock.testing.testcontainer.requests.get")
+@patch.object(WireMockContainer, "get_url")
+def test_container_not_running_returns_false(mock_get_url, mock_get):
+
+    # Arrange
+    mock_get_url.return_value = "http://localhost/__admin/mappings"
+    resp_mock = MagicMock(spec=requests.Response)
+    resp_mock.status_code = 403
+    mock_get.return_value = resp_mock
+    wm = WireMockContainer(verify_ssl_certs=False, secure=False, http_server_port=5000)
+
+    # Act
+
+    assert wm.server_running() is False
+
+
+@patch("wiremock.testing.testcontainer.requests.post")
+@patch.object(WireMockContainer, "get_url")
+def test_reload_mappings(mock_get_url, mock_post):
+
+    # Arrange
+    mock_get_url.return_value = "http://localhost/__admin/mappings"
+    resp_mock = MagicMock(spec=requests.Response)
+    resp_mock.status_code = 200
+    mock_post.return_value = resp_mock
+    wm = WireMockContainer(verify_ssl_certs=False, secure=False, http_server_port=5000)
+
+    # Act
+    resp = wm.reload_mappings()
+
+    assert resp.status_code == 200
+
+
+@patch("wiremock.testing.testcontainer.requests.post")
+@patch.object(WireMockContainer, "get_url")
+def test_reload_mappings_failure_raises_exception(mock_get_url, mock_post):
+
+    # Arrange
+    mock_get_url.return_value = "http://localhost/__admin/mappings"
+    resp_mock = MagicMock(spec=requests.Response)
+    resp_mock.status_code = 403
+    mock_post.return_value = resp_mock
+    wm = WireMockContainer(verify_ssl_certs=False, secure=False, http_server_port=5000)
+
+    # Act
+    with pytest.raises(WireMockContainerException):
+        wm.reload_mappings()
 
 
 def test_container_with_cli_arg_sets_cmd_line_args():
@@ -233,6 +325,7 @@ def test_copy_file_to_container(mock_get_container: Mock, tmp_path: Path):
     )
 
 
+@pytest.mark.container_test
 def test_configure_manually():
 
     wm = cast(
@@ -266,3 +359,44 @@ def test_configure_manually():
         assert resp1.content == b"hello"
         assert resp2.status_code == 200
         assert resp2.content == b'{"message": "Hello World !"}'
+
+
+@pytest.mark.container_test
+def test_configure_via_wiremock_container_context_manager():
+
+    mappings = [
+        (
+            "hello-world.json",
+            {
+                "request": {"method": "GET", "url": "/hello"},
+                "response": {"status": 200, "body": "hello"},
+            },
+        )
+    ]
+
+    with wiremock_container(mappings=mappings, verify_ssl_certs=False) as wm:
+
+        resp1 = requests.get(wm.get_url("/hello"), verify=False)
+        assert resp1.status_code == 200
+        assert resp1.content == b"hello"
+
+
+@pytest.mark.container_test
+def test_container_sdk_integration():
+
+    with wiremock_container(secure=False) as wm:
+
+        Config.base_url = wm.get_url("__admin")
+
+        Mappings.create_mapping(
+            Mapping(
+                priority=100,
+                request=MappingRequest(method=HttpMethods.GET, url="/hello"),
+                response=MappingResponse(status=200, body="hello"),
+                persistent=False,
+            )
+        )
+
+        resp1 = requests.get(wm.get_url("/hello"), verify=False)
+        assert resp1.status_code == 200
+        assert resp1.content == b"hello"

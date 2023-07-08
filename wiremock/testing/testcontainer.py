@@ -19,6 +19,10 @@ from wiremock.resources.mappings.models import Mapping
 TMappingConfigs = Dict[Union[str, Dict], Union[str, int, Dict, Mapping]]
 
 
+class WireMockContainerException(Exception):
+    pass
+
+
 class WireMockContainer(DockerContainer):
     """
     Wiremock container.
@@ -170,18 +174,25 @@ class WireMockContainer(DockerContainer):
         return False
 
     def reload_mappings(self) -> requests.Response:
+        """When mappings are mounted into a container via files
+        the server will already be running as it will start as soon as the container
+        starts.  reload_mappings is called via the rest api to ensure any mappings
+        added after the server starts are picked up.
+        """
         resp = requests.post(
             self.get_url("__admin/mappings/reset"), verify=self.verify_ssl_certs
         )
         if not resp.status_code <= 300:
-            raise Exception("Failed to reload mappings")
+            raise WireMockContainerException("Failed to reload mappings")
 
         return resp
 
     @wait_container_is_ready()
     def configure(self) -> None:
         if not self.server_running():
-            raise Exception("Server does not appear to be running in container")
+            raise WireMockContainerException(
+                "Server does not appear to be running in container"
+            )
 
         self.copy_mappings_to_container()
         self.copy_mapping_files_to_container()
@@ -196,7 +207,13 @@ class WireMockContainer(DockerContainer):
         """
         proto = "https" if self.secure else "http"
         port = self.https_server_port if self.secure else self.http_server_port
-        return f"{proto}://{self.get_container_host_ip()}:{self.get_exposed_port(port)}"
+
+        if os.environ.get("WIREMOCK_DIND", False):
+            host = "host.docker.internal"
+        else:
+            host = self.get_container_host_ip()
+
+        return f"{proto}://{host}:{self.get_exposed_port(port)}"
 
     def get_url(self, path: str) -> str:
         return urljoin(self.get_base_url(), path)
@@ -243,8 +260,10 @@ def wiremock_container(
         else:
             yield wm
     except ContainerStartException as e:
-        raise Exception("Error starting wiremock container") from e
+        raise WireMockContainerException("Error starting wiremock container") from e
     except requests.exceptions.RequestException as e:
-        raise Exception("Error connecting to wiremock container") from e
+        raise WireMockContainerException(
+            "Error connecting to wiremock container"
+        ) from e
     finally:
         client.close()
