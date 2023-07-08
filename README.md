@@ -72,6 +72,16 @@ def test_get_hello_world(wm_server):
 
 You can read more about testcontainer support in python-wiremock [here](docs/testcontainers.md).
 
+## Examples
+
+There are several example projects included to demonstrate the different ways that wiremock can be used to mock
+services in your tests and systems. These example test modules demonstrate different strategies for testing against
+the same "product service" and act as a good demonstration of real world applications.
+
+- [Python Test Containers](examples/tests/test_containers.py)
+
+- [Standlone JAVA Server Version](examples/tests/test_java_server.py)
+
 ## Documentation
 
 wiremock documentation can be found at http://wiremock.readthedocs.org/

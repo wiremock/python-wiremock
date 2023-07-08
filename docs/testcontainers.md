@@ -97,3 +97,40 @@ WireMockContainer(verify_ssl_certs=False)
     .with_env("JAVA_OPTS", "-Djava.net.preferIPv4Stack=true")
 )
 ```
+
+## Using WireMockContainer inside docker (dind)
+
+It's common that you might need to start testcontainers from inside of another comntainer. The example project in [Test Containers Example](example/docker-compose.yaml) actually does this.
+
+When running spawning testcontainer inside of another container you will need to set the `WIREMOCK_DIND` config variable to true. When this env var is set the host of the wiremock container
+will explicitly be set to `host.docker.internal`.
+
+Let's take a look at the example docker-compose.yaml the example products service uses.
+
+```yaml
+version: "3"
+
+services:
+  overview_srv:
+    build:
+      context: ../
+      dockerfile: example/Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      - WIREMOCK_DIND=true # (1) Set the env var
+    extra_hosts:
+      - "host.docker.internal:host-gateway" # (2)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # (3)
+      - ..:/app/
+      - .:/app/example/
+    command: uvicorn product_mock.overview_service:app --host=0.0.0.0 --port=5001
+```
+
+- 1 - Set the environment variable to instruct WireMockContainer that we're running in `DIND` mode.
+
+- 2 - Map the host.docker.internal to host-gateway. Docker will magically replace the host-gateway value with the ip of the container.
+  This mapping is required when using dind on certain CI system like github actions.
+
+- 3 - Mount the docker binary into the container
