@@ -6,11 +6,19 @@
     </a>
 </p>
 
-This is a python admin API client to a standalone WireMock server.
+Python Wiremock is an HTTP client that allows users to interact with a standalone Wiremock instance from within a Python project.
 
 [![a](https://img.shields.io/badge/slack-%23wiremock%2Fpython-brightgreen?style=flat&logo=slack)](https://slack.wiremock.org/)
 [![Coverage Status](https://coveralls.io/repos/github/wiremock/python-wiremock/badge.svg?branch=master)](https://coveralls.io/github/wiremock/python-wiremock?branch=master)
 [![Docs](https://img.shields.io/badge/docs-latest-brightgreen.svg)](http://wiremock.readthedocs.org/)
+
+## Key Features
+
+WireMock can run in unit tests, as a standalone process or a container. Key features include:
+
+- Supports most of the major [Wiremock](https://wiremock.org/docs) features (more on their way soon)
+- Support for [python-testcontainers](https://github.com/testcontainers/testcontainers-python) to eaily start wiremock server for your tests
+- Support for standalone wiremock JAVA sever
 
 ## Install as Dependency
 
@@ -21,6 +29,48 @@ To install:
 To install with testing dependencies:
 
     `pip install wiremock[testing]`
+
+To install via Poetry:
+
+    `poetry add --extras=testing wiremock`
+
+## Quick Start
+
+The preferred way of using wiremock to mock your services is via by using the provided wiremock test containers
+
+```python
+import pytest
+
+from wiremock.testing.testcontainer import wiremock_container
+
+# Create a pytest fixture to manage the container life-cycle
+@pytest.fixture(scope="session")
+def wm_server():
+    with wiremock_container(secure=False) as wm:
+
+        # set the wiremock sdk config url to the url exposed by the container
+        Config.base_url = wm.get_url("__admin")
+
+        # Generate mappings using the sdk
+        Mappings.create_mapping(
+            Mapping(
+                request=MappingRequest(method=HttpMethods.GET, url="/hello"),
+                response=MappingResponse(status=200, body="hello"),
+                persistent=False,
+            )
+        )
+        yield wm
+
+
+def test_get_hello_world(wm_server):
+
+    resp1 = requests.get(wm_server.get_url("/hello"), verify=False)
+
+    assert resp1.status_code == 200
+    assert resp1.content == b"hello"
+```
+
+You can read more about testcontainer support in python-wiremock here.
 
 ## Documentation
 
