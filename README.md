@@ -17,7 +17,7 @@ Python Wiremock is an HTTP client that allows users to interact with a standalon
 WireMock can run in unit tests, as a standalone process or a container. Key features include:
 
 - Supports most of the major [Wiremock](https://wiremock.org/docs) features (more on their way soon)
-- Support for [python-testcontainers](https://github.com/testcontainers/testcontainers-python) to eaily start wiremock server for your tests
+- Support for [python-testcontainers](https://github.com/testcontainers/testcontainers-python) to easily start wiremock server for your tests
 - Support for standalone wiremock JAVA sever
 
 ## Install as Dependency
@@ -36,39 +36,47 @@ To install via Poetry:
 
 ## Quick Start
 
-The preferred way of using wiremock to mock your services is by using the provided wiremock test-containers
+The preferred way of using wiremock to mock your services is by using the provided `WireMockContainer` testcontainer.
 
 ```python
 import pytest
 
 from wiremock.testing.testcontainer import wiremock_container
 
-# Create a pytest fixture to manage the container life-cycle
-@pytest.fixture(scope="session")
+
+@pytest.fixture(scope="session") # (1)
 def wm_server():
     with wiremock_container(secure=False) as wm:
 
-        # set the wiremock sdk config url to the url exposed by the container
-        Config.base_url = wm.get_url("__admin")
 
-        # Generate mappings using the sdk
+        Config.base_url = wm.get_url("__admin") # (2)
+
+
         Mappings.create_mapping(
             Mapping(
                 request=MappingRequest(method=HttpMethods.GET, url="/hello"),
                 response=MappingResponse(status=200, body="hello"),
                 persistent=False,
             )
-        )
+        ) # (3)
         yield wm
 
 
-def test_get_hello_world(wm_server):
+def test_get_hello_world(wm_server): # (4)
 
     resp1 = requests.get(wm_server.get_url("/hello"), verify=False)
 
     assert resp1.status_code == 200
     assert resp1.content == b"hello"
 ```
+
+- 1. Create a pytest fixture to manage the container life-cycle. use fixture `scope` to control how often the container is created
+
+- 2. Set the wiremock sdk config url to the url exposed by the container
+
+- 3. Create response and request mappings using the Admin SDK.
+
+- 4. Use the `wm_server` fixture in your tests and make requests against the mock server.
 
 You can read more about testcontainer support in python-wiremock [here](docs/testcontainers.md).
 
