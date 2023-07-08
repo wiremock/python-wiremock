@@ -73,7 +73,7 @@ of options.
 ## Using the WireMockContainer directly
 
 You can also instantiate the container instance yourself using `WireMockContainer`. The container itself provides methods for creating mapping files and stubs on the container instance which can be used as an alternative
-if you maintainf your request and response stubs as files.
+if you maintain your request and response stubs as files.
 
 ```python
 WireMockContainer(verify_ssl_certs=False)
@@ -128,9 +128,9 @@ services:
     command: uvicorn product_mock.overview_service:app --host=0.0.0.0 --port=5001
 ```
 
-- 1 - Set the environment variable to instruct WireMockContainer that we're running in `DIND` mode.
+1. Set the environment variable to instruct WireMockContainer that we're running in `DIND` mode.
 
-- 2 - Map the host.docker.internal to host-gateway. Docker will magically replace the host-gateway value with the ip of the container.
-  This mapping is required when using dind on certain CI system like github actions.
+2. Map the host.docker.internal to host-gateway. Docker will magically replace the host-gateway value with the ip of the container.
+   This mapping is required when using dind on certain CI system like github actions.
 
-- 3 - Mount the docker binary into the container
+3. Mount the docker binary into the container

@@ -70,21 +70,21 @@ def test_get_hello_world(wm_server): # (4)
     assert resp1.content == b"hello"
 ```
 
-- 1. Create a pytest fixture to manage the container life-cycle. use fixture `scope` to control how often the container is created
+1. Create a pytest fixture to manage the container life-cycle. use fixture `scope` to control how often the container is created
 
-- 2. Set the wiremock sdk config url to the url exposed by the container
+2. Set the wiremock sdk config url to the url exposed by the container
 
-- 3. Create response and request mappings using the Admin SDK.
+3. Create response and request mappings using the Admin SDK.
 
-- 4. Use the `wm_server` fixture in your tests and make requests against the mock server.
+4. Use the `wm_server` fixture in your tests and make requests against the mock server.
 
 You can read more about testcontainer support in python-wiremock [here](docs/testcontainers.md).
 
 ## Examples
 
 There are several example projects included to demonstrate the different ways that wiremock can be used to mock
-services in your tests and systems. These example test modules demonstrate different strategies for testing against
-the same "product service" and act as a good demonstration of real world applications.
+services in your tests and systems. The example test modules demonstrate different strategies for testing against
+the same "product service" and act as a good demonstration of real world applications to help you get started.
 
 - [Python Test Containers](examples/tests/test_containers.py)
 
