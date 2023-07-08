@@ -43,14 +43,11 @@ import pytest
 
 from wiremock.testing.testcontainer import wiremock_container
 
-
 @pytest.fixture(scope="session") # (1)
 def wm_server():
     with wiremock_container(secure=False) as wm:
 
-
         Config.base_url = wm.get_url("__admin") # (2)
-
 
         Mappings.create_mapping(
             Mapping(
