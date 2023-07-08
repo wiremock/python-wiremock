@@ -36,7 +36,7 @@ To install via Poetry:
 
 ## Quick Start
 
-The preferred way of using wiremock to mock your services is via by using the provided wiremock test containers
+The preferred way of using wiremock to mock your services is by using the provided wiremock test-containers
 
 ```python
 import pytest
@@ -70,7 +70,7 @@ def test_get_hello_world(wm_server):
     assert resp1.content == b"hello"
 ```
 
-You can read more about testcontainer support in python-wiremock here.
+You can read more about testcontainer support in python-wiremock [here](docs/testcontainers.md).
 
 ## Documentation
 

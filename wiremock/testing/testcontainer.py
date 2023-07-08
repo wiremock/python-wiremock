@@ -239,6 +239,44 @@ def wiremock_container(
     """
     Start a wiremock test container using Testcontainers
 
+    Attributes
+        image (str): specify the docker image name and version for wiremock server.
+        http_server_port (int): The port of the HTTP server port
+        https_server_port (int): The port of the HTTPS server port
+        secure (bool): Set True If you're connecting to the server via ssl.
+        verify_ssl_certs (bool): Should requests verify ssl certs when using
+            secure connections.
+        mappings list[Tuple[str, TMappingConfigs]]: a list of tuples containing
+            mapping name and mapping dictionary.
+        start (bool): If true, start the container, otherwise just yield
+            container instance
+        docker_client_kwargs (dict): Kwargs to pass to the docker client
+
+    Examples:
+
+        Mappings can be provided as tuples of mapping name, TMappingConfigs.  This
+        will create mapping config files in the container.
+
+        ```
+        mappings = [
+            (
+                "hello-world.json",
+                {
+                    "request": {"method": "GET", "url": "/hello"},
+                    "response": {"status": 200, "body": "hello"},
+                },
+            )
+        ]
+
+        with wiremock_container(mappings=mappings, verify_ssl_certs=False) as wm:
+
+            resp1 = requests.get(wm.get_url("/hello"), verify=False)
+            assert resp1.status_code == 200
+        ```
+
+        Or you can use the SDK directly to create mappings via the API.
+
+
     :return: WireMockContainer instance
     """
 
