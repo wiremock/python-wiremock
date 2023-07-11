@@ -36,7 +36,7 @@ To install via Poetry:
 
 ## Quick Start
 
-The preferred way of using wiremock to mock your services is by using the provided `WireMockContainer` testcontainer.
+The preferred way of using WireMock to mock your services is by using the provided `WireMockContainer` [testcontainers-python](https://github.com/testcontainers/testcontainers-python).
 
 ```python
 import pytest
