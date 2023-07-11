@@ -6,7 +6,7 @@
     </a>
 </p>
 
-Python Wiremock is an HTTP client that allows users to interact with a standalone Wiremock instance from within a Python project.
+Python Wiremock is an HTTP client that allows users to interact with a Wiremock instance from within a Python project.
 
 [![a](https://img.shields.io/badge/slack-%23wiremock%2Fpython-brightgreen?style=flat&logo=slack)](https://slack.wiremock.org/)
 [![Coverage Status](https://coveralls.io/repos/github/wiremock/python-wiremock/badge.svg?branch=master)](https://coveralls.io/github/wiremock/python-wiremock?branch=master)
