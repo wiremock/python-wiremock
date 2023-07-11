@@ -4,7 +4,7 @@ Python WireMock ships with support for [testcontainers-wiremock](https://github.
 
 ## Using the context manager
 
-The simplest way to integrate the wirmock container into your test suite is to use the `wiremock_container` context manager. For pytest users this can be
+The simplest way to integrate the WireMock container into your test suite is to use the `wiremock_container` context manager. For pytest users this can be
 used in conjuction with a pytest fixture to easily manage the life-cycle of the container.
 
 ```python
