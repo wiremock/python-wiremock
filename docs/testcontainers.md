@@ -103,7 +103,7 @@ WireMockContainer(verify_ssl_certs=False)
 )
 ```
 
-## Using WireMockContainer inside docker (dind)
+## Using WireMockContainer inside Docker (dind)
 
 It's common that you might need to start Testcontainers from inside of another container. The example project in [Testcontainer Example](example/docker-compose.yaml) actually does this.
 
