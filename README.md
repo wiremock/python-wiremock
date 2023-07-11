@@ -75,7 +75,7 @@ def test_get_hello_world(wm_server): # (4)
 
 4. Use the `wm_server` fixture in your tests and make requests against the mock server.
 
-You can read more about testcontainer support in python-wiremock [here](docs/testcontainers.md).
+You can read more about Testcontainers support in python-wiremock [here](docs/testcontainers.md).
 
 ## Examples
 
