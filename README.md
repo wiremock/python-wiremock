@@ -17,7 +17,7 @@ Python Wiremock is an HTTP client that allows users to interact with a Wiremock 
 WireMock can run in unit tests, as a standalone process or a container. Key features include:
 
 - Supports most of the major [Wiremock](https://wiremock.org/docs) features (more on their way soon)
-- Support for [python-testcontainers](https://github.com/testcontainers/testcontainers-python) to easily start wiremock server for your tests
+- Support for [testcontainers-python](https://github.com/testcontainers/testcontainers-python) to easily start wiremock server for your tests
 - Support for standalone wiremock JAVA sever
 
 ## Install as Dependency
