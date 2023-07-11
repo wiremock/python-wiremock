@@ -89,7 +89,7 @@ the same "product service" and act as a good demonstration of real world applica
 
 - [Python Testcontainers](example/tests/test_testcontainers.py)
 
-- [Standlone Java Server Version](master/example/tests/test_java_server.py)
+- [Standalone Java Server Version](example/tests/test_java_server.py)
 
 ## Documentation
 
