@@ -83,7 +83,7 @@ There are several example projects included to demonstrate the different ways th
 services in your tests and systems. The example test modules demonstrate different strategies for testing against
 the same "product service" and act as a good demonstration of real world applications to help you get started.
 
-- [Python Test Containers](examples/tests/test_containers.py)
+- [Python Testcontainers](examples/tests/test_containers.py)
 
 - [Standlone JAVA Server Version](examples/tests/test_java_server.py)
 
