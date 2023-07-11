@@ -105,7 +105,7 @@ WireMockContainer(verify_ssl_certs=False)
 
 ## Using WireMockContainer inside Docker (dind)
 
-It's common that you might need to start Testcontainers from inside of another container. The example project in [Testcontainer Example](../example/docker-compose.yml) actually does this.
+It's common that you might need to start Testcontainers from inside of another container. The example project in `example/docker-compose.yml` actually does this.
 
 When running spawning testcontainer inside of another container you will need to set the `WIREMOCK_DIND` config variable to true. When this env var is set the host of the wiremock container
 will explicitly be set to `host.docker.internal`.

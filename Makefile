@@ -44,4 +44,4 @@ clean:
 	find . -name '.bak' -exec rm -f {} +
 
 docs:
-	mkdocs build --site-dir=html
+	poetry run mkdocs build --site-dir=html

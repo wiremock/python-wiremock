@@ -1,27 +1,29 @@
 name: Verify documentation
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: ["main", "master"]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: ["main", "master"]
 
 jobs:
   verify-docs:
     name: Check Documentation
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install .[tests]
-    - name: Build docs with MkDocs
-      run: |
-        make docs
-    - name: Check Markdown links
-      uses: gaurav-nelson/github-action-markdown-link-check@v1
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: Install Poetry
+        run: curl -sSL https://install.python-poetry.org | python
+      - name: Install dependencies
+        run: |
+          poetry env use '3.10'
+          poetry install --extras=testing
+      - name: Build docs with MkDocs
+        run: |
+          make docs
+      - name: Check Markdown links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
