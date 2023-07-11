@@ -165,5 +165,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Sphinx
+# Static docs
 html/
+site/
