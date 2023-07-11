@@ -9,8 +9,12 @@
 Python Wiremock is an HTTP client that allows users to interact with a Wiremock instance from within a Python project.
 
 [![a](https://img.shields.io/badge/slack-%23wiremock%2Fpython-brightgreen?style=flat&logo=slack)](https://slack.wiremock.org/)
-[![Coverage Status](https://coveralls.io/repos/github/wiremock/python-wiremock/badge.svg?branch=master)](https://coveralls.io/github/wiremock/python-wiremock?branch=master)
 [![Docs](https://img.shields.io/badge/docs-latest-brightgreen.svg)](http://wiremock.readthedocs.org/)
+
+<!--
+FIXME: Reporting is dead: https://github.com/wiremock/python-wiremock/issues/74
+[![Coverage Status](https://coveralls.io/repos/github/wiremock/python-wiremock/badge.svg?branch=master)](https://coveralls.io/github/wiremock/python-wiremock?branch=master)
+-->
 
 ## Key Features
 
@@ -83,9 +87,9 @@ There are several example projects included to demonstrate the different ways th
 services in your tests and systems. The example test modules demonstrate different strategies for testing against
 the same "product service" and act as a good demonstration of real world applications to help you get started.
 
-- [Python Testcontainers](examples/tests/test_containers.py)
+- [Python Testcontainers](example/tests/test_testcontainers.py)
 
-- [Standlone JAVA Server Version](examples/tests/test_java_server.py)
+- [Standlone Java Server Version](master/example/tests/test_java_server.py)
 
 ## Documentation
 
