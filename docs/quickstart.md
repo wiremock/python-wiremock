@@ -1,73 +1,62 @@
-Quick Start
-===========
+Quickstart
+=====
 
-An example app:
+The preferred way of using WireMock to mock your services is by using the provided `WireMockContainer`
+that uses [testcontainers-python](https://github.com/testcontainers/testcontainers-python)
+and provisions WireMock as a test container on-demand.
 
-```python
-from wiremock.constants import Config
-from wiremock.client import *
+### Prerequisites
 
-Config.base_url = 'https://mockserver.example.com/__admin/'
-# Optionally set a custom cert path:
-# Config.requests_cert = ... (See requests documentation)
-# Optionally disable cert verification
-# Config.requests_verify = False
+- Python 3.7 or above
+- Pip 20.0.0 or above
 
-mapping = Mapping(
-    priority=100,
-    request=MappingRequest(
-        method=HttpMethods.GET,
-        url='/hello'
-    ),
-    response=MappingResponse(
-        status=200,
-        body='hi'
-    ),
-    persistent=False,
-)
+### Install Python WireMock
 
-mapping = Mappings.create_mapping(mapping=mapping)
-
-all_mappings = Mappings.retrieve_all_mappings()
+```bash
+pip install wiremock
 ```
 
-### Starting WireMock server with a context manager
+### Use Python WireMock
 
 ```python
-from wiremock.constants import Config
-from wiremock.client import *
-from wiremock.server.server import WireMockServer
+import pytest
 
-with WireMockServer() as wm:
-    Config.base_url = 'http://localhost:{}/__admin'.format(wm.port)
-    Mappings.create_mapping(...)  # Set up stubs
-    requests.get(...)             # Make API calls
+from wiremock.testing.testcontainer import wiremock_container
+
+@pytest.fixture(scope="session") # (1)
+def wm_server():
+    with wiremock_container(secure=False) as wm:
+
+        Config.base_url = wm.get_url("__admin") # (2)
+
+        Mappings.create_mapping(
+            Mapping(
+                request=MappingRequest(method=HttpMethods.GET, url="/hello"),
+                response=MappingResponse(status=200, body="hello"),
+                persistent=False,
+            )
+        ) # (3)
+        yield wm
+
+
+def test_get_hello_world(wm_server): # (4)
+
+    resp1 = requests.get(wm_server.get_url("/hello"), verify=False)
+
+    assert resp1.status_code == 200
+    assert resp1.content == b"hello"
 ```
 
-### Starting WireMock server in a unittest.TestCase
+1. Create a pytest fixture to manage the container life-cycle. use fixture `scope` to control how often the container is created
 
-```python
+2. Set the wiremock sdk config url to the url exposed by the container
 
-class MyTestClassBase(TestCase):
-    @classmethod
-    def setUpClass(cls):
-        wm = self.wiremock_server = WireMockServer()
-        wm.start()
-        Config.base_url = 'http://localhost:{}/__admin'.format(wm.port)
+3. Create response and request mappings using the Admin SDK.
 
-    @classmethod
-    def tearDownClass(cls):
-        self.wiremock_server.stop()
-```
+4. Use the `wm_server` fixture in your tests and make requests against the mock server.
 
-### Customizing the path to java
+You can read more about Testcontainers support in Python WireMock [here](./testcontainers.md).
 
-```python
-WireMockServer(java_path='/path/to/my/java')
-```
+## More examples
 
-### Customizing the WireMock server JAR file:
-
-```python
-WireMockServer(jar_path='/my/secret/location/wiremock-standalone-2.35.0.jar')
-```
+See [this page](..) for more example references
