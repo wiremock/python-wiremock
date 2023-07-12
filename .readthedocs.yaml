@@ -18,9 +18,3 @@ build:
   os: ubuntu-22.04
   tools:
     python: "3.6"
-
-python:
-  version: 3.6
-  install:
-    - method: pip
-      path: .
