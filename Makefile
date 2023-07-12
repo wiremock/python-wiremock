@@ -44,4 +44,4 @@ clean:
 	find . -name '.bak' -exec rm -f {} +
 
 docs:
-	sphinx-build docs html
+	poetry run mkdocs build --site-dir=html
