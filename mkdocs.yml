@@ -8,3 +8,12 @@ markdown_extensions:
   - markdown_include.include:
       base_path: .
   - admonition
+
+nav:
+  - Home: index.md
+  - Quickstart Guide: quickstart.md
+  - Installation: install.md
+  - Testcontainers: testcontainers.md
+  - Standalone: api-client.md
+  - Resources:
+    - Changelog: changelog.md
