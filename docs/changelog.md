@@ -3,11 +3,6 @@ ChangeLog
 
 Changes to the library are recorded here.
 
-Newer version
-------
-
-See [GitHub Releases](https://github.com/wiremock/python-wiremock/releases)
-
 v2.4.0
 ------
 

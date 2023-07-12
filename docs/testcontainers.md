@@ -1,4 +1,4 @@
-# Testcontainers module
+# WireMock module for Testcontainers Python
 
 Python WireMock ships with support for [testcontainers-wiremock](https://github.com/testcontainers/testcontainers-python) to easily start WireMock server from your test suite using Python.
 
