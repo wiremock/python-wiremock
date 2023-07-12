@@ -27,8 +27,8 @@ WireMock can run in unit tests, as a standalone process or a container. Key feat
 
 ## References
 
-- [Quickstart Guide](./docs/quickstart)
-- [Installation](./docs/install)
+- [Quickstart Guide](./docs/quickstart.md)
+- [Installation](./docs/install.md)
 - [Full documentation](http://wiremock.readthedocs.org/)
 
 ## Examples

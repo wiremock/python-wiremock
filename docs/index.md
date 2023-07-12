@@ -16,10 +16,10 @@ Key features include:
 
 ## Documentation
 
-- [Quickstart](./quickstart)
-- [Installation](./install)
-- [Testconatiners module](./testcontainers)
-- [Using with standalone WireMock](./api-client)
+- [Quickstart](./quickstart.md)
+- [Installation](./install.md)
+- [Testconatiners module](./testcontainers.md)
+- [Using with standalone WireMock](./api-client.md)
 
 ## Links
 
