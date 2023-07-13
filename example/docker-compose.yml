@@ -7,7 +7,12 @@ services:
       dockerfile: example/Dockerfile
     ports:
       - "5001:5001"
+    environment:
+      - WIREMOCK_DIND=true
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - ..:/app/
       - .:/app/example/
     command: uvicorn product_mock.overview_service:app --host=0.0.0.0 --port=5001
