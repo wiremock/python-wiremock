@@ -38,5 +38,4 @@ services in your tests and systems. The example test modules demonstrate differe
 the same "product service" and act as a good demonstration of real world applications to help you get started.
 
 - [Testcontainers Python](example/tests/test_testcontainers.py)
-
 - [Standalone Java Server Version](example/tests/test_java_server.py)
