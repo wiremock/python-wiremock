@@ -18,7 +18,7 @@ Key features include:
 
 - [Quickstart](./quickstart.md)
 - [Installation](./install.md)
-- [Testconatiners module](./testcontainers.md)
+- [Testcontфiners module](./testcontainers.md)
 - [Using with standalone WireMock](./api-client.md)
 
 ## Links
