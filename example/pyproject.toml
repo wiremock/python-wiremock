@@ -10,7 +10,7 @@ packages = [{include = "product_mock"}]
 [tool.poetry.dependencies]
 python = "^3.10.6"
 fastapi = "^0.95.1"
-requests = "^2.29.0"
+requests = "^2.31.0"
 uvicorn = "^0.22.0"
 wiremock = { path = "../", develop=true}
 httpx = "^0.24.0"
