@@ -33,7 +33,7 @@ WireMock can run in unit tests, as a standalone process or a container. Key feat
 
 ## Examples
 
-There are several [example projects](./example/) included to demonstrate the different ways that wiremock can be used to mock
+There are several [example projects](./examples/) included to demonstrate the different ways that wiremock can be used to mock
 services in your tests and systems. The example test modules demonstrate different strategies for testing against
 the same "product service" and act as a good demonstration of real world applications to help you get started.
 

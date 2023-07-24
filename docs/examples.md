@@ -1,10 +1,10 @@
 # Python WireMock examples
 
 - [quickstart](https://github.com/wiremock/python-wiremock/tree/master/examples/quickstart) -
-  example for the[Quick Start Guide](./quickstart/)
+  example for the[Quick Start Guide](./quickstart.md)
 - [intro](https://github.com/wiremock/python-wiremock/tree/master/examples/intro) -
   End-to-End example for both Testcontainers module
-  and native pytest integration.
+  and native `pytest` integration.
 
 ## External examples
 
