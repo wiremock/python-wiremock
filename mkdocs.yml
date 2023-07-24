@@ -16,4 +16,5 @@ nav:
   - Testcontainers: testcontainers.md
   - Standalone: api-client.md
   - Resources:
+    - Examples: examples.md
     - Changelog: changelog.md

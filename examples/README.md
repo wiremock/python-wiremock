@@ -7,7 +7,8 @@
 
 ## External examples
 
-No external examples at the moment
+No external examples are referenced at the moment.
+Please be welcome to [contribute](./../CONTRIBUTING.md)!
 
 ## Contributing
 
