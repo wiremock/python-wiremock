@@ -58,7 +58,7 @@ def wiremock_server():
 
 ## Write your first test with WireMock
 
-Use the `wm_server` fixture in your tests and make requests against the mock server.
+Use the `wiremock_server` fixture in your tests and make requests against the mock server.
 Add the following test to the `test.py` file:
 
 ```python
