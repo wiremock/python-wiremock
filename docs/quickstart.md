@@ -8,10 +8,10 @@ In this example we will use the [pytest](https://docs.pytest.org/) framework.
 
 ## Prerequisites
 
-- Python WireMock 2.6.0 or above
 - Python 3.7 or above
-- Pip 20.0.0 or above
-- Pytest 7.3.0 or above
+- Pip 20.0.0 or above (use `apt install python3-pip`, for example)
+- Pytest 7.3.0 or above (use `pip install pytest`)
+- Testcontainers 3.5.0 or above (use `pip install testcontainers`)
 
 ## Install Python WireMock
 
@@ -22,7 +22,7 @@ use the following command:
 pip install wiremock
 ```
 
-## Create Test Fixture
+## Create the Test Fixture
 
 As a first step, we will need to provision a test WireMock server to be used in tests:
 
@@ -35,22 +35,23 @@ As a first step, we will need to provision a test WireMock server to be used in 
 
 ```python
 import pytest
+import requests
 
 from wiremock.testing.testcontainer import wiremock_container
+from wiremock.constants import Config
+from wiremock.client import *
 
-@pytest.fixture(scope="session") # (1)
-def wm_server():
+@pytest.fixture # (1)
+def wiremock_server():
     with wiremock_container(secure=False) as wm:
-
         Config.base_url = wm.get_url("__admin") # (2)
-
         Mappings.create_mapping(
             Mapping(
                 request=MappingRequest(method=HttpMethods.GET, url="/hello"),
                 response=MappingResponse(status=200, body="hello"),
                 persistent=False,
             )
-        ) # (3)
+        ) # (3)      
         yield wm
 ```
 
@@ -59,12 +60,11 @@ def wm_server():
 Use the `wm_server` fixture in your tests and make requests against the mock server:
 
 ```python
-def test_get_hello_world(wm_server):
+def test_get_hello_world(wiremock_server): # (4)
+    response = requests.get(wiremock_server.get_url("/hello"))
 
-    resp1 = requests.get(wm_server.get_url("/hello"), verify=False)
-
-    assert resp1.status_code == 200
-    assert resp1.content == b"hello"
+    assert response.status_code == 200
+    assert response.content == b"hello"
 ```
 
 ## Read More
