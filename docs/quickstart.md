@@ -26,12 +26,13 @@ pip install wiremock
 
 As a first step, we will need to provision a test WireMock server to be used in tests:
 
-1. Create a pytest fixture to manage the container life-cycle.
+1. Create an empty `test.py` file
+2. In this file, create a pytest fixture to manage the container life-cycle.
    Use fixture `scope` to control how often the container is created
-2. Set the WireMock SDK config URL to the URL exposed by the container.
+3. Set the WireMock SDK config URL to the URL exposed by the container.
    It will route all Admin API requests to
    the mock server.
-3. Create REST API stub mapping for the `/hello` endpoint using the Admin SDK.
+4. Create REST API stub mapping for the `/hello` endpoint using the Admin SDK.
 
 ```python
 import pytest
@@ -57,7 +58,8 @@ def wiremock_server():
 
 ## Write your first test with WireMock
 
-Use the `wm_server` fixture in your tests and make requests against the mock server:
+Use the `wm_server` fixture in your tests and make requests against the mock server.
+Add the following test to the `test.py` file:
 
 ```python
 def test_get_hello_world(wiremock_server): # (4)
@@ -65,6 +67,29 @@ def test_get_hello_world(wiremock_server): # (4)
 
     assert response.status_code == 200
     assert response.content == b"hello"
+```
+
+## Run the test!
+
+Run the following command:
+
+```bash
+pytest test.py -v
+```
+
+Sample output:
+
+```
+$ pytest test.py -v
+================ test session starts ================
+platform linux -- Python 3.8.10, pytest-7.4.0, pluggy-1.2.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /c/Users/Oleg/Documents/opensource/wiremock/python-wiremock
+configfile: pyproject.toml
+plugins: anyio-3.7.1
+collected 1 item
+
+test.py::test_get_hello_world PASSED                                [100%]
 ```
 
 ## Read More
