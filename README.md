@@ -23,7 +23,7 @@ WireMock can run in unit tests, as a standalone process or a container. Key feat
 
 - [Testcontainers Python](https://github.com/testcontainers/testcontainers-python) module to easily start WireMock server for your tests
 - REST API Client for a standalone WireMock Java server
-- Supports most of the major [Wiremock](https://wiremock.org/docs) features (more on their way soon)
+- Support for most of ajor [WireMock features ](https://wiremock.org/docs) (more on their way soon)
 
 ## References
 
@@ -33,9 +33,9 @@ WireMock can run in unit tests, as a standalone process or a container. Key feat
 
 ## Examples
 
-There are several example projects included to demonstrate the different ways that wiremock can be used to mock
+There are several [example projects](./examples/) included to demonstrate the different ways that wiremock can be used to mock
 services in your tests and systems. The example test modules demonstrate different strategies for testing against
 the same "product service" and act as a good demonstration of real world applications to help you get started.
 
-- [Testcontainers Python](example/tests/test_testcontainers.py)
-- [Standalone Java Server Version](example/tests/test_java_server.py)
+- [Testcontainers Python](examples/intro/tests/test_testcontainers.py)
+- [Standalone Java Server Version](examples/intro/tests/test_java_server.py)
