@@ -18,13 +18,13 @@ WORKDIR /app/example
 
 # Install dependencies
 COPY . /app
-COPY ./example/pyproject.toml ./example/poetry.lock /app/example/
+COPY ./examples/intro/pyproject.toml ./examples/intro/poetry.lock /app/example/
 RUN poetry config virtualenvs.create false \
     && poetry install --no-root --no-interaction --no-ansi
 
 
 # Copy the rest of the application code
-COPY ./example /app/example
+COPY ./examples/intro /app/example
 
 # Expose the port that the FastAPI app will listen on
 EXPOSE 5001

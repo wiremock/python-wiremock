@@ -20,3 +20,9 @@ General Rules:
 Setup the project using poetry.
 
 `poetry install`
+
+## Contributing examples
+
+Please submit new examples as a pull requests to the [examples directory](./examples/).
+You can also also add links to external examples and tutorials to the `README.md`
+file in the directory.

@@ -1,4 +1,4 @@
-# Python Wiremock Example
+# Python Wiremock End-to-End Example
 
 ## Introduction
 

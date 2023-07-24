@@ -119,7 +119,7 @@ services:
   overview_srv:
     build:
       context: ../
-      dockerfile: example/Dockerfile
+      dockerfile: examples/intro/Dockerfile
     ports:
       - "5001:5001"
     environment:
