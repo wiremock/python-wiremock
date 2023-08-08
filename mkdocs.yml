@@ -15,6 +15,7 @@ nav:
   - Installation: install.md
   - Testcontainers: testcontainers.md
   - Standalone: api-client.md
+  - Contributing: CONTRIBUTING.md
   - Resources:
     - Examples: examples.md
     - Changelog: changelog.md

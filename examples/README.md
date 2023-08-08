@@ -8,7 +8,7 @@
 ## External examples
 
 No external examples are referenced at the moment.
-Please be welcome to [contribute](./../CONTRIBUTING.md)!
+Please be welcome to [contribute](../docs/CONTRIBUTING.md)!
 
 ## Contributing
 

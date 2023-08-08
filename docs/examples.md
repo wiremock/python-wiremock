@@ -9,9 +9,9 @@
 ## External examples
 
 No external examples are referenced at the moment.
-Please be welcome to [contribute]([./../CONTRIBUTING.md](https://github.com/wiremock/python-wiremock/blob/master/CONTRIBUTING.md))!
+Please be welcome to [contribute](./CONTRIBUTING.md)!
 
 ## Contributing examples
 
 More examples are always welcome!
-See the [Contributor Guide]([./../CONTRIBUTING.md](https://github.com/wiremock/python-wiremock/blob/master/CONTRIBUTING.md)).
+See the [Contributor Guide](./CONTRIBUTING.md).
