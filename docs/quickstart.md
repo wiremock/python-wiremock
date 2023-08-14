@@ -98,4 +98,4 @@ You can read more about Testcontainers support in Python WireMock [here](./testc
 
 ## More examples
 
-See [this page](..) for more example references
+See [this page](./examples.md) for more example references
