@@ -54,7 +54,7 @@ def test_init_with_defaults(config):
     with patch.object(WireMockServer, "_get_free_port", return_value=config.port):
         wm = WireMockServer()
 
-    expected_jar = files("wiremock") / "server" / "wiremock-standalone-2.35.0.jar"
+    expected_jar = files("wiremock") / "server" / "wiremock-standalone-2.35.1.jar"
     assertEqual(wm.java_path, "java")  # Assume java in PATH
     assertEqual(wm.jar_path, expected_jar)
 
