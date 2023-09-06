@@ -38,7 +38,7 @@ Then use your favorite IDE for development and testing.
 ## Contributing examples
 
 Please submit new examples as a pull requests to the
-[examples directory]([./examples/](https://github.com/wiremock/python-wiremock/tree/master/examples)).
+[examples directory](https://github.com/wiremock/python-wiremock/tree/master/examples). 
 You can also also add links to external examples and tutorials to the `README.md`
 file in the directory.
 
