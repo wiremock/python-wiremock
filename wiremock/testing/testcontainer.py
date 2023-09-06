@@ -33,7 +33,7 @@ class WireMockContainer(DockerContainer):
 
     def __init__(
         self,
-        image: str = "wiremock/wiremock:2.35.0",
+        image: str = "wiremock/wiremock:2.35.1-1",
         http_server_port: int = 8080,
         https_server_port: int = 8443,
         secure: bool = True,
@@ -227,7 +227,7 @@ class WireMockContainer(DockerContainer):
 
 @contextmanager
 def wiremock_container(
-    image: str = "wiremock/wiremock:2.35.0",
+    image: str = "wiremock/wiremock:2.35.1-1",
     http_server_port: int = 8080,
     https_server_port: int = 8443,
     secure: bool = True,

@@ -69,5 +69,5 @@ WireMockServer(java_path='/path/to/my/java')
 ### Customizing the WireMock server JAR file:
 
 ```python
-WireMockServer(jar_path='/my/secret/location/wiremock-standalone-2.35.0.jar')
+WireMockServer(jar_path='/my/secret/location/wiremock-standalone-2.35.1.jar')
 ```
