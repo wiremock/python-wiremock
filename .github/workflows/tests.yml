@@ -21,8 +21,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install Poetry
-        run: curl -sSL https://install.python-poetry.org | python
+      - name: Install and configure Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.5.1
 
       - name: Install dependencies
         run: |
