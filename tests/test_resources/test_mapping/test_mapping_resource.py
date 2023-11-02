@@ -16,22 +16,24 @@ from wiremock.client import (
 @pytest.mark.resource
 @responses.activate
 def test_create_mapping():
-    e = MappingResponse(body="test", status=200)
-    resp = e.get_json_data()
-    responses.add(
-        responses.POST, "http://localhost/__admin/mappings", json=resp, status=200
-    )
-
     m = Mapping(
         priority=1,
         request=MappingRequest(url="test", method="GET"),
         response=MappingResponse(status=200, body="test"),
     )
 
+    e = Mapping(**m, id="1234-5678")
+    resp = e.get_json_data()
+    responses.add(
+        responses.POST, "http://localhost/__admin/mappings", json=resp, status=200
+    )
+
     r = Mappings.create_mapping(m)
-    assert isinstance(r, MappingResponse)
-    assert r.status == 200
-    assert r.body == "test"
+    assert isinstance(r, Mapping)
+    assert r.id == "1234-5678"
+    assert r.priority == 1
+    assert r.request == m.request
+    assert r.response == m.response
 
 
 @pytest.mark.unit
