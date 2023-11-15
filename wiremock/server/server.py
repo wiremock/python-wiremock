@@ -61,7 +61,7 @@ class WireMockServer(object):
             "--local-response-templating",
         ]
         if self.root_dir is not None:
-            cmd.append("--root-dir=")
+            cmd.append("--root-dir")
             cmd.append(str(self.root_dir))
         try:
             self.__subprocess = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
