@@ -30,7 +30,7 @@ class Mappings(BaseResource):
             params=parameters,
         )
         response = cls.REST_CLIENT.handle_response(response)
-        return MappingResponse.from_dict(response.json())
+        return Mapping.from_dict(response.json())
 
     @classmethod
     def retrieve_all_mappings(cls, parameters={}):
