@@ -4,6 +4,11 @@ theme:
   highlightjs: true
 plugins:
   - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_submodules: true
 markdown_extensions:
   - markdown_include.include:
       base_path: .
@@ -15,6 +20,7 @@ nav:
   - Installation: install.md
   - Testcontainers: testcontainers.md
   - Standalone: api-client.md
+  - Reference: reference.md
   - Contributing: CONTRIBUTING.md
   - Resources:
     - Examples: examples.md
