@@ -4,7 +4,7 @@ import tarfile
 import tempfile
 import time
 from contextlib import contextmanager
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any, Dict, Generator, List, Optional, Tuple, Union
 from urllib.parse import urljoin
 
@@ -131,7 +131,7 @@ class WireMockContainer(DockerContainer):
         """
 
         self.copy_files_to_container(
-            configs=self.mapping_stubs, container_dir_path=Path(f"{self.MAPPINGS_DIR}")
+            configs=self.mapping_stubs, container_dir_path=PurePosixPath(f"{self.MAPPINGS_DIR}")
         )
 
     def copy_mapping_files_to_container(self) -> None:
@@ -140,7 +140,7 @@ class WireMockContainer(DockerContainer):
         the configured FILES_DIR
         """
         self.copy_files_to_container(
-            configs=self.mapping_files, container_dir_path=Path(f"{self.FILES_DIR}")
+            configs=self.mapping_files, container_dir_path=PurePosixPath(f"{self.FILES_DIR}")
         )
 
     def server_running(self, retry_count: int = 3, retry_delay: int = 1) -> bool:
