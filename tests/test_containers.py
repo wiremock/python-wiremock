@@ -321,7 +321,7 @@ def test_copy_file_to_container(mock_get_container: Mock, tmp_path: Path):
 
     # Assert
     mock_get_container.return_value.put_archive.assert_called_once_with(
-        path=Path(wm.MAPPINGS_DIR), data=b'{"foo": "bar"}'
+        path=Path(wm.MAPPINGS_DIR).as_posix(), data=b'{"foo": "bar"}'
     )
 
 
