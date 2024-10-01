@@ -94,7 +94,7 @@ class WireMockContainer(DockerContainer):
     def copy_file_to_container(self, host_path: Path, container_path: Path) -> None:
         with open(host_path, "rb") as fp:
             self.get_wrapped_container().put_archive(
-                path=container_path, data=fp.read()
+                path=container_path.as_posix(), data=fp.read()
             )
 
     def copy_files_to_container(
