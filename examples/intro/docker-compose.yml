@@ -13,7 +13,7 @@ services:
       - "host.docker.internal:host-gateway"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ..:/app/
+      - ../../app/
       - .:/app/example/
     command: uvicorn product_mock.overview_service:app --host=0.0.0.0 --port=5001
 
@@ -24,6 +24,6 @@ services:
     ports:
       - "5002:5002"
     volumes:
-      - ..:/app/
+      - ../../:/app/
       - .:/app/example/
     command: uvicorn product_mock.products_service:app --host=0.0.0.0 --port=5002
