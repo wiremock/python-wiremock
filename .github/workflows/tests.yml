@@ -44,6 +44,6 @@ jobs:
 
       - name: Integration Tests
         run: |
-          cd examples/
+          cd examples/intro/
           docker compose build overview_srv
           docker compose run overview_srv pytest --tb=short

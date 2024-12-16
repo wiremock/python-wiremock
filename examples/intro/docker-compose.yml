@@ -3,7 +3,7 @@ version: "3"
 services:
   overview_srv:
     build:
-      context: ../
+      context: ../../
       dockerfile: examples/intro/Dockerfile
     ports:
       - "5001:5001"
@@ -19,7 +19,7 @@ services:
 
   products_srv:
     build:
-      context: ../
+      context: ../../
       dockerfile: examples/intro/Dockerfile
     ports:
       - "5002:5002"
