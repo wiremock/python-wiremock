@@ -47,7 +47,7 @@ class Requests(BaseResource):
     @classmethod
     def reset_request_journal(cls, parameters={}):
         ids = {"id": "reset"}
-        response = cls.REST_CLIENT.post(cls.get_base_uri(cls.endpoint_single(), **ids), headers=make_headers(), params=parameters)
+        response = cls.REST_CLIENT.delete(cls.get_base_uri(cls.endpoint()), headers=make_headers(), params=parameters)
         return cls.REST_CLIENT.handle_response(response)
 
     @classmethod
