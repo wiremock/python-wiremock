@@ -42,7 +42,7 @@ to allow us to write solid integration tests that dont involved mockig the code 
 
 To run the tests use docker-compose to create the necessary containers.
 
-`docker-compose run overview_srv pytest --tb=short`
+`docker compose run overview_srv pytest --tb=short`
 
 ## How we use this example code base
 
