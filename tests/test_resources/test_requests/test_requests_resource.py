@@ -58,7 +58,7 @@ def test_get_request():
 @responses.activate
 def test_reset_request_journal():
     responses.add(
-        responses.POST, "http://localhost/__admin/requests/reset", body="", status=200
+        responses.DELETE, "http://localhost/__admin/requests", body="", status=200
     )
 
     r = Requests.reset_request_journal()
