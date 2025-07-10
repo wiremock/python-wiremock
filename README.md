@@ -6,6 +6,19 @@
     </a>
 </p>
 
+---
+
+<table>
+<tr>
+<td>
+<img src="https://wiremock.org/images/wiremock-cloud/wiremock_cloud_logo.png" alt="WireMock Cloud Logo" height="20" align="left">
+<strong>WireMock open source is supported by <a href="https://www.wiremock.io/cloud-overview?utm_source=github.com&utm_campaign=wiremock-README.md-banner">WireMock Cloud</a>. Please consider trying it out if your team needs advanced capabilities such as OpenAPI, dynamic state, data sources and more.</strong>
+</td>
+</tr>
+</table>
+
+---
+
 Python WireMock is a library that allows users to interact with a WireMock instance from within a Python project.
 Full documentation can be found at [wiremock.readthedocs.org](http://wiremock.readthedocs.org/).
 
