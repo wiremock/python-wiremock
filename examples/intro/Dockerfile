@@ -1,5 +1,5 @@
 # vim: set filetype=Dockerfile:
-FROM python:3.11-slim-buster
+FROM python:3.11-slim-bookworm
 
 ENV POETRY_HOME="/opt/poetry" \
     POETRY_VIRTUALENVS_CREATE=false \
