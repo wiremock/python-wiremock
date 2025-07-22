@@ -1,3 +1,5 @@
+"""This is example module docstring content for documentation development"""
+
 from collections import OrderedDict
 import json
 
