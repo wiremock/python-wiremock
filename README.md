@@ -23,7 +23,7 @@ Python WireMock is a library that allows users to interact with a WireMock insta
 Full documentation can be found at [wiremock.readthedocs.org](https://wiremock.readthedocs.org/).
 
 [![a](https://img.shields.io/badge/slack-%23wiremock%2Fpython-brightgreen?style=flat&logo=slack)](https://slack.wiremock.org/)
-[![Docs](https://img.shields.io/badge/docs-latest-brightgreen.svg)](http://wiremock.readthedocs.org/)
+[![Docs](https://img.shields.io/badge/docs-latest-brightgreen.svg)](https://wiremock.readthedocs.org/)
 
 <!--
 FIXME: Reporting is dead: https://github.com/wiremock/python-wiremock/issues/74
@@ -42,7 +42,7 @@ WireMock can run in unit tests, as a standalone process or a container. Key feat
 
 - [Quickstart Guide](./docs/quickstart.md)
 - [Installation](./docs/install.md)
-- [Full documentation](http://wiremock.readthedocs.org/)
+- [Full documentation](https://wiremock.readthedocs.org/)
 
 ## Examples
 

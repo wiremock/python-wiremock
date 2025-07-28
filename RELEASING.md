@@ -1,4 +1,4 @@
-# Checklist for releasing WireMock
+# Checklist for releasing Python WireMock
 
 - [ ] Bump version number
 - [ ] Publish the release note
