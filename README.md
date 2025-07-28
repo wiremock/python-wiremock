@@ -20,7 +20,7 @@
 ---
 
 Python WireMock is a library that allows users to interact with a WireMock instance from within a Python project.
-Full documentation can be found at [wiremock.readthedocs.org](http://wiremock.readthedocs.org/).
+Full documentation can be found at [wiremock.readthedocs.org](https://wiremock.readthedocs.org/).
 
 [![a](https://img.shields.io/badge/slack-%23wiremock%2Fpython-brightgreen?style=flat&logo=slack)](https://slack.wiremock.org/)
 [![Docs](https://img.shields.io/badge/docs-latest-brightgreen.svg)](http://wiremock.readthedocs.org/)
