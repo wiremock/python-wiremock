@@ -4,7 +4,7 @@ from unittest.mock import DEFAULT, patch
 
 import pytest
 import responses
-from importlib_resources import files
+from importlib.resources import files
 
 from tests.utils import assertEqual, assertIsInstance
 from wiremock.server.exceptions import (

@@ -6,7 +6,7 @@ import time
 from subprocess import PIPE, STDOUT, Popen
 
 import requests
-from importlib_resources import files
+from importlib.resources import files
 
 from wiremock.server.exceptions import (
     WireMockServerAlreadyStartedError,
