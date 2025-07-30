@@ -32,7 +32,7 @@ classifiers = [
 ]
 requires-python = ">=3.9, <3.14"
 dependencies = [
-  "requests>=2.32.4",
+  "requests>=2.32.4"
 ]
 
 [project.optional-dependencies]
@@ -67,11 +67,6 @@ markers = [
   "resource",
   "serialization",
 ]
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
 
 [tool.black]
 exclude = '''
