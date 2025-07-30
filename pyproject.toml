@@ -6,7 +6,7 @@ authors = [
     {name = "Cody Lee", email = "cody.lee@datadoghq.com"},
     {name = "Mike Waites", email = "mikey.waites@gmail.com"}
 ]
-license = "OSI Approved :: Apache Software License"
+license = "Apache-2.0"
 readme = "README.md"
 classifiers = [
   "Development Status :: 5 - Production/Stable",

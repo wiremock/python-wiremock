@@ -3,7 +3,7 @@ name = "product-mock"
 version = "0.1.0"
 description = "An exmaple micro service that demonstrates the utility of python-wiremock"
 authors = ["Mike Waites <mikey.waites@gmail.com>"]
-license = "Apache-2.0"
+license = "OSI Approved :: Apache Software License"
 readme = "README.md"
 packages = [{include = "product_mock"}]
 
