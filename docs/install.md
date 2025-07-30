@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Python WireMock is known to support Python 3.7 or above.
+Python WireMock is known to support Python 3.9 or above.
 
 ## Pip
 

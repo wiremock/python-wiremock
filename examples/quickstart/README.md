@@ -8,7 +8,7 @@ See the step-by-step guide [here](../../docs/quickstart.md)
 
 ## Prerequisites
 
-- Python 3.7 or above
+- Python 3.9 or above
 - Pip 20.0.0 or above (use `apt install python3-pip`, for example)
 - Pytest 7.3.0 or above (use `pip install pytest`)
 - Testcontainers 3.5.0 or above (use `pip install testcontainers`)
