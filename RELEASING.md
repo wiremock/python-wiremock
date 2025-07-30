@@ -9,7 +9,7 @@
 Make sure the version number has been updated. Do this by updating the version in `./pyproject.toml`:
 
 ```toml
-[tool.poetry]
+[project]
 name = "wiremock"
 version = "2.7.0"
 ```
