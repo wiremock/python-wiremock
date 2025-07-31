@@ -13,11 +13,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
-      - name: Install Poetry
-        run: curl -sSL https://install.python-poetry.org | python
+          python-version: "3.13"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
       - name: Get version from pyproject.toml
-        run: echo "VERSION=$(poetry version -s)" >> $GITHUB_ENV
+        run: echo "VERSION=$(uv version --short)" >> $GITHUB_ENV
       - uses: release-drafter/release-drafter@v5
         with:
           name: ${{ env.VERSION }}

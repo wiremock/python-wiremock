@@ -10,22 +10,13 @@ jobs:
     name: Check Documentation
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - name: Install uv and set the python version
+        uses: astral-sh/setup-uv@v6
         with:
-          python-version: "3.10"
-      - name: Install and configure Poetry
-        uses: snok/install-poetry@v1
-        with:
-          version: 2.1.3
+          python-version: '3.13'
+          enable-cache: true
       - name: Install dependencies
-        run: |
-          poetry env use '3.10'
-          poetry install --extras=testing
+        run: uv sync --locked --group docs
       - name: Build docs with MkDocs
-        run: |
-          make docs
-      - name: Check Markdown links
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        run: make docs
