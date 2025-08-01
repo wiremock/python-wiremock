@@ -26,12 +26,12 @@ General expectations:
 
 ## Development
 
-We use [Poetry](https://python-poetry.org/) for packaging and dependency management.
+We use [UV](https://docs.astral.sh/uv/) for packaging and dependency management.
 
 After forking and cloning the repository,
 run the following command to setup the project:
 
-`poetry install`
+`uv sync`
 
 Then use your favorite IDE for development and testing.
 
@@ -48,11 +48,11 @@ make sure to update the [documentation site page](./examples.md) too.
 ## Working on Documentation
 
 The documentation is powered by [MkDocs](https://www.mkdocs.org/) and [ReadTheDocs](https://readthedocs.org/).
-All the necessary dependencies are included into the Poetry definition.
+All the necessary dependencies are included into the pyproject definition.
 To build the docs locally:
 
 ```bash
-poetry run mkdocs build --site-dir=html
+uv run mkdocs build --site-dir=html
 ```
 
 MkDocs also comes with a built-in dev-server that lets you preview your documentation as you work on it by running the `mkdocs serve` command.
