@@ -1,0 +1,16 @@
+{
+	"name": "Python Wiremock",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": ".."
+	},
+	"overrideCommand": true,
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"charliermarsh.ruff"
+			]
+		}
+	}
+}

@@ -26,14 +26,15 @@ General expectations:
 
 ## Development
 
-We use [UV](https://docs.astral.sh/uv/) for packaging and dependency management.
+We use **VSCode Dev Containers** for development.
 
-After forking and cloning the repository,
-run the following command to setup the project:
+If you'd like to contribute:
 
-`uv sync`
+1. Follow [this tutorial](https://code.visualstudio.com/docs/devcontainers/tutorial) to set up Dev Containers.
+2. Once set up, open the `python-wiremock` folder in VSCode.
+3. Use the **Dev Containers** extension to reopen the project inside the container.
 
-Then use your favorite IDE for development and testing.
+That's it - you'll have a ready-to-use development environment.
 
 ## Contributing examples
 
