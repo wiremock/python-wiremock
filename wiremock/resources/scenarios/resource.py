@@ -20,5 +20,14 @@ class Scenarios(BaseResource):
         response = cls.REST_CLIENT.post(cls.get_base_uri(cls.endpoint()), headers=make_headers(), params=parameters)
         return cls.REST_CLIENT.handle_response(response)
 
+    @classmethod
+    def change_scenario_state(cls, scenario_name, state):
+        response = cls.REST_CLIENT.put(
+            cls.get_base_uri(f"{cls.endpoint_single()}/{scenario_name}/state"),
+            headers=make_headers(),
+            json={"state": state},
+        )
+        return cls.REST_CLIENT.handle_response(response)
+
 
 __all__ = ["Scenarios"]
