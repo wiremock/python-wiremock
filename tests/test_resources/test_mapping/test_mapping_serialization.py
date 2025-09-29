@@ -102,6 +102,7 @@ def test_mapping_request_serialization():
         url_path="test2",
         url_path_pattern="test3",
         url_pattern="test4",
+        url_path_template="test5",
         basic_auth_credentials=BasicAuthCredentials(
             username="username", password="password"
         ),
@@ -117,6 +118,7 @@ def test_mapping_request_serialization():
     assert serialized["urlPath"] == "test2"
     assert serialized["urlPathPattern"] == "test3"
     assert serialized["urlPattern"] == "test4"
+    assert serialized["urlPathTemplate"] == "test5"
     assert serialized["basicAuthCredentials"] == {
         "username": "username",
         "password": "password",
@@ -139,6 +141,7 @@ def test_mapping_request_deserialization():
         "urlPath": "test2",
         "urlPathPattern": "test3",
         "urlPattern": "test4",
+        "urlPathTemplate": "test5",
         "basicAuthCredentials": {
             "username": "username",
             "password": "password",
@@ -156,6 +159,7 @@ def test_mapping_request_deserialization():
     assert "test2" == e.url_path
     assert "test3" == e.url_path_pattern
     assert "test4" == e.url_pattern
+    assert "test5" == e.url_path_template
     assert isinstance(e.basic_auth_credentials, BasicAuthCredentials)
     assert "username" == e.basic_auth_credentials.username
     assert "password" == e.basic_auth_credentials.password
