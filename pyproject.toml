@@ -29,7 +29,7 @@ classifiers = [
   "Topic :: Software Development :: Quality Assurance",
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-requires-python = ">=3.9, <3.14"
+requires-python = ">=3.9.2, <3.14"
 dependencies = [
   "requests>=2.32.4"
 ]
@@ -37,7 +37,7 @@ dependencies = [
 [project.optional-dependencies]
 testing = [
   "docker>=7.1.0",
-  "testcontainers>=3.7.1,<4.0.0",
+  "testcontainers>=4.13.2",
 ]
 
 [dependency-groups]

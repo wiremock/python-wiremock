@@ -12,7 +12,7 @@ import docker
 import requests
 from testcontainers.core.container import DockerContainer
 from testcontainers.core.exceptions import ContainerStartException
-from testcontainers.core.waiting_utils import wait_container_is_ready
+from testcontainers.core.wait_strategies import HttpWaitStrategy
 
 from wiremock.resources.mappings.models import Mapping
 
@@ -187,7 +187,6 @@ class WireMockContainer(DockerContainer):
 
         return resp
 
-    @wait_container_is_ready()
     def configure(self) -> None:
         if not self.server_running():
             raise WireMockContainerException(
@@ -221,6 +220,7 @@ class WireMockContainer(DockerContainer):
     def start(self, cmd: Optional[str] = None) -> "WireMockContainer":
         self.with_command(cmd)
         super().start()
+        self.waiting_for(HttpWaitStrategy(self.https_server_port if self.secure else self.http_server_port))
         self.configure()
         return self
 
