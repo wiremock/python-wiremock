@@ -46,6 +46,18 @@ file in the directory.
 When adding new examples,
 make sure to update the [documentation site page](./examples.md) too.
 
+## Testing
+
+To run tests in the Dev Container, just invoke the test scripts in the root directory:
+
+```shell
+sh run_tests.sh
+```
+
+For local developer environments, you may also need to run `uv sync --extra testing` 
+to get all the test modules installed.
+
+
 ## Working on Documentation
 
 The documentation is powered by [MkDocs](https://www.mkdocs.org/) and [ReadTheDocs](https://readthedocs.org/).
@@ -53,6 +65,7 @@ All the necessary dependencies are included into the pyproject definition.
 To build the docs locally:
 
 ```bash
+cd docs
 uv run mkdocs build --site-dir=html
 ```
 

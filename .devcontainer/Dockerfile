@@ -12,4 +12,4 @@ RUN apt-get update \
 WORKDIR /workspaces/python-wiremock
 COPY pyproject.toml uv.lock ./
 ENV UV_PROJECT_ENVIRONMENT=/usr/local
-RUN uv sync --frozen
+RUN uv sync --frozen --extra testing

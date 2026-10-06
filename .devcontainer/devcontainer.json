@@ -4,6 +4,12 @@
 		"dockerfile": "Dockerfile",
 		"context": ".."
 	},
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:4.1.2": {
+			"version": "latest",
+			"moby": false
+		}
+	},
 	"overrideCommand": true,
 	"customizations": {
 		"vscode": {
